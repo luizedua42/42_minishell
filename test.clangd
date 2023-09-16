@@ -1,4 +1,0 @@
-CompileFlags: # Tweak the parse settings
-  Add: 
-    - "-I=[/nfs/homes/luizedua/42_projects/minishell/42_minishell/include]"
-    - "-I=[/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft]"
