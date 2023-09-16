@@ -1,0 +1,1136 @@
+[
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strncmp.c",
+   "-o",
+   "build/ft_strncmp.o"
+  ],
+  "file": "string/ft_strncmp.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strnstr.c",
+   "-o",
+   "build/ft_strnstr.o"
+  ],
+  "file": "string/ft_strnstr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_striteri.c",
+   "-o",
+   "build/ft_striteri.o"
+  ],
+  "file": "string/ft_striteri.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strjoin.c",
+   "-o",
+   "build/ft_strjoin.o"
+  ],
+  "file": "string/ft_strjoin.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strdup.c",
+   "-o",
+   "build/ft_strdup.o"
+  ],
+  "file": "string/ft_strdup.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_itoa.c",
+   "-o",
+   "build/ft_itoa.o"
+  ],
+  "file": "string/ft_itoa.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strtrim.c",
+   "-o",
+   "build/ft_strtrim.o"
+  ],
+  "file": "string/ft_strtrim.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strlen.c",
+   "-o",
+   "build/ft_strlen.o"
+  ],
+  "file": "string/ft_strlen.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strcmp.c",
+   "-o",
+   "build/ft_strcmp.o"
+  ],
+  "file": "string/ft_strcmp.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_split_size.c",
+   "-o",
+   "build/ft_split_size.o"
+  ],
+  "file": "string/ft_split_size.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strlcat.c",
+   "-o",
+   "build/ft_strlcat.o"
+  ],
+  "file": "string/ft_strlcat.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_split.c",
+   "-o",
+   "build/ft_split.o"
+  ],
+  "file": "string/ft_split.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_substr.c",
+   "-o",
+   "build/ft_substr.o"
+  ],
+  "file": "string/ft_substr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strlcpy.c",
+   "-o",
+   "build/ft_strlcpy.o"
+  ],
+  "file": "string/ft_strlcpy.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strchr.c",
+   "-o",
+   "build/ft_strchr.o"
+  ],
+  "file": "string/ft_strchr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strrchr.c",
+   "-o",
+   "build/ft_strrchr.o"
+  ],
+  "file": "string/ft_strrchr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strmapi.c",
+   "-o",
+   "build/ft_strmapi.o"
+  ],
+  "file": "string/ft_strmapi.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_strcpy.c",
+   "-o",
+   "build/ft_strcpy.o"
+  ],
+  "file": "string/ft_strcpy.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "string/ft_free_split.c",
+   "-o",
+   "build/ft_free_split.o"
+  ],
+  "file": "string/ft_free_split.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_memcmp.c",
+   "-o",
+   "build/ft_memcmp.o"
+  ],
+  "file": "memory/ft_memcmp.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_memcpy.c",
+   "-o",
+   "build/ft_memcpy.o"
+  ],
+  "file": "memory/ft_memcpy.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_calloc.c",
+   "-o",
+   "build/ft_calloc.o"
+  ],
+  "file": "memory/ft_calloc.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_memset.c",
+   "-o",
+   "build/ft_memset.o"
+  ],
+  "file": "memory/ft_memset.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_bzero.c",
+   "-o",
+   "build/ft_bzero.o"
+  ],
+  "file": "memory/ft_bzero.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_memchr.c",
+   "-o",
+   "build/ft_memchr.o"
+  ],
+  "file": "memory/ft_memchr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_memmove.c",
+   "-o",
+   "build/ft_memmove.o"
+  ],
+  "file": "memory/ft_memmove.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "memory/ft_intswap.c",
+   "-o",
+   "build/ft_intswap.o"
+  ],
+  "file": "memory/ft_intswap.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "math/ft_atoi.c",
+   "-o",
+   "build/ft_atoi.o"
+  ],
+  "file": "math/ft_atoi.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "math/ft_atof.c",
+   "-o",
+   "build/ft_atof.o"
+  ],
+  "file": "math/ft_atof.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isalnum.c",
+   "-o",
+   "build/ft_isalnum.o"
+  ],
+  "file": "char/ft_isalnum.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isascii.c",
+   "-o",
+   "build/ft_isascii.o"
+  ],
+  "file": "char/ft_isascii.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isprint.c",
+   "-o",
+   "build/ft_isprint.o"
+  ],
+  "file": "char/ft_isprint.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isalpha.c",
+   "-o",
+   "build/ft_isalpha.o"
+  ],
+  "file": "char/ft_isalpha.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isdigit.c",
+   "-o",
+   "build/ft_isdigit.o"
+  ],
+  "file": "char/ft_isdigit.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_toupper.c",
+   "-o",
+   "build/ft_toupper.o"
+  ],
+  "file": "char/ft_toupper.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_tolower.c",
+   "-o",
+   "build/ft_tolower.o"
+  ],
+  "file": "char/ft_tolower.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "char/ft_isspace.c",
+   "-o",
+   "build/ft_isspace.o"
+  ],
+  "file": "char/ft_isspace.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstclear.c",
+   "-o",
+   "build/ft_lstclear.o"
+  ],
+  "file": "list/ft_lstclear.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstdelone.c",
+   "-o",
+   "build/ft_lstdelone.o"
+  ],
+  "file": "list/ft_lstdelone.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstadd_front.c",
+   "-o",
+   "build/ft_lstadd_front.o"
+  ],
+  "file": "list/ft_lstadd_front.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstnew.c",
+   "-o",
+   "build/ft_lstnew.o"
+  ],
+  "file": "list/ft_lstnew.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstmap.c",
+   "-o",
+   "build/ft_lstmap.o"
+  ],
+  "file": "list/ft_lstmap.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstlast.c",
+   "-o",
+   "build/ft_lstlast.o"
+  ],
+  "file": "list/ft_lstlast.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstsize.c",
+   "-o",
+   "build/ft_lstsize.o"
+  ],
+  "file": "list/ft_lstsize.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstiter.c",
+   "-o",
+   "build/ft_lstiter.o"
+  ],
+  "file": "list/ft_lstiter.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "list/ft_lstadd_back.c",
+   "-o",
+   "build/ft_lstadd_back.o"
+  ],
+  "file": "list/ft_lstadd_back.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "file/ft_putendl_fd.c",
+   "-o",
+   "build/ft_putendl_fd.o"
+  ],
+  "file": "file/ft_putendl_fd.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "file/ft_putnbr_fd.c",
+   "-o",
+   "build/ft_putnbr_fd.o"
+  ],
+  "file": "file/ft_putnbr_fd.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "file/ft_putstr_fd.c",
+   "-o",
+   "build/ft_putstr_fd.o"
+  ],
+  "file": "file/ft_putstr_fd.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "file/ft_putchar_fd.c",
+   "-o",
+   "build/ft_putchar_fd.o"
+  ],
+  "file": "file/ft_putchar_fd.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "gnl/get_next_line_utils.c",
+   "-o",
+   "build/get_next_line_utils.o"
+  ],
+  "file": "gnl/get_next_line_utils.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "gnl/get_next_line.c",
+   "-o",
+   "build/get_next_line.o"
+  ],
+  "file": "gnl/get_next_line.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_putnbr.c",
+   "-o",
+   "build/ft_printf_putnbr.o"
+  ],
+  "file": "printf/ft_printf_putnbr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_flags_utils.c",
+   "-o",
+   "build/ft_printf_flags_utils.o"
+  ],
+  "file": "printf/ft_printf_flags_utils.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_putpointer.c",
+   "-o",
+   "build/ft_printf_putpointer.o"
+  ],
+  "file": "printf/ft_printf_putpointer.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_putnbr_base.c",
+   "-o",
+   "build/ft_printf_putnbr_base.o"
+  ],
+  "file": "printf/ft_printf_putnbr_base.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_putstr.c",
+   "-o",
+   "build/ft_printf_putstr.o"
+  ],
+  "file": "printf/ft_printf_putstr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_strcpy.c",
+   "-o",
+   "build/ft_printf_strcpy.o"
+  ],
+  "file": "printf/ft_printf_strcpy.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_atoi.c",
+   "-o",
+   "build/ft_printf_atoi.o"
+  ],
+  "file": "printf/ft_printf_atoi.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_printnbr.c",
+   "-o",
+   "build/ft_printf_printnbr.o"
+  ],
+  "file": "printf/ft_printf_printnbr.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf.c",
+   "-o",
+   "build/ft_printf.o"
+  ],
+  "file": "printf/ft_printf.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell/lib/libft",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iincludes",
+   "-I.",
+   "-c",
+   "printf/ft_printf_putchar.c",
+   "-o",
+   "build/ft_printf_putchar.o"
+  ],
+  "file": "printf/ft_printf_putchar.c"
+ },
+ {
+  "directory": "/nfs/homes/luizedua/42_projects/minishell/42_minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-O3",
+   "-g3",
+   "-Iinclude",
+   "-I./lib/libft",
+   "-c",
+   "src/mandatory/minishell.c",
+   "-o",
+   "build/minishell.o"
+  ],
+  "file": "src/mandatory/minishell.c"
+ }
+]
