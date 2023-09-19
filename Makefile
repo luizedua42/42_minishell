@@ -42,10 +42,10 @@ $(LIBTF_DIR):
 	mkdir -p $(LIBTF_DIR)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME) -lreadline
 
 bonus: libft $(OBJS_BONUS)
-	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
+	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME) -lreadline
 
 clean: 
 	@$(MAKE) -C $(LIBTF_DIR) clean

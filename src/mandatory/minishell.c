@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/19 08:09:40 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/19 13:11:00 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,22 @@ int	main(int argc, char **argv)
 	t_list	*tokens;
 	t_token	*teste;
 	char	*command;
+	char	*prompt;
 
 	if (argc != 2)
 		return (1);
-	command = argv[1];
-	tokens = create_tokens(command);
-	while (tokens != NULL)
+	(void)argv;
+	while (1)
 	{
-		teste = (t_token *)(tokens->content);
-		ft_printf("%s\n", teste->value);
-		tokens = tokens->next;
+		prompt = "minishell$ ";
+		command = readline(prompt);
+		tokens = create_tokens(command);
+		while (tokens != NULL)
+		{
+			teste = (t_token *)(tokens->content);
+			ft_printf("%s\n", teste->value);
+			tokens = tokens->next;
+		}
 	}
 	return (0);
 }
