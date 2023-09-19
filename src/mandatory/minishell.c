@@ -3,74 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/16 19:57:50 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/19 08:09:40 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(t_token_type type, char *value)
+bool	is_token(char c)
 {
+	return (c == '\'' || c == '\"');
+}
+
+bool	token_cmp(char *source, char *cmp)
+{
+	while (*source != '\0')
+		if (*source++ != *cmp++)
+			return (false);
+	return (*cmp == '\0' || *cmp == ' ');
+}
+
+void	new_token(t_list **tokens, t_token_type type, char *value,
+		size_t *index)
+{
+	size_t	i;
 	t_token	*token;
 
 	token = ft_calloc(1, sizeof(t_token));
 	token->type = type;
-	token->value = value;
-	return (token);
+	if (type == WORD)
+	{
+		i = 0;
+		while (value[i] != '\0' && value[i] != ' ' && !is_token(value[i]))
+			i++;
+		token->value = ft_calloc(i + 1, sizeof(char));
+		while (i--)
+			token->value[i] = value[i];
+	}
+	else
+		token->value = ft_strdup(value);
+	*index += ft_strlen(token->value);
+	ft_lstadd_back(tokens, ft_lstnew(token));
+}
+
+t_list	*create_tokens(char *command)
+{
+	t_list	*tokens;
+	size_t	i;
+
+	i = 0;
+	tokens = NULL;
+	while (command[i] != '\0')
+	{
+		if (ft_isspace(command[i]))
+			i++;
+		else if (token_cmp("||", command + i))
+			new_token(&tokens, OR, "||", &i);
+		else if (token_cmp("|", command + i))
+			new_token(&tokens, PIPE, "|", &i);
+		else if (token_cmp("&&", command + i))
+			new_token(&tokens, AND, "&&", &i);
+		else if (token_cmp("<", command + i))
+			new_token(&tokens, REDIRECT_IN, "<", &i);
+		else if (token_cmp(">", command + i))
+			new_token(&tokens, REDIRECT_OUT, ">", &i);
+		else if (token_cmp("<<", command + i))
+			new_token(&tokens, HEREDOC_IN, "<<", &i);
+		else if (token_cmp(">>", command + i))
+			new_token(&tokens, HEREDOC_OUT, ">>", &i);
+		else if (command[i] == '\'')
+			new_token(&tokens, QUOTE, "'", &i);
+		else if (command[i] == '\"')
+			new_token(&tokens, DQUOTE, "\"", &i);
+		else if (command[i] == '$')
+			new_token(&tokens, DOLLAR_SIGN, "$", &i);
+		else if (command[i] == '(')
+			new_token(&tokens, OPEN_PARENTHESIS, "(", &i);
+		else if (command[i] == ')')
+			new_token(&tokens, CLOSE_PARENTHESIS, ")", &i);
+		else
+			new_token(&tokens, WORD, command + i, &i);
+	}
+	return (tokens);
 }
 
 int	main(int argc, char **argv)
 {
 	t_list	*tokens;
 	t_token	*teste;
-	size_t	i;
-	char	**commands;
+	char	*command;
 
 	if (argc != 2)
 		return (1);
-	i = 0;
-	tokens = NULL;
-	commands = ft_split(argv[1], ' ');
-	while (commands[i])
-	{
-
-		if (ft_strncmp("||", commands[i], 2) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(OR, "||")));
-		else if (ft_strncmp("|", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(PIPE, "|")));
-		else if (ft_strncmp("&&", commands[i], 2) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(AND, "&&")));
-		else if (ft_strncmp("<", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(REDIRECT_IN, "<")));
-		else if (ft_strncmp(">", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(REDIRECT_OUT, ">")));
-		else if (ft_strncmp("<<", commands[i], 2) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(HEREDOC_IN, "<<")));
-		else if (ft_strncmp(">>", commands[i], 2) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(HEREDOC_OUT, ">>")));
-		else if (ft_strncmp("'", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(QUOTE, "'")));
-		else if (ft_strncmp("\"", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(DQUOTE, "\"")));
-		else if (ft_strncmp("$", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(DOLLAR_SIGN, "$")));
-		else if (ft_strncmp("(", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(OPEN_PARENTHESIS, "(")));
-		else if (ft_strncmp(")", commands[i], 1) == 0)
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(CLOSE_PARENTHESIS, ")")));
-		else
-			ft_lstadd_back(&tokens, ft_lstnew(new_token(WORD, commands[i])));
-		i++;
-	}
+	command = argv[1];
+	tokens = create_tokens(command);
 	while (tokens != NULL)
 	{
 		teste = (t_token *)(tokens->content);
 		ft_printf("%s\n", teste->value);
 		tokens = tokens->next;
 	}
-	ft_free_split(commands);
 	return (0);
 }

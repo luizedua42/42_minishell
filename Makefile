@@ -3,7 +3,7 @@ vpath %.c src/bonus
 
 NAME := minishell
 CFLAGS := -Wextra -Wall -Werror
-CFLAGS += -O3 -g3
+CFLAGS += -g3
 
 CC := cc
 RM := rm -rf
@@ -29,7 +29,7 @@ init_modules: $(LIBTF_DIR)
 update_modules: init_modules
 	git submodule foreach git pull origin master --rebase
 
-libft: update_modules
+libft:
 	@$(MAKE) -C $(LIBTF_DIR)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
