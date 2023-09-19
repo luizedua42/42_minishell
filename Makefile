@@ -9,13 +9,13 @@ CC := cc
 RM := rm -rf
 
 LIBTF_DIR := ./lib/libft
-LIBS := -L$(LIBTF_DIR) -lft
+LIBS := -L$(LIBTF_DIR) -lft -lreadline
 
 OBJ_DIR := build
 INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
-SRCS := minishell.c
+SRCS := minishell.c tokenizer.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := minishell_bonus.c
@@ -42,10 +42,13 @@ $(LIBTF_DIR):
 	mkdir -p $(LIBTF_DIR)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME) -lreadline
+	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
 
 bonus: libft $(OBJS_BONUS)
-	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME) -lreadline
+	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
+
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./readline.supp -q ./$(NAME)
 
 clean: 
 	@$(MAKE) -C $(LIBTF_DIR) clean
@@ -59,4 +62,4 @@ re: fclean all
 
 rebonus: fclean bonus
 
-.PHONY: all clean fclean re bonus rebonus libft update_modules init_modules
+.PHONY: all clean fclean re bonus rebonus libft update_modules init_modules val
