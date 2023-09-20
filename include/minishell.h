@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/19 13:11:13 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/19 20:51:25 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 }					t_token;
+
+t_list	*create_tokens(char *command);
 
 #endif
