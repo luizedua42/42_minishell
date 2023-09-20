@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/19 20:56:35 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:14:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	new_token(t_list **tokens, t_token_type type, char *value,
 	if (type == WORD)
 	{
 		i = 0;
-		while (value[i] != '\0' && value[i] != ' ' && !is_token(value[i]))
+		while (value[i] != '\0' && !ft_isspace(value[i]) && !is_token(value[i]))
 			i++;
 		token->value = ft_calloc(i + 1, sizeof(char));
 		while (i--)
