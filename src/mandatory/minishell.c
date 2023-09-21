@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/09/20 21:29:48 by pdavi-al         ###   ########.fr       */
-=======
-/*   Updated: 2023/09/20 21:35:18 by luizedua         ###   ########.fr       */
->>>>>>> starting parser
+/*   Updated: 2023/09/21 20:50:16 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +57,35 @@ void	print_envs(t_list *envs)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_tree	*tree;
 	t_list	*tokens;
 	char	*command;
 	char	*prompt;
 	t_list	*envs;
+	int		*token_array;
+	int		i;
 
+	i = 0;
 	(void)argc;
 	(void)argv;
 	envs = create_envs(envp);
 	while (1)
 	{
+		i = 0;
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
 		command = readline(prompt);
 		if (command[0] == '[')
 			break ;
 		tokens = create_tokens(command);
-		if(syntax_analyzer(tokens) == false)
-		{
-			ft_lstclear(&tokens, del_token);
-			free(command);
-			break ;
-		}
-		print_tokens(tokens);
+		token_array = create_token_array(tokens, &i);
+		if (syntax_analysis(token_array) == false)
+			ft_fprintf(2, "minishell : syntax error\n");
+		else
+			print_tokens(tokens);
+		free(token_array);
 		ft_lstclear(&tokens, del_token);
-		ft_cleantree(tree, del_token);
 		free(command);
 	}
+	free(token_array);
 	free(command);
 	print_envs(envs);
 	ft_lstclear(&envs, del_env);

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/09/20 20:21:32 by luizedua         ###   ########.fr       */
-=======
-/*   Updated: 2023/09/20 21:25:56 by luizedua         ###   ########.fr       */
->>>>>>> starting parser
+/*   Updated: 2023/09/21 20:49:26 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +52,11 @@ typedef struct s_node
 	char			    *value;
 }					t_node;
 
-t_list				*create_tokens(char *command);
 t_list				*create_envs(char **envp);
 bool				syntax_analyzer(t_list *token_list);
+t_list	*create_tokens(char *command);
+int		*create_token_array(t_list *tokens, int *i);
+void	print_token_array(int *token_array, int size);
+bool	syntax_analysis(int *token_array);
 
 #endif
