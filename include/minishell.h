@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/19 20:51:25 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:30:20 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <stdbool.h>
 # include <readline/readline.h>
+# include <stdbool.h>
 
 typedef enum e_token_type
 {
@@ -40,6 +40,13 @@ typedef struct s_token
 	char			*value;
 }					t_token;
 
-t_list	*create_tokens(char *command);
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+}					t_env;
+
+t_list				*create_tokens(char *command);
+t_list				*create_envs(char **envp);
 
 #endif
