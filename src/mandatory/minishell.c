@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/20 20:40:09 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:29:48 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	del_env(void *content)
+{
+	t_env	*env;
+
+	env = content;
+	free(env->key);
+	free(env->value);
+	free(env);
+}
 
 void	del_token(void *content)
 {
@@ -33,15 +43,29 @@ void	print_tokens(t_list *tokens)
 	}
 }
 
-int	main(int argc, char **argv)
+void	print_envs(t_list *envs)
+{
+	t_env	*env;
+
+	while (envs != NULL)
+	{
+		env = envs->content;
+		ft_printf("key: %s | value: %s\n", env->key, env->value);
+		envs = envs->next;
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_tree	*tree;
 	t_list	*tokens;
 	char	*command;
 	char	*prompt;
+	t_list	*envs;
 
 	(void)argc;
 	(void)argv;
+	envs = create_envs(envp);
 	while (1)
 	{
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
@@ -56,5 +80,7 @@ int	main(int argc, char **argv)
 		free(command);
 	}
 	free(command);
+	print_envs(envs);
+	ft_lstclear(&envs, del_env);
 	return (0);
 }
