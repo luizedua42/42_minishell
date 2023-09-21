@@ -57,6 +57,7 @@ void	print_envs(t_list *envs)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_tree	*tree;
 	t_list	*tokens;
 	char	*command;
 	char	*prompt;
@@ -67,13 +68,15 @@ int	main(int argc, char **argv, char **envp)
 	envs = create_envs(envp);
 	while (1)
 	{
-		prompt = "minishell$ ";
+		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
 		command = readline(prompt);
 		if (command[0] == '[')
 			break ;
 		tokens = create_tokens(command);
+		tree = create_tree(tokens);
 		print_tokens(tokens);
 		ft_lstclear(&tokens, del_token);
+		ft_cleantree(tree, del_token);
 		free(command);
 	}
 	free(command);
