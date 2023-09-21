@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/20 14:14:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:21:24 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	is_token(char c)
 			c == '>' || c == '$' || c == '(' || c == ')');
 }
 
-static bool	new_token(t_list **tokens, t_token_type type, char *value,
+bool	new_token(t_list **tokens, t_token_type type, char *value,
 	size_t *index)
 {
 	size_t	i;
