@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/19 20:49:47 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:40:09 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	print_tokens(t_list *tokens)
 
 int	main(int argc, char **argv)
 {
+	t_tree	*tree;
 	t_list	*tokens;
 	char	*command;
 	char	*prompt;
@@ -43,13 +44,15 @@ int	main(int argc, char **argv)
 	(void)argv;
 	while (1)
 	{
-		prompt = "minishell$ ";
+		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
 		command = readline(prompt);
 		if (command[0] == '[')
 			break ;
 		tokens = create_tokens(command);
+		tree = create_tree(tokens);
 		print_tokens(tokens);
 		ft_lstclear(&tokens, del_token);
+		ft_cleantree(tree, del_token);
 		free(command);
 	}
 	free(command);

@@ -15,7 +15,7 @@ OBJ_DIR := build
 INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
-SRCS := minishell.c tokenizer.c
+SRCS := minishell.c tokenizer.c syntax_tree.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := minishell_bonus.c
@@ -30,7 +30,7 @@ update_modules: init_modules
 	git submodule foreach git pull origin master --rebase
 
 libft:
-	@$(MAKE) -C $(LIBTF_DIR)
+	@$(MAKE) -j50 -C $(LIBTF_DIR)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
