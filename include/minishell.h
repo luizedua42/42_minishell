@@ -6,7 +6,11 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/20 20:21:32 by luizedua         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/20 21:25:56 by luizedua         ###   ########.fr       */
+>>>>>>> starting parser
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +58,6 @@ typedef struct s_node
 
 t_list				*create_tokens(char *command);
 t_list				*create_envs(char **envp);
+bool				syntax_analyzer(t_list *token_list);
 
 #endif

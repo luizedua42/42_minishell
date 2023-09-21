@@ -6,7 +6,11 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/20 21:29:48 by pdavi-al         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/20 21:35:18 by luizedua         ###   ########.fr       */
+>>>>>>> starting parser
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +77,12 @@ int	main(int argc, char **argv, char **envp)
 		if (command[0] == '[')
 			break ;
 		tokens = create_tokens(command);
-		tree = create_tree(tokens);
+		if(syntax_analyzer(tokens) == false)
+		{
+			ft_lstclear(&tokens, del_token);
+			free(command);
+			break ;
+		}
 		print_tokens(tokens);
 		ft_lstclear(&tokens, del_token);
 		ft_cleantree(tree, del_token);
