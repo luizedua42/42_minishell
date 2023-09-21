@@ -16,7 +16,7 @@ t_node	*create_node(t_token_type type, char *value)
 {
 	t_node	*node;
 
-	node = malloc (1 * sizeof(t_node));
+	node = ft_calloc(1, sizeof(t_node));
 	node->type = type;
 	node->value = ft_strdup(value);
 	return (node);
