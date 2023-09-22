@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/21 21:55:32 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/22 00:47:33 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,23 @@ typedef struct s_node
 	char			*value;
 }					t_node;
 
-t_list				*create_envs(char **envp);
 t_list				*create_tokens(char *command);
 t_token_type		*create_token_array(t_list *tokens, int *i);
 void				print_token_array(int *token_array, int size);
-bool				syntax_analysis(int *token_array);
+bool				syntax_analysis(t_token_type *token_array);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
 
 // Builtins
 void				pwd(void);
 void				env(t_list *envs);
-void				cd(char **args);
+void				cd(char **args, t_list *envs);
 size_t				count_args(char **args);
 bool				is_builtin(t_list **tokens, char *command, size_t *i);
+
+// Enviroments
+t_list				*create_envs(char **envp);
+t_env				*find_env(t_list *envs, char *key);
+char				*find_env_value(t_list *envs, char *key);
 
 #endif

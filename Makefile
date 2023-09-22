@@ -15,7 +15,8 @@ OBJ_DIR := build
 INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
-SRCS := minishell.c tokenizer.c syntax_tree.c parser.c create_envs.c
+SRCS := minishell.c tokenizer.c syntax_tree.c parser.c
+SRCS += create_envs.c find_env.c
 SRCS += is_builtin.c env.c pwd.c count_args.c cd.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
