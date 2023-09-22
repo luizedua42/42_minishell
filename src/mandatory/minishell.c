@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/20 21:29:48 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:55:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,44 +43,41 @@ void	print_tokens(t_list *tokens)
 	}
 }
 
-void	print_envs(t_list *envs)
-{
-	t_env	*env;
-
-	while (envs != NULL)
-	{
-		env = envs->content;
-		ft_printf("key: %s | value: %s\n", env->key, env->value);
-		envs = envs->next;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	t_tree	*tree;
-	t_list	*tokens;
-	char	*command;
-	char	*prompt;
-	t_list	*envs;
+	t_list			*tokens;
+	char			*command;
+	char			*prompt;
+	t_list			*envs;
+	t_token_type	*token_array;
+	int				i;
 
+	cd(argv);
+	return (0);
+	i = 0;
 	(void)argc;
 	(void)argv;
 	envs = create_envs(envp);
 	while (1)
 	{
+		i = 0;
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
 		command = readline(prompt);
+		add_history(command);
 		if (command[0] == '[')
 			break ;
 		tokens = create_tokens(command);
-		tree = create_tree(tokens);
-		print_tokens(tokens);
+		token_array = create_token_array(tokens, &i);
+		if (syntax_analysis(token_array) == false)
+			ft_fprintf(2, "minishell : syntax error\n");
+		else
+			print_tokens(tokens);
+		free(token_array);
 		ft_lstclear(&tokens, del_token);
-		ft_cleantree(tree, del_token);
 		free(command);
 	}
+	rl_clear_history();
 	free(command);
-	print_envs(envs);
 	ft_lstclear(&envs, del_env);
 	return (0);
 }

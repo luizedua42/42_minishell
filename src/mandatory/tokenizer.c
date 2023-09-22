@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/20 14:14:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:15:52 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static bool	is_token(char c)
 			c == '>' || c == '$' || c == '(' || c == ')');
 }
 
-static bool	new_token(t_list **tokens, t_token_type type, char *value,
-	size_t *index)
+bool	new_token(t_list **tokens, t_token_type type, char *value,
+		size_t *index)
 {
 	size_t	i;
 	t_token	*token;
@@ -90,6 +90,8 @@ t_list	*create_tokens(char *command)
 		else if (is_double_token(&tokens, command, &i))
 			continue ;
 		else if (is_single_token(&tokens, command, &i))
+			continue ;
+		else if (is_builtin(&tokens, command, &i))
 			continue ;
 		else
 			new_token(&tokens, WORD, command + i, &i);
