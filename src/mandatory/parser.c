@@ -6,17 +6,17 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 21:14:46 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/21 19:42:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:16:55 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*create_token_array(t_list *tokens, int *i)
+t_token_type	*create_token_array(t_list *tokens, int *i)
 {
-	int		size;
-	int		*token_array;
-	t_token	*token_cont;
+	int				size;
+	t_token_type	*token_array;
+	t_token			*token_cont;
 
 	size = ft_lstsize(tokens);
 	token_array = ft_calloc((size + 1), sizeof(int));
@@ -27,33 +27,33 @@ int	*create_token_array(t_list *tokens, int *i)
 		tokens = tokens->next;
 		(*i)++;
 	}
-	token_array[*i] = -1;
+	token_array[*i] = END_ARRAY;
 	return (token_array);
 }
 
-bool	syntax_analysis(int *token_array)
+bool	syntax_analysis(t_token_type *token_array)
 {
 	int	i;
 
 	i = 0;
 	if (token_array[0] < QUOTE || token_array[0] == CLOSE_PARENTHESIS)
 		return (false);
-	while (token_array[i] != -1)
+	while (token_array[i] != END_ARRAY)
 	{
-		if (token_array[i] == PIPE && (token_array[i - 1] != WORD || \
-			token_array[i + 1] != WORD))
+		if (token_array[i] == PIPE && (token_array[i - 1] != WORD \
+					|| token_array[i + 1] != WORD))
 			return (false);
 		else if (token_array[i] == REDIRECT_IN && (token_array[i - 1] != WORD \
-			|| token_array[i + 1] != WORD))
+					|| token_array[i + 1] != WORD))
 			return (false);
-		else if (token_array[i] == REDIRECT_OUT && (token_array[i - 1] \
-			!=WORD || token_array[i + 1] != WORD))
+		else if (token_array[i] == REDIRECT_OUT && (token_array[i - 1] != WORD \
+					|| token_array[i + 1] != WORD))
 			return (false);
-		else if (token_array[i] == AND && (token_array[i - 1] \
-			!=WORD || token_array[i + 1] != WORD))
+		else if (token_array[i] == AND && (token_array[i - 1] != WORD \
+					|| token_array[i + 1] != WORD))
 			return (false);
-		else if (token_array[i] == OR && (token_array[i - 1] \
-			!=WORD || token_array[i + 1] != WORD))
+		else if (token_array[i] == OR && (token_array[i - 1] != WORD \
+					|| token_array[i + 1] != WORD))
 			return (false);
 		i++;
 	}
