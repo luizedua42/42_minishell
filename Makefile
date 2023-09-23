@@ -16,7 +16,7 @@ INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
 SRCS := minishell.c tokenizer.c syntax_tree.c parser.c
-SRCS += create_envs.c find_env.c
+SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c
 SRCS += is_builtin.c env.c pwd.c count_args.c cd.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
@@ -50,7 +50,7 @@ bonus: libft $(OBJS_BONUS)
 	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./readline.supp -q ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./readline.supp -q ./$(NAME)
 
 clean: 
 	@$(MAKE) -C $(LIBTF_DIR) clean

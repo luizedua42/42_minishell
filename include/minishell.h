@@ -6,7 +6,7 @@
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/22 00:47:33 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/23 20:31:03 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ bool				is_builtin(t_list **tokens, char *command, size_t *i);
 t_list				*create_envs(char **envp);
 t_env				*find_env(t_list *envs, char *key);
 char				*find_env_value(t_list *envs, char *key);
+void				uptade_pwd_env(t_list *envs);
+t_env				*update_env(t_list *envs, char *key, char *value);
+t_env				*add_env(t_list *envs, char *key, char *value);
 
 #endif
