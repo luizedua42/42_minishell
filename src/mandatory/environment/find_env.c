@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 00:34:30 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/22 00:57:46 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/24 02:36:30 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,18 @@ char	*find_env_value(t_list *envs, char *key)
 	if (env == NULL)
 		return (NULL);
 	return (env->value);
+}
+
+t_list	*find_env_element(t_list *envs, char *key)
+{
+	t_env	*env;
+
+	while (envs != NULL)
+	{
+		env = envs->content;
+		if (ft_strncmp(env->key, key, ft_strlen(env->key)) == 0)
+			return (envs);
+		envs = envs->next;
+	}
+	return (NULL);
 }

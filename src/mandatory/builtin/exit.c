@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 21:33:57 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 23:00:29 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/09/23 22:57:57 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/09/23 23:46:47 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env(t_list *envs)
+int	minishell_exit(t_minishell *minishell)
+{
+	rl_clear_history();
+	if (minishell->tokens != NULL)
+		ft_lstclear(&minishell->tokens, del_token);
+	if (minishell->envs != NULL)
+		ft_lstclear(&minishell->envs, del_env);
+	return (EXIT_SUCCESS);
+}
+
+void	del_env(void *content)
 {
 	t_env	*env;
 
-	while (envs != NULL)
-	{
-		env = envs->content;
-		ft_printf("%s=%s\n", env->key, env->value);
-		envs = envs->next;
-	}
-	return (EXIT_SUCCESS);
+	env = content;
+	free(env->key);
+	free(env->value);
+	free(env);
+}
+
+void	del_token(void *content)
+{
+	t_token	*token;
+
+	token = content;
+	free(token->value);
+	free(token);
 }

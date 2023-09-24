@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 21:33:57 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 23:00:29 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/09/23 23:46:45 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env(t_list *envs)
+void	init_minishell(t_minishell *minishell, char **envp)
 {
-	t_env	*env;
-
-	while (envs != NULL)
-	{
-		env = envs->content;
-		ft_printf("%s=%s\n", env->key, env->value);
-		envs = envs->next;
-	}
-	return (EXIT_SUCCESS);
+	minishell->envs = create_envs(envp);
+	minishell->tokens = NULL;
+	minishell->exit_status = EXIT_SUCCESS;
+	minishell->fds.fd_in = STDIN_FILENO;
+	minishell->fds.fd_out = STDOUT_FILENO;
+	minishell->fds.fd_error = STDERR_FILENO;
 }

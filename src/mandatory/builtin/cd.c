@@ -3,55 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:43:31 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 02:22:39 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/23 23:12:01 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_env_path(t_list *envs, char *env_key);
+static int	get_env_path(t_list *envs, char *env_key, char **path);
 
-void	cd(char **args, t_list *envs)
+int	cd(char **args, t_list *envs)
 {
 	size_t	argc;
 	char	*path;
+	int		exit_status;
 
 	argc = count_args(args);
 	path = args[1];
+	exit_status = EXIT_SUCCESS;
 	if (argc == 1)
-	{
-		path = get_env_path(envs, "HOME");
-		if (path == NULL)
-			return ;
-	}
+		exit_status = get_env_path(envs, "HOME", &path);
 	else if (argc != 2)
 	{
 		ft_fprintf(2, "minishell: cd: too many arguments\n");
-		return ;
+		return (EXIT_FAILURE);
 	}
 	else if (ft_strncmp(path, "-", 1) == 0)
-	{
-		path = get_env_path(envs, "OLDPWD");
-		if (path == NULL)
-			return ;
-	}
+		exit_status = get_env_path(envs, "OLDPWD", &path);
 	if (chdir(path) < 0)
-		return (perror("minishell: cd"));
+	{
+		perror("minishell: cd");
+		exit_status = EXIT_FAILURE;
+	}
 	uptade_pwd_env(envs);
+	return (exit_status);
 }
 
-static char	*get_env_path(t_list *envs, char *env_key)
+static int	get_env_path(t_list *envs, char *env_key, char **path)
 {
-	char	*path;
-
-	path = find_env_value(envs, env_key);
-	if (path == NULL)
+	*path = find_env_value(envs, env_key);
+	if (*path == NULL)
 	{
 		ft_fprintf(2, "minishell: cd: %s not defined\n", env_key);
-		return (NULL);
+		return (EXIT_FAILURE);
 	}
-	return (path);
+	return (EXIT_SUCCESS);
 }
