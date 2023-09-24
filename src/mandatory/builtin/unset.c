@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 21:33:57 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 23:00:29 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/09/24 01:02:22 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/09/24 02:36:58 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env(t_list *envs)
+int	unset(t_minishell *minishell, char **args)
 {
-	t_env	*env;
+	size_t	argc;
+	t_list	*env;
 
-	while (envs != NULL)
+	argc = count_args(args);
+	if (argc == 1)
+		return (EXIT_SUCCESS);
+	args++;
+	while (*args != NULL)
 	{
-		env = envs->content;
-		ft_printf("%s=%s\n", env->key, env->value);
-		envs = envs->next;
+		env = find_env_element(minishell->envs, *args);
+		if (env == NULL)
+		{
+			args++;
+			continue ;
+		}
+		ft_lstrm(minishell->envs, env, del_env);
+		args++;
 	}
 	return (EXIT_SUCCESS);
 }

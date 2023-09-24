@@ -3,7 +3,7 @@ vpath %.c src/bonus
 
 NAME := minishell
 CFLAGS := -Wextra -Wall -Werror
-CFLAGS += -g3 -O3
+CFLAGS += -g3
 
 CC := cc
 RM := rm -rf
@@ -15,9 +15,9 @@ OBJ_DIR := build
 INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
-SRCS := minishell.c tokenizer.c syntax_tree.c parser.c
+SRCS := minishell.c tokenizer.c syntax_tree.c parser.c init_minishell.c
 SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c
-SRCS += is_builtin.c env.c pwd.c count_args.c cd.c
+SRCS += is_builtin.c env.c pwd.c count_args.c cd.c exit.c unset.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := minishell_bonus.c

@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/22 13:08:28 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/24 03:02:15 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	del_env(void *content)
-{
-	t_env	*env;
-
-	env = content;
-	free(env->key);
-	free(env->value);
-	free(env);
-}
-
-void	del_token(void *content)
-{
-	t_token	*token;
-
-	token = content;
-	free(token->value);
-	free(token);
-}
 
 void	print_tokens(t_list *tokens)
 {
@@ -43,39 +24,56 @@ void	print_tokens(t_list *tokens)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+void	print_envs(t_list *envs)
 {
-	t_list			*tokens;
-	char			*command;
-	char			*prompt;
-	t_list			*envs;
+	t_env	*aux;
+
+	while (envs != NULL)
+	{
+		aux = envs->content;
+		ft_printf("key : %s		value: %s\n", aux->key, aux->value);
+		envs = envs->next;
+	}
+}
+
+void	verify_syntax(t_minishell *minishell)
+{
 	t_token_type	*token_array;
 	int				i;
 
-	i = 0;
+	token_array = create_token_array(minishell->tokens, &i);
+	if (syntax_analysis(token_array) == false)
+		ft_fprintf(2, "minishell : syntax error\n");
+	else
+		print_tokens(minishell->tokens);
+	free(token_array);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char		*command;
+	char		*prompt;
+	char		**unset_args;
+	t_minishell	minishell;
+
 	(void)argc;
 	(void)argv;
-	envs = create_envs(envp);
+	init_minishell(&minishell, envp);
 	while (1)
 	{
-		i = 0;
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
 		command = readline(prompt);
 		add_history(command);
-		if (command[0] == '[')
-			break ;
-		tokens = create_tokens(command);
-		token_array = create_token_array(tokens, &i);
-		if (syntax_analysis(token_array) == false)
-			ft_fprintf(2, "minishell : syntax error\n");
-		else
-			print_tokens(tokens);
-		free(token_array);
-		ft_lstclear(&tokens, del_token);
+		if (ft_strncmp("exit", command, 4) == 0)
+		{
+			free(command);
+			return (minishell_exit(&minishell));
+		}
+		print_envs(minishell.envs);
+		minishell.tokens = create_tokens(command);
+		verify_syntax(&minishell);
+		ft_lstclear(&minishell.tokens, del_token);
 		free(command);
 	}
-	rl_clear_history();
-	free(command);
-	ft_lstclear(&envs, del_env);
-	return (0);
+	return (minishell.exit_status);
 }
