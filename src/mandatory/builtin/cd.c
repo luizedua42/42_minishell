@@ -6,7 +6,7 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:43:31 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 23:12:01 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/24 15:43:46 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	get_env_path(t_list *envs, char *env_key, char **path);
 
-int	cd(char **args, t_list *envs)
+int	cd(t_minishell *minishell, char **args)
 {
 	size_t	argc;
 	char	*path;
@@ -24,20 +24,20 @@ int	cd(char **args, t_list *envs)
 	path = args[1];
 	exit_status = EXIT_SUCCESS;
 	if (argc == 1)
-		exit_status = get_env_path(envs, "HOME", &path);
+		exit_status = get_env_path(minishell->envs, "HOME", &path);
 	else if (argc != 2)
 	{
 		ft_fprintf(2, "minishell: cd: too many arguments\n");
 		return (EXIT_FAILURE);
 	}
 	else if (ft_strncmp(path, "-", 1) == 0)
-		exit_status = get_env_path(envs, "OLDPWD", &path);
+		exit_status = get_env_path(minishell->envs, "OLDPWD", &path);
 	if (chdir(path) < 0)
 	{
 		perror("minishell: cd");
 		exit_status = EXIT_FAILURE;
 	}
-	uptade_pwd_env(envs);
+	uptade_pwd_env(minishell->envs);
 	return (exit_status);
 }
 

@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/21 22:15:52 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/24 19:09:40 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_token(char c)
+static bool	is_token(char c);
+static bool	is_double_token(t_list **tokens, char *command, size_t *i);
+static bool	is_single_token(t_list **tokens, char *command, size_t *i);
+
+t_list	*create_tokens(char *command)
 {
-	return (c == '\'' || c == '\"' || c == '|' || c == '&' || c == '<' || \
-			c == '>' || c == '$' || c == '(' || c == ')');
+	t_list	*tokens;
+	size_t	i;
+
+	i = 0;
+	tokens = NULL;
+	while (command[i] != '\0')
+	{
+		if (ft_isspace(command[i]))
+			i++;
+		else if (is_double_token(&tokens, command, &i))
+			continue ;
+		else if (is_single_token(&tokens, command, &i))
+			continue ;
+		else if (is_builtin(&tokens, command, &i))
+			continue ;
+		else
+			new_token(&tokens, WORD, command + i, &i);
+	}
+	return (tokens);
 }
 
 bool	new_token(t_list **tokens, t_token_type type, char *value,
@@ -40,6 +61,12 @@ bool	new_token(t_list **tokens, t_token_type type, char *value,
 	*index += ft_strlen(token->value);
 	ft_lstadd_back(tokens, ft_lstnew(token));
 	return (true);
+}
+
+static bool	is_token(char c)
+{
+	return (c == '|' || c == '&' || c == '<' || c == '>' || c == '$' || c == '('
+		|| c == ')');
 }
 
 static bool	is_double_token(t_list **tokens, char *command, size_t *i)
@@ -74,27 +101,4 @@ static bool	is_single_token(t_list **tokens, char *command, size_t *i)
 	else if (command[*i] == ')')
 		return (new_token(tokens, CLOSE_PARENTHESIS, ")", i));
 	return (false);
-}
-
-t_list	*create_tokens(char *command)
-{
-	t_list	*tokens;
-	size_t	i;
-
-	i = 0;
-	tokens = NULL;
-	while (command[i] != '\0')
-	{
-		if (ft_isspace(command[i]))
-			i++;
-		else if (is_double_token(&tokens, command, &i))
-			continue ;
-		else if (is_single_token(&tokens, command, &i))
-			continue ;
-		else if (is_builtin(&tokens, command, &i))
-			continue ;
-		else
-			new_token(&tokens, WORD, command + i, &i);
-	}
-	return (tokens);
 }

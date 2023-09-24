@@ -12,25 +12,6 @@
 
 #include "minishell.h"
 
-t_token_type	*create_token_array(t_list *tokens, int *i)
-{
-	int				size;
-	t_token_type	*token_array;
-	t_token			*token_cont;
-
-	size = ft_lstsize(tokens);
-	token_array = ft_calloc((size + 1), sizeof(int));
-	while (*i < size && tokens != NULL)
-	{
-		token_cont = tokens->content;
-		token_array[*i] = token_cont->type;
-		tokens = tokens->next;
-		(*i)++;
-	}
-	token_array[*i] = END_ARRAY;
-	return (token_array);
-}
-
 bool	syntax_analysis(t_token_type *token_array)
 {
 	int	i;

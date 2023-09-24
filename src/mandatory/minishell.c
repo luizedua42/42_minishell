@@ -6,7 +6,7 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 03:02:15 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:05:50 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_tokens(t_list *tokens)
 	while (tokens != NULL)
 	{
 		aux = tokens->content;
-		ft_printf("value: %s	type : %i\n", aux->value, aux->type);
+		ft_printf("value: %s	type: %i\n", aux->value, aux->type);
 		tokens = tokens->next;
 	}
 }
@@ -31,34 +31,56 @@ void	print_envs(t_list *envs)
 	while (envs != NULL)
 	{
 		aux = envs->content;
-		ft_printf("key : %s		value: %s\n", aux->key, aux->value);
+		ft_printf("key: %s		value: %s\n", aux->key, aux->value);
 		envs = envs->next;
 	}
 }
 
-void	verify_syntax(t_minishell *minishell)
+void	print_redirects(t_minishell *minishell)
+{
+	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_in.redirect_to,
+				minishell->fds.fd_in.type);
+	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_out.redirect_to,
+				minishell->fds.fd_out.type);
+	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_error.redirect_to,
+				minishell->fds.fd_error.type);
+}
+
+void	handle_command(t_minishell *minishell, char *command)
 {
 	t_token_type	*token_array;
 	int				i;
 
+	minishell->tokens = create_tokens(command);
 	token_array = create_token_array(minishell->tokens, &i);
 	if (syntax_analysis(token_array) == false)
-		ft_fprintf(2, "minishell : syntax error\n");
+		ft_fprintf(2, "minishell: syntax error\n");
 	else
+	{
+		get_redirects(minishell);
+		sanitize_tokens(minishell);
 		print_tokens(minishell->tokens);
+		print_redirects(minishell);
+		clear_fds(minishell);
+	}
 	free(token_array);
+	ft_lstclear(&minishell->tokens, del_token);
+	free(command);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
 	char		*prompt;
-	char		**unset_args;
 	t_minishell	minishell;
 
 	(void)argc;
 	(void)argv;
 	init_minishell(&minishell, envp);
+	minishell_export(&minishell, );
 	while (1)
 	{
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
@@ -69,11 +91,7 @@ int	main(int argc, char **argv, char **envp)
 			free(command);
 			return (minishell_exit(&minishell));
 		}
-		print_envs(minishell.envs);
-		minishell.tokens = create_tokens(command);
-		verify_syntax(&minishell);
-		ft_lstclear(&minishell.tokens, del_token);
-		free(command);
+		handle_command(&minishell, command);
 	}
 	return (minishell.exit_status);
 }

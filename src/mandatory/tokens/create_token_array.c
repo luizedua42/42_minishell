@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   create_token_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 01:02:22 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 11:57:09 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/09/24 11:56:22 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/09/24 11:56:32 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset(t_minishell *minishell, char **args)
+t_token_type	*create_token_array(t_list *tokens, int *i)
 {
-	size_t	argc;
+	int				size;
+	t_token_type	*token_array;
+	t_token			*token_cont;
 
-	argc = count_args(args);
-	if (argc == 1)
-		return (EXIT_SUCCESS);
-	args++;
-	while (*args != NULL)
+	size = ft_lstsize(tokens);
+	token_array = ft_calloc((size + 1), sizeof(int));
+	while (*i < size && tokens != NULL)
 	{
-		if (delete_env(minishell, *args))
-			break ;
-		args++;
+		token_cont = tokens->content;
+		token_array[*i] = token_cont->type;
+		tokens = tokens->next;
+		(*i)++;
 	}
-	return (EXIT_SUCCESS);
+	token_array[*i] = END_ARRAY;
+	return (token_array);
 }
