@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   update_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 21:38:52 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/23 02:40:20 by cobli            ###   ########.fr       */
+/*   Created: 2023/09/22 20:20:50 by cobli             #+#    #+#             */
+/*   Updated: 2023/09/22 20:25:13 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(void)
+t_env	*update_env(t_list *envs, char *key, char *value)
 {
-	char	*path;
+	t_env	*env;
 
-	path = getcwd(NULL, 0);
-	if (path == NULL)
-		return (perror("pwd: "));
-	ft_printf("%s\n", path);
-	free(path);
+	env = find_env(envs, key);
+	if (env == NULL)
+		return (NULL);
+	free(env->value);
+	env->value = ft_strdup(value);
+	return (env);
 }
