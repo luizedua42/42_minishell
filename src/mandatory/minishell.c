@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 23:52:34 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:28:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	print_envs(t_list *envs)
 
 void	print_redirects(t_minishell *minishell)
 {
-	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n",
+	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n", \
 			minishell->fds.fd_in.redirect_to, minishell->fds.fd_in.type);
-	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n",
+	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n", \
 			minishell->fds.fd_out.redirect_to, minishell->fds.fd_out.type);
-	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n",
+	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n", \
 			minishell->fds.fd_error.redirect_to, minishell->fds.fd_error.type);
 }
 
