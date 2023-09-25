@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 16:37:45 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/24 23:52:50 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 typedef enum e_token_type
 {
-	END_ARRAY = -1,
 	OR,
 	PIPE,
 	AND,
@@ -29,13 +28,12 @@ typedef enum e_token_type
 	REDIRECT_OUT,
 	HEREDOC_IN,
 	HEREDOC_OUT,
-	QUOTE,
-	DQUOTE,
-	DOLLAR_SIGN,
+	EXPANTION,
 	OPEN_PARENTHESIS,
 	CLOSE_PARENTHESIS,
 	BUILTIN,
 	WORD,
+	END_ARRAY,
 }					t_token_type;
 
 typedef struct s_token
@@ -82,6 +80,10 @@ void				init_minishell(t_minishell *minishell, char **envp);
 // Parse
 t_tree				*create_tree(t_list *tokens);
 bool				syntax_analysis(t_token_type *token_array);
+bool				token_analysis(t_token_type *token_array,
+						t_token_type type);
+bool				redirection_analysis(t_token_type *token_array);
+bool				check_parenthesis(t_token_type *token_array);
 
 // Builtins
 int					pwd(void);
@@ -98,7 +100,9 @@ void				clear_fds(t_minishell *minishell);
 void				del_fd(t_fd *fd);
 void				del_env(void *content);
 void				del_token(void *content);
-bool				is_redirect(t_token *token);
+bool				is_redirect(t_token_type type);
+bool				is_token(char c);
+bool				is_exe(t_token_type type);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
@@ -107,7 +111,7 @@ void				get_redirects(t_minishell *minishell);
 t_list				*create_tokens(char *command);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
-t_token_type		*create_token_array(t_list *tokens, int *i);
+t_token_type		*create_token_array(t_list *tokens, size_t *i);
 
 // Enviroments
 t_list				*create_envs(char **envp);

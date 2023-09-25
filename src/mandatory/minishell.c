@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 18:05:50 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/24 23:52:34 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ void	print_envs(t_list *envs)
 void	print_redirects(t_minishell *minishell)
 {
 	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_in.redirect_to,
-				minishell->fds.fd_in.type);
+			minishell->fds.fd_in.redirect_to, minishell->fds.fd_in.type);
 	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_out.redirect_to,
-				minishell->fds.fd_out.type);
+			minishell->fds.fd_out.redirect_to, minishell->fds.fd_out.type);
 	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_error.redirect_to,
-				minishell->fds.fd_error.type);
+			minishell->fds.fd_error.redirect_to, minishell->fds.fd_error.type);
 }
 
 void	handle_command(t_minishell *minishell, char *command)
 {
 	t_token_type	*token_array;
-	int				i;
+	size_t			i;
 
+	i = 0;
 	minishell->tokens = create_tokens(command);
 	token_array = create_token_array(minishell->tokens, &i);
+	if (token_array == NULL)
+		return ;
 	if (syntax_analysis(token_array) == false)
 		ft_fprintf(2, "minishell: syntax error\n");
 	else
@@ -80,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_minishell(&minishell, envp);
-	minishell_export(&minishell, );
 	while (1)
 	{
 		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";

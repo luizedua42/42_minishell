@@ -3,53 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 21:14:46 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/21 22:16:55 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/24 23:29:57 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static bool	simple_analysis(t_token_type *token_array);
+
 bool	syntax_analysis(t_token_type *token_array)
 {
-	int	i;
-
-	i = 0;
-	if (token_array[0] < QUOTE || token_array[0] == CLOSE_PARENTHESIS)
+	if (token_array[0] < REDIRECT_IN || token_array[0] == CLOSE_PARENTHESIS)
 		return (false);
-	while (token_array[i] != END_ARRAY)
-	{
-		if (token_array[i] == PIPE && (token_array[i - 1] != WORD \
-					|| token_array[i + 1] != WORD))
-			return (false);
-		else if (token_array[i] == REDIRECT_IN && (token_array[i - 1] != WORD \
-					|| token_array[i + 1] != WORD))
-			return (false);
-		else if (token_array[i] == REDIRECT_OUT && (token_array[i - 1] != WORD \
-					|| token_array[i + 1] != WORD))
-			return (false);
-		else if (token_array[i] == AND && (token_array[i - 1] != WORD \
-					|| token_array[i + 1] != WORD))
-			return (false);
-		else if (token_array[i] == OR && (token_array[i - 1] != WORD \
-					|| token_array[i + 1] != WORD))
-			return (false);
-		i++;
-	}
+	if (simple_analysis(token_array) == false)
+		return (false);
 	return (true);
 }
 
-void	print_token_array(int *token_array, int size)
+static bool	simple_analysis(t_token_type *token_array)
 {
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_printf("%i,	", token_array[i]);
-		ft_printf("\n");
-		i++;
-	}
+	if (token_analysis(token_array, PIPE) == false)
+		return (false);
+	else if (token_analysis(token_array, AND) == false)
+		return (false);
+	else if (token_analysis(token_array, OR) == false)
+		return (false);
+	else if (redirection_analysis(token_array) == false)
+		return (false);
+	else if (check_parenthesis(token_array) == false)
+		return (false);
+	return (true);
 }
