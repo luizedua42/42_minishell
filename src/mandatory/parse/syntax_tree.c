@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 19:57:09 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/20 20:50:49 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/24 12:21:01 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node	*create_node(t_token_type type, char *value)
-{
-	t_node	*node;
-
-	node = ft_calloc(1, sizeof(t_node));
-	node->type = type;
-	node->value = ft_strdup(value);
-	return (node);
-}
+static t_node	*create_node(t_token_type type, char *value);
 
 t_tree	*create_tree(t_list *tokens)
 {
@@ -41,4 +33,14 @@ t_tree	*create_tree(t_list *tokens)
 		tokens = tokens->next;
 	}
 	return (head);
+}
+
+static t_node	*create_node(t_token_type type, char *value)
+{
+	t_node	*node;
+
+	node = ft_calloc(1, sizeof(t_node));
+	node->type = type;
+	node->value = ft_strdup(value);
+	return (node);
 }

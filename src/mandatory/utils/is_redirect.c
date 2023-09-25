@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   is_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 01:02:22 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 11:57:09 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/09/24 11:47:52 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/09/24 23:23:19 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset(t_minishell *minishell, char **args)
+bool	is_redirect(t_token_type type)
 {
-	size_t	argc;
-
-	argc = count_args(args);
-	if (argc == 1)
-		return (EXIT_SUCCESS);
-	args++;
-	while (*args != NULL)
-	{
-		if (delete_env(minishell, *args))
-			break ;
-		args++;
-	}
-	return (EXIT_SUCCESS);
+	return (type == REDIRECT_IN || type == REDIRECT_OUT || type == HEREDOC_IN
+		|| type == HEREDOC_OUT);
 }

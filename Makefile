@@ -1,4 +1,5 @@
-vpath %.c src/mandatory src/mandatory/environment src/mandatory/builtin
+vpath %.c src/mandatory src/mandatory/environment src/mandatory/parse
+vpath %.c src/mandatory/tokens src/mandatory/utils src/mandatory/builtin
 vpath %.c src/bonus
 
 NAME := minishell
@@ -15,9 +16,13 @@ OBJ_DIR := build
 INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
-SRCS := minishell.c tokenizer.c syntax_tree.c parser.c init_minishell.c
-SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c
-SRCS += is_builtin.c env.c pwd.c count_args.c cd.c exit.c unset.c
+SRCS := minishell.c
+SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c delete_env.c
+SRCS += syntax_tree.c parser.c analysis.c
+SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c
+SRCS += env.c pwd.c cd.c exit.c unset.c export.c
+SRCS += delete.c count_args.c is_builtin.c init_minishell.c is_redirect.c
+SRCS += is_exe.c is_token.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := minishell_bonus.c
