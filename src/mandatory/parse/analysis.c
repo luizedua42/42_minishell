@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 23:12:46 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/25 23:02:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:53:19 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ bool	token_analysis(t_token_type *token_array, t_token_type type)
 	i = 1;
 	while (token_array[i] != END_ARRAY)
 	{
-		if (token_array[i] == type && (!is_exe(token_array[i - 1])
-				&& !is_exe(token_array[i + 1])))
+		if (token_array[i] == type && ((!is_exe(token_array[i - 1]) \
+			&& token_array[i - 1] != CLOSE_PARENTHESIS) \
+				|| (!is_exe(token_array[i + 1]) && token_array[i + 1] \
+					!= OPEN_PARENTHESIS)))
 			return (false);
 		i++;
 	}
