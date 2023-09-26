@@ -19,10 +19,10 @@ INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 SRCS := minishell.c
 SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c delete_env.c
 SRCS += syntax_tree.c parser.c analysis.c
-SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c
+SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c new_token.c
 SRCS += env.c pwd.c cd.c exit.c unset.c export.c
 SRCS += delete.c count_args.c is_builtin.c init_minishell.c is_redirect.c
-SRCS += is_exe.c is_token.c
+SRCS += is_exe.c is_token.c is_operator.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := minishell_bonus.c

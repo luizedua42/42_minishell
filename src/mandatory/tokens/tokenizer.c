@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/24 23:12:14 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/25 22:53:18 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,10 @@ t_list	*create_tokens(char *command)
 			continue ;
 		else if (is_builtin(&tokens, command, &i))
 			continue ;
-		else
-			new_token(&tokens, WORD, command + i, &i);
+		else if (new_token(&tokens, WORD, command + i, &i) == false)
+			break ;
 	}
 	return (tokens);
-}
-
-bool	new_token(t_list **tokens, t_token_type type, char *value,
-		size_t *index)
-{
-	size_t	i;
-	t_token	*token;
-
-	token = ft_calloc(1, sizeof(t_token));
-	token->type = type;
-	if (type == WORD || type == EXPANTION)
-	{
-		i = 0;
-		if (value[i] == '&')
-			i++;
-		while (value[i] != '\0' && !ft_isspace(value[i]) && !is_token(value[i]))
-			i++;
-		token->value = ft_calloc(i + 1, sizeof(char));
-		while (i--)
-			token->value[i] = value[i];
-	}
-	else
-		token->value = ft_strdup(value);
-	*index += ft_strlen(token->value);
-	ft_lstadd_back(tokens, ft_lstnew(token));
-	return (true);
 }
 
 static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 23:52:50 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/25 22:52:23 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void				del_token(void *content);
 bool				is_redirect(t_token_type type);
 bool				is_token(char c);
 bool				is_exe(t_token_type type);
+bool				is_operator(t_token_type type);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
