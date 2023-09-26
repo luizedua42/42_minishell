@@ -33,6 +33,8 @@ typedef enum e_token_type
 	CLOSE_PARENTHESIS,
 	BUILTIN,
 	WORD,
+	DQUOTE,
+	QUOTE,
 	END_ARRAY,
 }					t_token_type;
 

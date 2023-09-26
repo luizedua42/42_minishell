@@ -52,7 +52,10 @@ static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)
 
 	index = 0;
 	token = ft_calloc(1, sizeof(t_token));
-	token->type = WORD;
+	if (quote == '\'')
+		token->type = QUOTE;
+	else
+		token->type = DQUOTE;
 	while (command[index] != quote && command[index] != '\0')
 		index++;
 	if (command[index] == '\0')
