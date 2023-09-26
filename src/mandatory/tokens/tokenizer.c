@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/24 23:12:14 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:13:21 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ bool	new_token(t_list **tokens, t_token_type type, char *value,
 		i = 0;
 		if (value[i] == '&')
 			i++;
-		while (value[i] != '\0' && !ft_isspace(value[i]) && !is_token(value[i]))
+		while (value[i] != '\0' && !ft_isspace(value[i]) && \
+			!is_token(value[i]) && value[i] != '\'' && value[i] != '"')
 			i++;
 		token->value = ft_calloc(i + 1, sizeof(char));
 		while (i--)
@@ -78,7 +79,10 @@ static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)
 
 	index = 0;
 	token = ft_calloc(1, sizeof(t_token));
-	token->type = WORD;
+	if (quote == '\'')
+		token->type = QUOTE;
+	else
+		token->type = DQUOTE;
 	while (command[index] != quote && command[index] != '\0')
 		index++;
 	if (command[index] == '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analysis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 23:12:46 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/24 23:31:19 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:25:06 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ bool	redirection_analysis(t_token_type *token_array)
 
 bool	check_parenthesis(t_token_type *token_array)
 {
-	int i;
-	int parenthesis_counter;
+	int	i;
+	int	parenthesis_counter;
 
 	i = 0;
 	parenthesis_counter = 0;
