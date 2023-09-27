@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 21:20:27 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/25 22:54:28 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/26 21:37:13 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	parse_expantion(char *value, t_token *token)
 	i = 0;
 	if (value[i] == '&')
 		i++;
-	while (value[i] != '\0' && !ft_isspace(value[i]) && !is_token(value[i]))
+	while (value[i] != '\0' && !is_space(value[i]) && !is_token(value[i]))
 		i++;
 	token->value = ft_calloc(i + 1, sizeof(char));
 	while (i--)
@@ -60,7 +60,7 @@ static bool	parse_word(char *value, t_token *token)
 		i++;
 	while (true)
 	{
-		while (value[i] != '\0' && !ft_isspace(value[i]) && \
+		while (value[i] != '\0' && !is_space(value[i]) && \
 			!is_token(value[i]) && value[i] != '\'' && value[i] != '"')
 			i++;
 		if (value[i] != '\'' && value[i] != '"')

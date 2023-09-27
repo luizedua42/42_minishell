@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_exe.c                                           :+:      :+:    :+:   */
+/*   is_space.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 23:14:10 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/26 21:37:47 by luizedua         ###   ########.fr       */
+/*   Created: 2023/09/26 21:32:53 by luizedua          #+#    #+#             */
+/*   Updated: 2023/09/26 21:35:40 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_exe(t_token_type type)
+bool	is_space(char c)
 {
-	return (type == WORD || type == EXPANTION || type == BUILTIN || \
-		type == DQUOTE || type == QUOTE || is_redirect(type));
+	return (c == '\t' || c == '\v' || c == '\f' || c == '\r' || c == ' ');
 }

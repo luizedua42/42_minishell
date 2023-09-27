@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/25 22:52:23 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/26 21:56:27 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@
 
 typedef enum e_token_type
 {
-	OR,
-	PIPE,
-	AND,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	HEREDOC_IN,
-	HEREDOC_OUT,
-	EXPANTION,
-	OPEN_PARENTHESIS,
-	CLOSE_PARENTHESIS,
-	BUILTIN,
-	WORD,
-	DQUOTE,
-	QUOTE,
-	END_ARRAY,
+	OR = 0,
+	PIPE = 1,
+	AND = 2,
+	REDIRECT_IN = 3,
+	REDIRECT_OUT = 4,
+	HEREDOC_IN = 5,
+	HEREDOC_OUT = 6,
+	EXPANTION = 7,
+	OPEN_PARENTHESIS = 8,
+	CLOSE_PARENTHESIS = 9,
+	BUILTIN = 10,
+	WORD = 11,
+	DQUOTE = 12,
+	QUOTE = 13,
+	END_ARRAY = 14,
 }					t_token_type;
 
 typedef struct s_token
@@ -106,6 +106,7 @@ bool				is_redirect(t_token_type type);
 bool				is_token(char c);
 bool				is_exe(t_token_type type);
 bool				is_operator(t_token_type type);
+bool				is_space(char c);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
