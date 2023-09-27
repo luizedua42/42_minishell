@@ -6,7 +6,7 @@
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/27 01:43:17 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/27 02:00:14 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ bool				is_space(char c);
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
 void				get_redirects(t_minishell *minishell);
-t_list				*create_tokens(char *command);
+bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
 t_token_type		*create_token_array(t_list *tokens, size_t *i);

@@ -6,7 +6,7 @@
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/27 01:44:00 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/27 02:03:27 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ static bool	is_single_token(t_list **tokens, char *command, size_t *i);
 static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote);
 static bool	check_qword(char *command);
 
-t_list	*create_tokens(char *cmd)
+bool	create_tokens(t_list **tokens, char *cmd)
 {
-	t_list	*tokens;
 	size_t	i;
 
 	i = 0;
-	tokens = NULL;
+	*tokens = NULL;
 	while (cmd[i] != '\0')
 	{
 		if (is_space(cmd[i]))
@@ -31,19 +30,19 @@ t_list	*create_tokens(char *cmd)
 		else if ((cmd[i] == '\'' || cmd[i] == '"') && check_qword(cmd + i))
 		{
 			i++;
-			if (quote_parse(&tokens, cmd + i, &i, cmd[i - 1]) == false)
-				return (NULL);
+			if (quote_parse(tokens, cmd + i, &i, cmd[i - 1]) == false)
+				return (false);
 		}
-		else if (is_double_token(&tokens, cmd, &i))
+		else if (is_double_token(tokens, cmd, &i))
 			continue ;
-		else if (is_single_token(&tokens, cmd, &i))
+		else if (is_single_token(tokens, cmd, &i))
 			continue ;
-		else if (is_builtin(&tokens, cmd, &i))
+		else if (is_builtin(tokens, cmd, &i))
 			continue ;
-		else if (new_token(&tokens, WORD, cmd + i, &i) == false)
-			break ;
+		else if (new_token(tokens, WORD, cmd + i, &i) == false)
+			return (false);
 	}
-	return (tokens);
+	return (true);
 }
 
 static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)
@@ -62,7 +61,6 @@ static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)
 	if (command[index] == '\0')
 	{
 		free(token);
-		ft_fprintf(2, "minishell: syntax error\n");
 		return (false);
 	}
 	command[index] = '\0';

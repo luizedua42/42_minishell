@@ -6,7 +6,7 @@
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 21:20:27 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/27 01:43:46 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/27 02:05:32 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ static bool	parse_quote_word(char *value, size_t *i, char quote)
 	while (value[*i] != quote && value[*i] != '\0')
 		(*i)++;
 	if (value[*i] == '\0')
-	{
-		ft_fprintf(2, "minishell: syntax error\n");
 		return (false);
-	}
 	(*i)++;
 	return (true);
 }

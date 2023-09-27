@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/25 22:52:44 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/27 02:06:20 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ void	print_redirects(t_minishell *minishell)
 
 void	handle_command(t_minishell *minishell, char *command)
 {
+	bool			success_create_tokens;
 	t_token_type	*token_array;
 	size_t			i;
 
 	i = 0;
-	minishell->tokens = create_tokens(command);
+	success_create_tokens = create_tokens(&minishell->tokens, command);
 	token_array = create_token_array(minishell->tokens, &i);
-	if (token_array == NULL)
-		return ;
-	if (syntax_analysis(token_array) == false)
+	if (!(success_create_tokens && syntax_analysis(token_array)))
 		ft_fprintf(2, "minishell: syntax error\n");
 	else
 	{
