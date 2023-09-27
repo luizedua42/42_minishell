@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/26 22:11:22 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/27 01:44:00 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static bool	quote_parse(t_list **tokens, char *command, size_t *i, char quote)
 		index++;
 	if (command[index] == '\0')
 	{
+		free(token);
 		ft_fprintf(2, "minishell: syntax error\n");
 		return (false);
 	}
@@ -92,8 +93,6 @@ static bool	is_single_token(t_list **tokens, char *command, size_t *i)
 		return (new_token(tokens, REDIRECT_IN, "<", i));
 	else if (command[*i] == '>')
 		return (new_token(tokens, REDIRECT_OUT, ">", i));
-	else if (command[*i] == '$' && !is_space(command[*i + 1]))
-		return (new_token(tokens, EXPANTION, command + (*i), i));
 	else if (command[*i] == '(')
 		return (new_token(tokens, OPEN_PARENTHESIS, "(", i));
 	else if (command[*i] == ')')

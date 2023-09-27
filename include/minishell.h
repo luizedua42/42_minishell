@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/26 21:56:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/27 01:43:17 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ typedef enum e_token_type
 	REDIRECT_OUT = 4,
 	HEREDOC_IN = 5,
 	HEREDOC_OUT = 6,
-	EXPANTION = 7,
-	OPEN_PARENTHESIS = 8,
-	CLOSE_PARENTHESIS = 9,
-	BUILTIN = 10,
-	WORD = 11,
-	DQUOTE = 12,
-	QUOTE = 13,
-	END_ARRAY = 14,
+	OPEN_PARENTHESIS = 7,
+	CLOSE_PARENTHESIS = 8,
+	BUILTIN = 9,
+	WORD = 10,
+	DQUOTE = 11,
+	QUOTE = 12,
+	END_ARRAY = 13,
 }					t_token_type;
 
 typedef struct s_token
@@ -110,7 +109,6 @@ bool				is_space(char c);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
-void				print_token_array(int *token_array, int size);
 void				get_redirects(t_minishell *minishell);
 t_list				*create_tokens(char *command);
 bool				new_token(t_list **tokens, t_token_type type, char *value,

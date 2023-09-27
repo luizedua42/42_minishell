@@ -14,6 +14,6 @@
 
 bool	is_exe(t_token_type type)
 {
-	return (type == WORD || type == EXPANTION || type == BUILTIN || \
-		type == DQUOTE || type == QUOTE || is_redirect(type));
+	return (type == WORD || type == BUILTIN || type == DQUOTE \
+				|| type == QUOTE || is_redirect(type));
 }
