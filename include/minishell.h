@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/28 08:41:53 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/28 19:16:28 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,8 @@ typedef enum e_token_type
 	HEREDOC_OUT = 6,
 	OPEN_PARENTHESIS = 7,
 	CLOSE_PARENTHESIS = 8,
-	BUILTIN = 9,
-	WORD = 10,
-	DQUOTE = 11,
-	QUOTE = 12,
-	END_ARRAY = 13,
+	WORD = 9,
+	END_ARRAY = 10,
 }					t_token_type;
 
 typedef struct s_token
@@ -94,9 +91,9 @@ int					cd(t_minishell *minishell, char **args);
 int					minishell_exit(t_minishell *minishell);
 int					unset(t_minishell *minishell, char **args);
 int					minishell_export(t_minishell *minishell, char **args);
+int					builtin_selector(t_minishell *minishell, char **args);
 
 // Utils
-bool				is_builtin(t_list **tokens, char *command, size_t *i);
 size_t				count_args(char **args);
 void				clear_fds(t_minishell *minishell);
 void				del_fd(t_fd *fd);

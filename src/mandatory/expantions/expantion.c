@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/28 09:01:34 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/28 19:34:27 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	parse_word(t_list **words, char *str, size_t *index);
+static void	parse_word(t_list **words, char *str, size_t *index,
+				bool is_in_quotes);
 static char	*handle_wild(t_list *words);
 
 char	*expand(t_minishell *minishell, char *str, bool is_in_quotes)
@@ -31,7 +32,7 @@ char	*expand(t_minishell *minishell, char *str, bool is_in_quotes)
 		else if (str[i] == '$')
 			parse_env(minishell, &words, str + i, &i);
 		else
-			parse_word(&words, str + i, &i);
+			parse_word(&words, str + i, &i, is_in_quotes);
 	}
 	return (handle_wild(words));
 }
@@ -53,13 +54,15 @@ static char	*handle_wild(t_list *words)
 	return (expantion);
 }
 
-static void	parse_word(t_list **words, char *str, size_t *index)
+static void	parse_word(t_list **words, char *str, size_t *index,
+		bool is_in_quotes)
 {
 	size_t	i;
 	char	*word;
 
 	i = 0;
-	while (str[i] != '\0' && str[i] != '\'' && str[i] != '"' && str[i] != '$')
+	while (str[i] != '\0' && str[i] != '$' && (is_in_quotes || (str[i] != '\''
+				&& str[i] != '"')))
 		i++;
 	word = calloc(i + 1, sizeof(char));
 	ft_strlcpy(word, str, i + 1);

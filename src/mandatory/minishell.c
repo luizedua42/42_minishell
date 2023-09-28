@@ -3,23 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/27 02:06:20 by cobli            ###   ########.fr       */
+/*   Updated: 2023/09/28 19:22:12 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens(t_list *tokens)
+void	print_tokens(t_minishell *minishell, t_list *tokens)
 {
-	t_token	*aux;
+	t_token	*token;
+	char	*aux;
 
 	while (tokens != NULL)
 	{
-		aux = tokens->content;
-		ft_printf("value: %s	type: %i\n", aux->value, aux->type);
+		token = tokens->content;
+		if (token->type == WORD)
+		{
+			aux = expand(minishell, token->value, false);
+			free(token->value);
+			token->value = aux;
+		}
+		ft_printf("value: %s	type: %i\n", token->value, token->type);
 		tokens = tokens->next;
 	}
 }
@@ -38,12 +45,15 @@ void	print_envs(t_list *envs)
 
 void	print_redirects(t_minishell *minishell)
 {
-	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n", \
-			minishell->fds.fd_in.redirect_to, minishell->fds.fd_in.type);
-	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n", \
-			minishell->fds.fd_out.redirect_to, minishell->fds.fd_out.type);
-	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n", \
-			minishell->fds.fd_error.redirect_to, minishell->fds.fd_error.type);
+	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_in.redirect_to,
+				minishell->fds.fd_in.type);
+	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_out.redirect_to,
+				minishell->fds.fd_out.type);
+	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n",
+				minishell->fds.fd_error.redirect_to,
+				minishell->fds.fd_error.type);
 }
 
 void	handle_command(t_minishell *minishell, char *command)
@@ -61,7 +71,7 @@ void	handle_command(t_minishell *minishell, char *command)
 	{
 		get_redirects(minishell);
 		sanitize_tokens(minishell);
-		print_tokens(minishell->tokens);
+		print_tokens(minishell, minishell->tokens);
 		print_redirects(minishell);
 		clear_fds(minishell);
 	}
