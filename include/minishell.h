@@ -6,7 +6,7 @@
 /*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/27 21:53:14 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/28 08:41:53 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <dirent.h>
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <dirent.h>
 
 typedef enum e_token_type
 {
@@ -127,7 +127,14 @@ t_env				*add_env(t_list *envs, char *key, char *value);
 bool				delete_env(t_minishell *minishell, char *key);
 
 // Wildcard
+char				*expand(t_minishell *minishell, char *str,
+						bool is_in_quotes);
 bool				wild_match(const char *pattern, const char *string);
 char				*wild_get(char *wildcard);
+void				parse_env(t_minishell *minishell, t_list **words, char *str,
+						size_t *index);
+char				*join_words(t_list *words);
+void				parse_quote(t_minishell *minishell, t_list **words,
+						char *str, size_t *index);
 
 #endif
