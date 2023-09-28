@@ -23,7 +23,7 @@ SRCS += syntax_tree.c parser.c analysis.c
 SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c new_token.c
 SRCS += env.c pwd.c cd.c exit.c unset.c export.c
 SRCS += delete.c count_args.c is_builtin.c init_minishell.c is_redirect.c
-SRCS += is_exe.c is_token.c is_operator.c
+SRCS += is_exe.c is_token.c is_operator.c is_space.c
 SRCS += wild_file.c wild_match.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
