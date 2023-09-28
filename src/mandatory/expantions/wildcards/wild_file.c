@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 19:53:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/27 21:54:02 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/28 02:20:30 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static t_list	*wild_read(char *wildcard, DIR *dir);
 
 char	*wild_get(char *wildcard)
 {
-	DIR				*dir;
-	char			*pwd;
-	t_list			*wild_list;
-	char			*str;
+	DIR		*dir;
+	char	*pwd;
+	t_list	*wild_list;
+	char	*str;
 
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
@@ -95,7 +95,7 @@ static char	*wild_join(char **wild_list)
 	if (wild_list[i] == NULL)
 		return (NULL);
 	str = ft_strdup("");
-	while (wild_list[i])
+	while (wild_list[i] != NULL)
 	{
 		if (i != 0)
 		{
