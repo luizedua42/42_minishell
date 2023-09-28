@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/25 22:52:23 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/27 02:00:14 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,20 @@
 
 typedef enum e_token_type
 {
-	OR,
-	PIPE,
-	AND,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	HEREDOC_IN,
-	HEREDOC_OUT,
-	EXPANTION,
-	OPEN_PARENTHESIS,
-	CLOSE_PARENTHESIS,
-	BUILTIN,
-	WORD,
-	DQUOTE,
-	QUOTE,
-	END_ARRAY,
+	OR = 0,
+	PIPE = 1,
+	AND = 2,
+	REDIRECT_IN = 3,
+	REDIRECT_OUT = 4,
+	HEREDOC_IN = 5,
+	HEREDOC_OUT = 6,
+	OPEN_PARENTHESIS = 7,
+	CLOSE_PARENTHESIS = 8,
+	BUILTIN = 9,
+	WORD = 10,
+	DQUOTE = 11,
+	QUOTE = 12,
+	END_ARRAY = 13,
 }					t_token_type;
 
 typedef struct s_token
@@ -106,12 +105,12 @@ bool				is_redirect(t_token_type type);
 bool				is_token(char c);
 bool				is_exe(t_token_type type);
 bool				is_operator(t_token_type type);
+bool				is_space(char c);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
-void				print_token_array(int *token_array, int size);
 void				get_redirects(t_minishell *minishell);
-t_list				*create_tokens(char *command);
+bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
 t_token_type		*create_token_array(t_list *tokens, size_t *i);
