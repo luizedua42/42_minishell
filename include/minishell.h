@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/25 22:52:23 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:53:14 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+# include <dirent.h>
 
 typedef enum e_token_type
 {
@@ -125,5 +126,9 @@ void				uptade_pwd_env(t_list *envs);
 t_env				*update_env(t_list *envs, char *key, char *value);
 t_env				*add_env(t_list *envs, char *key, char *value);
 bool				delete_env(t_minishell *minishell, char *key);
+
+// Wildcard
+bool				wild_match(const char *pattern, const char *string);
+char				*wild_get(char *wildcard);
 
 #endif
