@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_exe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 23:14:10 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/26 21:37:47 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:08:56 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 bool	is_exe(t_token_type type)
 {
-	return (type == WORD || type == BUILTIN || type == DQUOTE \
-				|| type == QUOTE || is_redirect(type));
+	return (type == WORD || is_redirect(type));
 }

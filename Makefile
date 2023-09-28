@@ -21,8 +21,8 @@ SRCS := minishell.c
 SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c delete_env.c
 SRCS += syntax_tree.c parser.c analysis.c
 SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c new_token.c
-SRCS += env.c pwd.c cd.c exit.c unset.c export.c
-SRCS += delete.c count_args.c is_builtin.c init_minishell.c is_redirect.c
+SRCS += env.c pwd.c cd.c exit.c unset.c export.c builtin_selector.c
+SRCS += delete.c count_args.c init_minishell.c is_redirect.c
 SRCS += is_exe.c is_token.c is_operator.c is_space.c
 SRCS += wild_file.c wild_match.c expantion.c join_words.c parse_env.c parse_quote.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
