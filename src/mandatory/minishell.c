@@ -45,15 +45,15 @@ void	print_envs(t_list *envs)
 
 void	print_redirects(t_minishell *minishell)
 {
-	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_in.redirect_to,
-				minishell->fds.fd_in.type);
-	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_out.redirect_to,
-				minishell->fds.fd_out.type);
-	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n",
-				minishell->fds.fd_error.redirect_to,
-				minishell->fds.fd_error.type);
+	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n", \
+		minishell->fds.fd_in.redirect_to,
+		minishell->fds.fd_in.type);
+	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n", \
+		minishell->fds.fd_out.redirect_to,
+		minishell->fds.fd_out.type);
+	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n", \
+		minishell->fds.fd_error.redirect_to,
+		minishell->fds.fd_error.type);
 }
 
 void	handle_command(t_minishell *minishell, char *command)

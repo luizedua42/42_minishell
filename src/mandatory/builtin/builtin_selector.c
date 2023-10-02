@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_selector.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:18:44 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/28 19:17:19 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/09/29 01:04:57 by cobli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	builtin_selector(t_minishell *minishell, char **args)
 	else if (ft_strncmp("exit", args[0], 4) == 0)
 		return (minishell_exit(minishell));
 	else if (ft_strncmp("echo", args[0], 4) == 0)
-		return (0);
+		return (echo(args));
 	return (-1);
 }
