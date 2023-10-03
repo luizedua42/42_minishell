@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 16:48:10 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:29:16 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_minishell
 	t_list				*envs;
 	t_fds				fds;
 	unsigned char		exit_status;
-	struct t_minishell	**next;
+	t_list				*shells;
 }						t_minishell;
 
 void					init_minishell(t_minishell *minishell, char **envp);
@@ -83,6 +83,8 @@ bool					token_analysis(t_token_type *token_array,
 							t_token_type type);
 bool					redirection_analysis(t_token_type *token_array);
 bool					check_parenthesis(t_token_type *token_array);
+size_t					create_sub_shells(t_minishell *minishell, t_list *tokens,
+							t_list **shells);
 
 // Builtins
 int						pwd(void);
