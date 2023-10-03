@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/28 19:22:12 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:41:37 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ int	main(int argc, char **argv, char **envp)
 	init_minishell(&minishell, envp);
 	while (1)
 	{
-		prompt = "\001\x1b[32m\002minishell$ \001\x1b[0m\002";
+		prompt = create_prompt();
 		command = readline(prompt);
-		add_history(command);
-		if (ft_strncmp("exit", command, 4) == 0)
+		if (command == NULL || ft_strncmp("exit", command, 4) == 0)
 		{
 			free(command);
 			return (minishell_exit(&minishell));
 		}
-		handle_command(&minishell, command);
+		if (command[0] != '\0')
+		{
+			add_history(command);
+			handle_command(&minishell, command);
+		}
+		else if (command[0] == '\0')
+			free(command);
 	}
-	return (minishell.exit_status);
 }
