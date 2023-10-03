@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/29 01:24:28 by cobli            ###   ########.fr       */
+/*   Updated: 2023/10/03 16:48:10 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ bool					is_token(char c);
 bool					is_exe(t_token_type type);
 bool					is_operator(t_token_type type);
 bool					is_space(char c);
+char					*create_prompt(void);
 
 // Tokens
 void					sanitize_tokens(t_minishell *minishell);
