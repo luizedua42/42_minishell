@@ -6,7 +6,7 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 19:30:05 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:58:25 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef enum e_token_type
 	OPEN_PARENTHESIS = 7,
 	CLOSE_PARENTHESIS = 8,
 	WORD = 9,
-	END_ARRAY = 10,
+	SHELL = 10,
+	END_ARRAY = 11,
 }					t_token_type;
 
 typedef struct s_token
@@ -83,8 +84,7 @@ bool	token_analysis(t_token_type *token_array,
 					t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
 bool				check_parenthesis(t_token_type *token_array);
-size_t				create_sub_shells(t_minishell *minishell, t_list *tokens,
-						t_list **shells);
+t_minishell			*create_sub_shells(t_minishell **minishell);
 
 // Builtins
 int					pwd(void);

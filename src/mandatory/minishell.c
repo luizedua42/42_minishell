@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 16:41:37 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/03 21:27:07 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	handle_command(t_minishell *minishell, char *command)
 		ft_fprintf(2, "minishell: syntax error\n");
 	else
 	{
+		minishell = create_sub_shells(&minishell);
 		get_redirects(minishell);
 		sanitize_tokens(minishell);
 		print_tokens(minishell, minishell->tokens);
