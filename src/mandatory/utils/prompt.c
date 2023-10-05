@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 14:44:28 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/03 16:45:58 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:30:17 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*create_prompt(void)
 {
 	char	*usr;
 
-	usr = "\001\x1b[32m\002cadet@minishell\001\x1b[m\002:" \
-		"\001\x1b[34m\002~\001\x1b[m\002\001\x1b[37m\002$\001\x1b[m\002 ";
+	usr = "\001\x1b[32m\002cadet@minishell\001\x1b[m\002 " \
+		"\001\x1b[172m\002λ\001\x1b[m\002 ";
 	return (usr);
 }

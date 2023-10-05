@@ -80,11 +80,12 @@ void				init_minishell(t_minishell *minishell, char **envp);
 
 // Parse
 bool				syntax_analysis(t_token_type *token_array);
-bool	token_analysis(t_token_type *token_array,
-					t_token_type type);
+bool				token_analysis(t_token_type *token_array, \
+									t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
 bool				check_parenthesis(t_token_type *token_array);
-t_minishell			*create_sub_shells(t_minishell **minishell);
+t_minishell			*create_sub_shells(t_list **tokens, t_list *envs);
+void				clear_shells(void *minishell);
 
 // Builtins
 int					pwd(void);
@@ -115,7 +116,7 @@ void				get_redirects(t_minishell *minishell);
 bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
-t_token_type		*create_token_array(t_list *tokens, size_t *i);
+t_token_type		*create_token_array(t_list *tokens);
 
 // Enviroments
 t_list				*create_envs(char **envp);

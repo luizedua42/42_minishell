@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   create_token_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:56:22 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 23:56:01 by cobli            ###   ########.fr       */
+/*   Updated: 2023/10/04 20:23:42 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token_type	*create_token_array(t_list *tokens, size_t *i)
+t_token_type	*create_token_array(t_list *tokens)
 {
 	size_t			size;
 	t_token_type	*token_array;
 	t_token			*token;
+	size_t			i;
 
 	if (tokens == NULL)
 		return (NULL);
@@ -24,13 +25,14 @@ t_token_type	*create_token_array(t_list *tokens, size_t *i)
 	token_array = ft_calloc((size + 1), sizeof(t_token_type));
 	if (token_array == NULL)
 		return (NULL);
-	while (*i < size && tokens != NULL)
+	i = 0;
+	while (i < size && tokens != NULL)
 	{
 		token = tokens->content;
-		token_array[*i] = token->type;
+		token_array[i] = token->type;
 		tokens = tokens->next;
-		(*i)++;
+		i++;
 	}
-	token_array[*i] = END_ARRAY;
+	token_array[i] = END_ARRAY;
 	return (token_array);
 }
