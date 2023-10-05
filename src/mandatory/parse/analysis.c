@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analysis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 23:12:46 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/26 19:53:19 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:13:52 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ static bool	check_parenthesis_syntax(t_token_type *token_array, int i, \
 	{
 		if (is_operator(token_array[i - 1]))
 			return (false);
-		if (!is_operator(token_array[i + 1]) && token_array[i + 1] \
+		if ((!is_operator(token_array[i + 1]) && \
+			!is_redirect(token_array[i + 1])) && token_array[i + 1] \
 			!= END_ARRAY && token_array[i + 1] != CLOSE_PARENTHESIS)
 			return (false);
 		(*parenthesis_counter)--;

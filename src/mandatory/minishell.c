@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 16:41:37 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:01:25 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,42 @@ void	print_redirects(t_minishell *minishell)
 		minishell->fds.fd_error.type);
 }
 
+void	print_sub_shells(t_minishell *minishell, int level)
+{
+	t_list	*shell;
+
+	shell = minishell->shells;
+	while (shell != NULL)
+	{
+		print_sub_shells(shell->content, level + 1);
+		shell = shell->next;
+	}
+	ft_printf("level %d ------------------\n", level);
+	print_tokens(minishell, minishell->tokens);
+	print_redirects(minishell);
+}
+
 void	handle_command(t_minishell *minishell, char *command)
 {
 	bool			success_create_tokens;
 	t_token_type	*token_array;
-	size_t			i;
+	t_minishell		*new_shell;
+	t_list			*tokens;
 
-	i = 0;
 	success_create_tokens = create_tokens(&minishell->tokens, command);
-	token_array = create_token_array(minishell->tokens, &i);
+	token_array = create_token_array(minishell->tokens);
 	if (!(success_create_tokens && syntax_analysis(token_array)))
 		ft_fprintf(2, "minishell: syntax error\n");
 	else
 	{
-		get_redirects(minishell);
-		sanitize_tokens(minishell);
-		print_tokens(minishell, minishell->tokens);
-		print_redirects(minishell);
-		clear_fds(minishell);
+		tokens = minishell->tokens;
+		new_shell = create_sub_shells(&tokens, minishell->envs);
+		print_sub_shells(new_shell, 0);
+		ft_lstclear(&(minishell)->tokens, del_token);
+		ft_lstclear(&(minishell)->envs, del_env);
+		ft_lstclear(&(minishell)->shells, clear_shells);
+		clear_fds((minishell));
+		clear_shells(new_shell);
 	}
 	free(token_array);
 	ft_lstclear(&minishell->tokens, del_token);

@@ -6,7 +6,7 @@
 /*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 12:59:29 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:11:41 by pdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_minishell(t_minishell *minishell, char **envp)
 	minishell->fds.fd_out.type = END_ARRAY;
 	minishell->fds.fd_error.redirect_to = NULL;
 	minishell->fds.fd_error.type = END_ARRAY;
+	minishell->shells = NULL;
 }
 
 static void	create_pwd_env(t_minishell *minishell)
