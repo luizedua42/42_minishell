@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 20:58:25 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/09 22:08:17 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+
+// Defines 
+# define COMMAND_NOT_FOUND 127
+# define PATH_STR "PATH="
 
 typedef enum e_token_type
 {
@@ -138,5 +145,16 @@ void				parse_env(t_minishell *minishell, t_list **words, char *str,
 char				*join_words(t_list *words);
 void				parse_quote(t_minishell *minishell, t_list **words,
 						char *str, size_t *index);
+void				expand_all(t_minishell *minishell, t_list *tokens);
+
+// Executor
+void				exec(char **cmds, char **env);
+void				child(char **argv, int *pipedes, char **env);
+void				parent(char **argv, int *pipedes, char **env);
+void				invalid_args(void);
+int					open_file(t_minishell *minishell, t_fd *fd);
+void				here_doc(t_minishell *minishell, t_fd *fd);
+char				*get_path(char *cmd, char **env);
+t_list				**split_pipes(t_list *tokens);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/28 19:34:27 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/09 21:58:57 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,22 @@ static void	parse_word(t_list **words, char *str, size_t *index,
 	ft_strlcpy(word, str, i + 1);
 	ft_lstadd_back(words, ft_lstnew(word));
 	*index += i;
+}
+
+void	expand_all(t_minishell *minishell, t_list *tokens)
+{
+	t_token *token;
+	char	*tokenex;
+
+	while (tokens != NULL)
+	{
+		token = tokens->content;
+		if (token->type == WORD)
+		{
+			tokenex = expand(minishell, token->value, false);
+			free(token->value);
+			token->value = tokenex;
+		}
+		tokens = tokens->next;
+	}
 }
