@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/04 21:01:25 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:56:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ void	handle_command(t_minishell *minishell, char *command)
 	{
 		tokens = minishell->tokens;
 		new_shell = create_sub_shells(&tokens, minishell->envs);
-		print_sub_shells(new_shell, 0);
+		executor(*new_shell);
 		ft_lstclear(&(minishell)->tokens, del_token);
-		ft_lstclear(&(minishell)->envs, del_env);
 		ft_lstclear(&(minishell)->shells, clear_shells);
 		clear_fds((minishell));
 		clear_shells(new_shell);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path_bonus.c                                   :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:06:27 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/09 20:16:52 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:56:32 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,16 @@ char	*get_path(char *cmd, char **env)
 	char	*exec;
 	char	*path_dir;
 	char	**path;
-	char	**cmds;
 
 	i = -1;
 	path_dir = find_path(env);
 	if (path_dir == NULL)
 		return (cmd);
 	path = ft_split(path_dir, ':');
-	cmds = ft_split(cmd, ' ');
 	while (path[++i])
 	{
 		path_dir = ft_strjoin(path[i], "/");
-		exec = ft_strjoin(path_dir, cmds[0]);
+		exec = ft_strjoin(path_dir, cmd);
 		free(path_dir);
 		if (access(exec, F_OK | X_OK) == 0)
 			break ;
@@ -39,7 +37,6 @@ char	*get_path(char *cmd, char **env)
 		exec = NULL;
 	}
 	ft_free_split(path);
-	ft_free_split(cmds);
 	return (exec);
 }
 

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:01:13 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/09 22:09:05 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:59:43 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ static void	here_doc_put_in(char *limiter, int *pipedes)
 
 static char *expand_redirect(t_minishell *minishell, char *redirect_to)
 {
-	char	*expand;
+	char	*expanded_redirect;
 
-	expand = expand(minishell, redirect_to, false);
+	expanded_redirect = expand(minishell, redirect_to, false);
 	free(redirect_to);
-	return (expand);
+	return (expanded_redirect);
 }

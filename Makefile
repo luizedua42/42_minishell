@@ -1,6 +1,8 @@
 vpath %.c src/mandatory src/mandatory/environment src/mandatory/parse
 vpath %.c src/mandatory/tokens src/mandatory/utils src/mandatory/builtin
-vpath %.c src/mandatory/expantions/ src/mandatory/expantions/wildcards
+vpath %.c src/mandatory/expantions src/mandatory/expantions/wildcards
+vpath %.c src/mandatory/executor
+
 vpath %.c src/bonus
 
 NAME := minishell
@@ -24,6 +26,7 @@ SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c new_t
 SRCS += env.c pwd.c cd.c exit.c unset.c export.c echo.c builtin_selector.c
 SRCS += delete.c count_args.c init_minishell.c is_redirect.c
 SRCS += is_exe.c is_token.c is_operator.c is_space.c
+SRCS += executor.c get_path.c here_doc.c open_file.c selects.c split_pipes.c
 SRCS += wild_file.c wild_match.c expantion.c join_words.c parse_env.c
 SRCS += parse_quote.c prompt.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
