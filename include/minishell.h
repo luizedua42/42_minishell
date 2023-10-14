@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/11 20:02:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/13 21:34:42 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void				parse_quote(t_minishell *minishell, t_list **words,
 void				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
-void				exec(char **cmds, t_minishell *minishell);
 void				child(char **argv, int *pipedes, char **env);
 void				parent(char **argv, int *pipedes, char **env);
 void				invalid_args(void);
@@ -158,6 +157,7 @@ char				*get_path(char *cmd, char **env);
 t_list				**split_pipes(t_list *tokens);
 void				*select_token_value(void *token);
 void				*select_env(void *content);
+size_t				lst_matrix_len(t_list **matrix);
 int					executor(t_minishell minishell);
 
 #endif

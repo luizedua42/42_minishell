@@ -6,58 +6,62 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:27:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/11 20:56:49 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/13 21:50:03 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	do_pipe(t_minishell minishell, t_list *tokens, bool is_last);
+static int	do_pipe(t_minishell minishell, t_list *tokens, bool is_last, size_t i, int *pids, t_list **token_array);
+static void	exec(char **cmds, t_minishell *minishell, int *pids, t_list **token_array);
+
 
 int	executor(t_minishell minishell)
 {
 	size_t	i;
-	int		fd_in;
-	int		fd_out;
 	t_list	**token_array;
+	size_t	lst_size;
+	int		*pid;
 
 	i = 0;
-	if (minishell.fds.fd_in.type == HEREDOC_IN)
-		here_doc(&minishell, &minishell.fds.fd_in);
-	else if (minishell.fds.fd_in.type == REDIRECT_IN)
-	{
-		fd_in = open_file(&minishell, &minishell.fds.fd_in);
-		dup2(fd_in, STDIN_FILENO);
-	}
 	expand_all(&minishell, minishell.tokens);
 	token_array = split_pipes(minishell.tokens);
+	lst_size = lst_matrix_len(token_array);
+	pid = ft_calloc(lst_size, sizeof(int));
 	while (token_array[i] != NULL)
 	{
-		do_pipe(minishell, token_array[i], token_array[i + 1] == NULL);
+		pid[i] = do_pipe(minishell, token_array[i], token_array[i + 1] == NULL, i, pid, token_array);
 		i++;
 	}
+	i = 0;
+	while (i < lst_size)
+		waitpid(pid[i++], NULL, 0);
+	free(pid);
 	i = -1;
 	while (token_array[++i] != NULL)
 		ft_lstclear(&token_array[i], del_token);
 	free(token_array);
-	if (minishell.fds.fd_out.type != END_ARRAY)
-	{
-		fd_out = open_file(&minishell, &minishell.fds.fd_out);
-		dup2(fd_out, STDOUT_FILENO);	
-	}
 	return (errno);
 }
 
-void	exec(char **cmds, t_minishell *minishell)
+static void	exec(char **cmds, t_minishell *minishell, int *pids, t_list **token_array)
 {
 	int		ret;
 	char	*path;
 	char	**env;
+	size_t	i;
 
+	i = -1;
 	ret = builtin_selector(minishell, cmds);
 	if (ret != -1)
 	{
 		free(cmds);
+		free(pids);
+		ft_lstclear(&minishell->tokens, del_token);
+		ft_lstclear(&minishell->envs, del_env);
+		while (token_array[++i] != NULL)
+			ft_lstclear(&token_array[i], del_token);
+		free(token_array);
 		exit(ret);
 	}
 	env = ft_lst_to_array_choice(minishell->envs, select_env);
@@ -81,50 +85,50 @@ void	exec(char **cmds, t_minishell *minishell)
 	exit(errno);
 }
 
-static void	do_pipe(t_minishell minishell, t_list *tokens, bool is_last)
+static int	do_pipe(t_minishell minishell, t_list *tokens, bool is_last, size_t i, int *pids, t_list **token_array)
 {
-	pid_t	pid;
-	t_token *token;
-	char	**cmds;
-	int		pipedes[2];
+	pid_t		pid;
+	char		**cmds;
+	int			pipedes[2];
+	static int	hostage_pipe;
 
-	token = tokens->content;
 	if (!is_last && pipe(pipedes) == -1)
 	{
 		perror(NULL);
-		exit(errno);
+		return (-1);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror(NULL);
-		exit(errno);
+		return (-1);
 	}
 	if (!pid)
 	{
 		if (!is_last)
-		{
 			close(pipedes[0]);
-			dup2(pipedes[1], STDOUT_FILENO);
-		}
-		if (token->type == SHELL)
+		if (i != 0)
 		{
-			executor(*(t_minishell *)minishell.shells->content);
-			minishell.shells->content = minishell.shells->next;
+			dup2(hostage_pipe, STDIN_FILENO);
+			close(hostage_pipe);
 		}
-		else
-		{
-			cmds = ft_lst_to_array_choice(tokens, select_token_value);
-			exec(cmds, &minishell);
-		}
-	}
-	else
-	{
 		if (!is_last)
 		{
+			dup2(pipedes[1], STDOUT_FILENO);
 			close(pipedes[1]);
-			dup2(pipedes[0], STDIN_FILENO);
 		}
-		wait(NULL);
+		cmds = ft_lst_to_array_choice(tokens, select_token_value);
+		exec(cmds, &minishell, pids, token_array);
 	}
+	else if (!is_last)
+	{
+		if (i != 0)
+			close(hostage_pipe);
+		hostage_pipe = dup(pipedes[0]);
+		close(pipedes[0]);
+		close(pipedes[1]);
+	}
+	else if (hostage_pipe != 0)
+		close(hostage_pipe);
+	return (pid);
 }

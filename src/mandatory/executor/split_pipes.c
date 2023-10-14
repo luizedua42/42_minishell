@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 21:14:47 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/09 21:31:22 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:05:33 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ static size_t	pipe_quantize(t_list *tokens)
 		tokens = tokens->next;
 	}
 	return (count);
+}
+
+size_t	lst_matrix_len(t_list **matrix)
+{
+	size_t	size;
+	
+	size = 0;
+	while (matrix[size] != NULL)
+		size++;
+	return (size);
 }

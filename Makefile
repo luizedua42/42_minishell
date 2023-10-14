@@ -61,7 +61,7 @@ bonus: libft $(OBJS_BONUS)
 	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./readline.supp -q ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --trace-children-skip='*/bin/*,*/sbin/*' --suppressions=./readline.supp -q ./$(NAME)
 
 clean: 
 	@$(MAKE) -C $(LIBTF_DIR) clean
