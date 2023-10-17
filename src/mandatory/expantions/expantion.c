@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/09 21:58:57 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:32:29 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	parse_word(t_list **words, char *str, size_t *index,
 
 void	expand_all(t_minishell *minishell, t_list *tokens)
 {
-	t_token *token;
+	t_token	*token;
 	char	*tokenex;
 
 	while (tokens != NULL)

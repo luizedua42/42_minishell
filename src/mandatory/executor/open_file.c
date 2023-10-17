@@ -6,13 +6,13 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:26:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/11 20:00:42 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:36:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *expand_redirect(t_minishell *minishell, char *redirect_to);
+static char	*expand_redirect(t_minishell *minishell, char *redirect_to);
 
 int	open_file(t_minishell *minishell, t_fd *fd)
 {
@@ -44,7 +44,7 @@ int	open_file(t_minishell *minishell, t_fd *fd)
 	return (ret);
 }
 
-static char *expand_redirect(t_minishell *minishell, char *redirect_to)
+static char	*expand_redirect(t_minishell *minishell, char *redirect_to)
 {
 	char	*expanded_redirect;
 

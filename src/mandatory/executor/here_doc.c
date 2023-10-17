@@ -6,16 +6,16 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:01:13 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/11 19:59:43 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:36:04 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	here_doc_put_in(char *limiter, int *pipedes);
-static char *expand_redirect(t_minishell *minishell, char *redirect_to);
+static char	*expand_redirect(t_minishell *minishell, char *redirect_to);
 
-void				here_doc(t_minishell *minishell, t_fd *fd)
+void	here_doc(t_minishell *minishell, t_fd *fd)
 {
 	int		pipedes[2];
 	pid_t	pid;
@@ -64,7 +64,7 @@ static void	here_doc_put_in(char *limiter, int *pipedes)
 	}
 }
 
-static char *expand_redirect(t_minishell *minishell, char *redirect_to)
+static char	*expand_redirect(t_minishell *minishell, char *redirect_to)
 {
 	char	*expanded_redirect;
 
