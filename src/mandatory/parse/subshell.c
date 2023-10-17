@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:14:31 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/04 21:02:33 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:00:40 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static t_list	*copy_envs(t_list *envs)
 	{
 		env = envs->content;
 		sub_env = ft_calloc(1, sizeof(t_env));
-		sub_env->value = ft_strdup(env->value);
+		if (env->value != NULL)
+			sub_env->value = ft_strdup(env->value);
 		sub_env->key = ft_strdup(env->key);
 		ft_lstadd_back(&new_envs, ft_lstnew(sub_env));
 		envs = envs->next;

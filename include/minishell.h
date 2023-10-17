@@ -6,7 +6,7 @@
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 00:36:11 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/17 11:33:19 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void				uptade_pwd_env(t_list *envs);
 t_env				*update_env(t_list *envs, char *key, char *value);
 t_env				*add_env(t_list *envs, char *key, char *value);
 bool				delete_env(t_minishell *minishell, char *key);
+t_env				*export_env(t_minishell *minishell, char *key, char *value);
 
 // Wildcard
 char				*expand(t_minishell *minishell, char *str,
