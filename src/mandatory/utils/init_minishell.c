@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/03 20:11:41 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/16 23:35:17 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 static void	create_pwd_env(t_minishell *minishell);
 
-void	init_minishell(t_minishell *minishell, char **envp)
+t_minishell	*init_minishell(char **envp)
 {
+	t_minishell	*minishell;
+
+	minishell = ft_calloc(1, sizeof(t_minishell));
 	minishell->envs = create_envs(envp);
 	create_pwd_env(minishell);
-	minishell->tokens = NULL;
 	minishell->exit_status = EXIT_SUCCESS;
-	minishell->fds.fd_in.redirect_to = NULL;
 	minishell->fds.fd_in.type = END_ARRAY;
-	minishell->fds.fd_out.redirect_to = NULL;
 	minishell->fds.fd_out.type = END_ARRAY;
-	minishell->fds.fd_error.redirect_to = NULL;
 	minishell->fds.fd_error.type = END_ARRAY;
-	minishell->shells = NULL;
+	return (minishell);
 }
 
 static void	create_pwd_env(t_minishell *minishell)

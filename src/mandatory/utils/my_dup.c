@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   my_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 22:57:57 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/16 23:47:20 by paulo            ###   ########.fr       */
+/*   Created: 2023/10/17 00:34:11 by paulo             #+#    #+#             */
+/*   Updated: 2023/10/17 00:36:04 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	minishell_exit(t_minishell *minishell)
+void	my_dup(int fd, int fd2)
 {
-	rl_clear_history();
-	clear_shell(minishell);
-	return (EXIT_SUCCESS);
+	dup2(fd, fd2);
+	close(fd);
 }

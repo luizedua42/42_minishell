@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/16 20:51:15 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:36:11 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include "libft.h"
 # include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <errno.h>
-# include <fcntl.h>
 # include <sys/wait.h>
 
-// Defines 
+// Defines
 # define COMMAND_NOT_FOUND 127
 # define PATH_STR "PATH="
 
@@ -79,20 +79,22 @@ typedef struct s_minishell
 	t_list			*tokens;
 	t_list			*envs;
 	t_fds			fds;
-	unsigned char	exit_status;
 	t_list			*shells;
+	int				*pids;
+	unsigned char	exit_status;
 }					t_minishell;
 
-void				init_minishell(t_minishell *minishell, char **envp);
+t_minishell			*init_minishell(char **envp);
 
 // Parse
 bool				syntax_analysis(t_token_type *token_array);
-bool				token_analysis(t_token_type *token_array, \
-									t_token_type type);
+bool				token_analysis(t_token_type *token_array,
+						t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
 bool				check_parenthesis(t_token_type *token_array);
 t_minishell			*create_sub_shells(t_list **tokens, t_list *envs);
-void				clear_shells(void *minishell);
+void				clear_shell(void *minishell);
+void				clear_subshells(void *minishell);
 
 // Builtins
 int					pwd(void);
@@ -117,6 +119,7 @@ bool				is_operator(t_token_type type);
 bool				is_space(char c);
 char				*create_prompt(void);
 bool				is_builtin(char *cmd);
+void				my_dup(int fd, int fd2);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
@@ -149,9 +152,6 @@ void				parse_quote(t_minishell *minishell, t_list **words,
 void				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
-void				child(char **argv, int *pipedes, char **env);
-void				parent(char **argv, int *pipedes, char **env);
-void				invalid_args(void);
 int					open_file(t_minishell *minishell, t_fd *fd);
 void				here_doc(t_minishell *minishell, t_fd *fd);
 char				*get_path(char *cmd, char **env);
@@ -159,7 +159,10 @@ t_list				**split_pipes(t_list *tokens);
 void				*select_token_value(void *token);
 void				*select_env(void *content);
 size_t				lst_matrix_len(t_list **matrix);
-int					executor(t_minishell *minishell, t_minishell *original_minishell);
+int					executor(t_minishell *minishell);
+int					exec(char **cmds, t_minishell *minishell);
+int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
+						t_list **token_array);
 
 // Prints
 void				print_tokens(t_minishell *minishell, t_list *tokens);

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:26:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/16 15:36:31 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/16 23:55:52 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static char	*expand_redirect(t_minishell *minishell, char *redirect_to);
+static void	handler_error(char *redirect_to);
 
 int	open_file(t_minishell *minishell, t_fd *fd)
 {
-	int		ret;
-	char	*error_message;
+	int	ret;
 
 	if (fd->type == REDIRECT_IN)
 	{
@@ -35,12 +35,7 @@ int	open_file(t_minishell *minishell, t_fd *fd)
 		ret = open(fd->redirect_to, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	if (ret == -1)
-	{
-		error_message = ft_strjoin("minishell: ", fd->redirect_to);
-		perror(error_message);
-		free(error_message);
-		exit(errno);
-	}
+		handler_error(fd->redirect_to);
 	return (ret);
 }
 
@@ -51,4 +46,14 @@ static char	*expand_redirect(t_minishell *minishell, char *redirect_to)
 	expanded_redirect = expand(minishell, redirect_to, false);
 	free(redirect_to);
 	return (expanded_redirect);
+}
+
+static void	handler_error(char *redirect_to)
+{
+	char	*error_message;
+
+	error_message = ft_strjoin("minishell: ", redirect_to);
+	perror(error_message);
+	free(error_message);
+	exit(errno);
 }
