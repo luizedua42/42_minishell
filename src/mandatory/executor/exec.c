@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/17 00:40:20 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/17 20:36:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	builtin_handler(t_minishell *minishell, char **cmds);
+static int	handler_builtin(t_minishell *minishell, char **cmds);
 static void	clear_all(t_minishell *minishell, char **cmds, char **env);
 
 int	exec(char **cmds, t_minishell *minishell)
@@ -21,7 +21,7 @@ int	exec(char **cmds, t_minishell *minishell)
 	char	*path;
 	char	**env;
 
-	ret = builtin_handler(minishell, cmds);
+	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
 		return (ret);
 	env = ft_lst_to_array_choice(minishell->envs, select_env);
@@ -50,11 +50,11 @@ static void	clear_all(t_minishell *minishell, char **cmds, char **env)
 	ft_free_split(env);
 }
 
-static int	builtin_handler(t_minishell *minishell, char **cmds)
+static int	handler_builtin(t_minishell *minishell, char **cmds)
 {
 	int	ret;
 
-	ret = builtin_selector(minishell, cmds);
+	ret = builtin_selector(minishell, cmds, true);
 	if (ret != -1)
 	{
 		free(cmds);

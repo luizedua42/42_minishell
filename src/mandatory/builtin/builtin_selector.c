@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_selector.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:18:44 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/29 01:04:57 by cobli            ###   ########.fr       */
+/*   Updated: 2023/10/17 20:33:25 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_selector(t_minishell *minishell, char **args)
+int	builtin_selector(t_minishell *minishell, char **args, bool has_pipe)
 {
 	if (ft_strncmp("cd", args[0], 2) == 0)
 		return (cd(minishell, args));
@@ -25,7 +25,7 @@ int	builtin_selector(t_minishell *minishell, char **args)
 	else if (ft_strncmp("unset", args[0], 5) == 0)
 		return (unset(minishell, args));
 	else if (ft_strncmp("exit", args[0], 4) == 0)
-		return (minishell_exit(minishell));
+		return (minishell_exit(minishell, args, has_pipe));
 	else if (ft_strncmp("echo", args[0], 4) == 0)
 		return (echo(args));
 	return (-1);

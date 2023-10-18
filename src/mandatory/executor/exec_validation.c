@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   exec_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 14:44:28 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/17 22:01:21 by luizedua         ###   ########.fr       */
+/*   Created: 2023/10/17 14:27:55 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/17 14:39:14 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*create_prompt(void)
+int	pipe_validation(bool is_last, int *pipedes)
 {
-	char	*usr;
+	if (!is_last && pipe(pipedes) == -1)
+	{
+		perror(NULL);
+		return (-1);
+	}
+	return (0);
+}
 
-	usr = "\001\x1b[32m\002cadet@minishell\001\x1b[m\002" \
-		"\001\x1b[38;2;252;127;0m\002🐚 λ \001\x1b[25;0m\002";
-	return (usr);
+int	fork_validation(int pid)
+{
+	if (pid == -1)
+	{
+		perror(NULL);
+		return (-1);
+	}
+	return (0);
 }

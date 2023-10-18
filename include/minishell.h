@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 11:33:19 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/17 22:46:57 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 // Defines
 # define COMMAND_NOT_FOUND 127
@@ -100,10 +101,12 @@ void				clear_subshells(void *minishell);
 int					pwd(void);
 int					env(t_minishell *minishell);
 int					cd(t_minishell *minishell, char **args);
-int					minishell_exit(t_minishell *minishell);
+int					minishell_exit(t_minishell *minishell, char **args,
+						bool has_pipe);
 int					unset(t_minishell *minishell, char **args);
 int					minishell_export(t_minishell *minishell, char **args);
-int					builtin_selector(t_minishell *minishell, char **args);
+int					builtin_selector(t_minishell *minishell, char **args,
+						bool has_pipe);
 int					echo(char **args);
 
 // Utils
@@ -120,6 +123,8 @@ bool				is_space(char c);
 char				*create_prompt(void);
 bool				is_builtin(char *cmd);
 void				my_dup(int fd, int fd2);
+void				handle_signal(void);
+void				handle_signal_child(void);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
@@ -164,6 +169,9 @@ int					executor(t_minishell *minishell);
 int					exec(char **cmds, t_minishell *minishell);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
+// Validation
+int					pipe_validation(bool is_last, int *pipedes);
+int					fork_validation(int pid);
 
 // Prints
 void				print_tokens(t_minishell *minishell, t_list *tokens);

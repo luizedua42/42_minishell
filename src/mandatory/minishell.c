@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/16 23:50:00 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/17 22:05:55 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_minishell	*expand_shell(t_minishell *minishell);
 void		handle_command(t_minishell **minishell, char *command);
+static void	exit_main(t_minishell *minishell, char *command);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,13 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	minishell = init_minishell(envp);
 	while (1)
 	{
+		handle_signal();
 		prompt = create_prompt();
 		command = readline(prompt);
-		if (command == NULL || ft_strncmp("exit", command, 4) == 0)
-		{
-			free(command);
-			return (minishell_exit(minishell));
-		}
+		if (command == NULL)
+			exit_main(minishell, command);
 		if (command[0] != '\0')
 		{
 			add_history(command);
@@ -74,4 +73,13 @@ void	handle_command(t_minishell **minishell, char *command)
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);
 	free(command);
+}
+
+static void	exit_main(t_minishell *minishell, char *command)
+{
+	free(command);
+	rl_clear_history();
+	clear_shell(minishell);
+	ft_printf("exit\n");
+	exit (EXIT_SUCCESS);
 }
