@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/28 19:15:50 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:51:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ bool	create_tokens(t_list **tokens, char *cmd)
 		else if (new_token(tokens, WORD, cmd + i, &i) == false)
 			return (false);
 	}
+	if (tokens == NULL)
+		return (false);
 	return (true);
 }
 

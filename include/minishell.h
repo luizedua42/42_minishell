@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 22:46:57 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/18 22:06:49 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <sys/wait.h>
-# include <signal.h>
 
 // Defines
 # define COMMAND_NOT_FOUND 127
@@ -66,20 +66,14 @@ typedef struct s_fd
 {
 	char			*redirect_to;
 	t_token_type	type;
+	int				fd;
 }					t_fd;
-
-typedef struct s_fds
-{
-	t_fd			fd_in;
-	t_fd			fd_out;
-	t_fd			fd_error;
-}					t_fds;
 
 typedef struct s_minishell
 {
 	t_list			*tokens;
 	t_list			*envs;
-	t_fds			fds;
+	t_list			*fds;
 	t_list			*shells;
 	int				*pids;
 	unsigned char	exit_status;
@@ -111,8 +105,7 @@ int					echo(char **args);
 
 // Utils
 size_t				count_args(char **args);
-void				clear_fds(t_minishell *minishell);
-void				del_fd(t_fd *fd);
+void				del_fd(void *content);
 void				del_env(void *content);
 void				del_token(void *content);
 bool				is_redirect(t_token_type type);
@@ -128,7 +121,7 @@ void				handle_signal_child(void);
 
 // Tokens
 void				sanitize_tokens(t_minishell *minishell);
-void				get_redirects(t_minishell *minishell);
+t_list				*get_redirects(t_list *tokens);
 bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
@@ -158,7 +151,7 @@ void				parse_quote(t_minishell *minishell, t_list **words,
 void				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
-int					open_file(t_minishell *minishell, t_fd *fd);
+bool				open_file(t_minishell *minishell, t_fd *file);
 void				here_doc(t_minishell *minishell, t_fd *fd);
 char				*get_path(char *cmd, char **env);
 t_list				**split_pipes(t_list *tokens);
@@ -169,6 +162,10 @@ int					executor(t_minishell *minishell);
 int					exec(char **cmds, t_minishell *minishell);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
+void				close_fds(t_list *fds);
+bool				analyse_fds(t_list *child_files, t_list *parent_files);
+int					get_last_fd(int type, t_list *fds);
+
 // Validation
 int					pipe_validation(bool is_last, int *pipedes);
 int					fork_validation(int pid);

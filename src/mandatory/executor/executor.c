@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:27:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 00:07:48 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/18 21:25:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_fds(t_list *fds)
+{
+	t_fd	*file;
+
+	while(fds != NULL)
+	{
+		file = fds->content;
+		if (file->fd == -1)
+			break;
+		close(file->fd);
+		fds = fds->next;
+	}
+}
+
+void	open_redirects(t_minishell *minishell, t_list *fds)
+{
+	t_fd	*file;
+
+	while (fds != NULL)
+	{
+		file = fds->content;
+		open_file(minishell, file);
+		fds = fds->next;
+	}
+}
 
 int	executor(t_minishell *minishell)
 {
@@ -18,16 +44,14 @@ int	executor(t_minishell *minishell)
 	t_list	**token_array;
 	size_t	lst_size;
 
-	i = 0;
+	open_redirects(minishell, minishell->fds);
 	expand_all(minishell, minishell->tokens);
 	token_array = split_pipes(minishell->tokens);
 	lst_size = lst_matrix_len(token_array);
 	minishell->pids = ft_calloc(lst_size, sizeof(int));
-	while (token_array[i] != NULL)
-	{
+	i = -1;
+	while (token_array[++i] != NULL)
 		minishell->pids[i] = do_pipe(minishell, token_array[i], i, token_array);
-		i++;
-	}
 	i = 0;
 	while (i < lst_size)
 		waitpid(minishell->pids[i++], NULL, 0);
@@ -35,5 +59,6 @@ int	executor(t_minishell *minishell)
 	while (token_array[++i] != NULL)
 		ft_lstclear(&token_array[i], del_token);
 	free(token_array);
+	close_fds(minishell->fds);
 	return (errno);
 }

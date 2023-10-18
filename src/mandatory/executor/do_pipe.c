@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:05:33 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/17 22:36:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/18 22:11:15 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,26 @@ static void	handle_child(int *pipedes, int i,
 	char	**cmds;
 	int		ret;
 	bool	is_last;
+	t_list	*child_files;
+	int		last_fd;
 
+	child_files = get_redirects(token_array[i]);
+	if(analyse_fds(child_files, minishell->fds) == false)
+		exit(EXIT_FAILURE);
 	is_last = token_array[i + 1] == NULL;
+	last_fd = get_last_fd(STDIN_FILENO, child_files);
+	if (last_fd != -2)
+		my_dup(last_fd, STDIN_FILENO);
+	else
+		;
+	last_fd = get_last_fd(STDOUT_FILENO, child_files);
+	if (last_fd != -2)
+		my_dup(last_fd, STDOUT_FILENO);
+	else if (!is_last)
+		my_dup(pipedes[1], STDOUT_FILENO);
 	if (!is_last)
 		close(pipedes[0]);
-	if (!is_last)
-		my_dup(pipedes[1], STDOUT_FILENO);
+	sanitize_tokens(minishell);
 	cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
 	ret = exec(cmds, minishell);
 	free_token_array(token_array);

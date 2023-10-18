@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:33:15 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/16 15:34:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:54:30 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@ void	print_envs(t_list *envs)
 	}
 }
 
-void	print_redirects(t_minishell *minishell)
-{
-	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_in.redirect_to,
-		minishell->fds.fd_in.type);
-	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_out.redirect_to,
-		minishell->fds.fd_out.type);
-	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_error.redirect_to,
-		minishell->fds.fd_error.type);
-}
-
 void	print_sub_shells(t_minishell *minishell, int level)
 {
 	t_list	*shell;
@@ -68,5 +55,4 @@ void	print_sub_shells(t_minishell *minishell, int level)
 	}
 	ft_printf("level %d ------------------\n", level);
 	print_tokens(minishell, minishell->tokens);
-	print_redirects(minishell);
 }

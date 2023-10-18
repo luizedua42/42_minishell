@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 22:05:55 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:55:14 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,17 @@ void	handle_command(t_minishell **minishell, char *command)
 	success_create_tokens = create_tokens(&(*minishell)->tokens, command);
 	token_array = create_token_array((*minishell)->tokens);
 	valid_syntax = syntax_analysis(token_array);
-	free(token_array);
-	if (!(success_create_tokens && valid_syntax))
-		ft_fprintf(2, "minishell: syntax error\n");
-	else
+	if (token_array != NULL)
 	{
-		*minishell = expand_shell(*minishell);
-		executor(*minishell);
-		clear_subshells(*minishell);
+		free(token_array);
+		if (!(success_create_tokens && valid_syntax))
+			ft_fprintf(2, "minishell: syntax error\n");
+		else
+		{
+			*minishell = expand_shell(*minishell);
+			executor(*minishell);
+			clear_subshells(*minishell);
+		}
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);
 	free(command);

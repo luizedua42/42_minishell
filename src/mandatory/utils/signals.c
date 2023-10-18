@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 21:52:06 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/17 22:47:28 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:44:16 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
+static void	handle_sigpipe(int sig)
+{
+	(void)sig;
+}
+
 static void	handle_sigint_child(int sig)
 {
 	(void)sig;
@@ -31,12 +36,13 @@ static void	handle_sigint_child(int sig)
 void	handle_signal(void)
 {
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
+	signal(SIGPIPE, handle_sigpipe);
 	signal(SIGINT, handle_sigint);
 }
 
 void	handle_signal_child(void)
 {
+	signal(SIGPIPE, handle_sigpipe);
 	signal(SIGINT, handle_sigint_child);
 	signal(SIGQUIT, SIG_IGN);
 }

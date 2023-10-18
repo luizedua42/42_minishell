@@ -6,7 +6,7 @@
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/16 23:35:17 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/18 12:46:18 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ t_minishell	*init_minishell(char **envp)
 	minishell->envs = create_envs(envp);
 	create_pwd_env(minishell);
 	minishell->exit_status = EXIT_SUCCESS;
-	minishell->fds.fd_in.type = END_ARRAY;
-	minishell->fds.fd_out.type = END_ARRAY;
-	minishell->fds.fd_error.type = END_ARRAY;
 	return (minishell);
 }
 
