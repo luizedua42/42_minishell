@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:26:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 21:51:11 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:25:09 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	open_file(t_minishell *minishell, t_fd *file)
 	if (fd == -1)
 	{
 		file->fd = -2;
-		return(handler_error(file->redirect_to));
+		return (handler_error(file->redirect_to));
 	}
 	file->fd = fd;
 	return (true);

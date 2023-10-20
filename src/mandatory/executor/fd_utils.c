@@ -3,61 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:40:56 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/18 22:04:42 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:22:28 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_fd	*match_fd(t_fd *file, t_list *parent_files);
-
-bool	analyse_fds(t_list *child_files, t_list *parent_files)
+void	close_fds(t_list *fds)
 {
 	t_fd	*file;
-	t_fd	*match;
 
-	while (child_files != NULL)
+	while (fds != NULL)
 	{
-		file = child_files->content;
-		match = match_fd(file, parent_files);
-		if (match->fd == -2)
-			return (false);
-		child_files = child_files->next;
+		file = fds->content;
+		if (file->fd != -1)
+			close(file->fd);
+		fds = fds->next;
 	}
-	return (true);
 }
 
-static	t_fd	*match_fd(t_fd *file, t_list *parent_files)
+void	open_redirects(t_minishell *minishell, t_list *fds,
+		t_list **token_array)
 {
-	t_fd	*p_file;
+	t_fd	*file;
+	t_list	*head;
 
-	while (parent_files != NULL)
+	head = fds;
+	while (fds != NULL)
 	{
-		p_file = parent_files->content;
-		if (file->type == p_file->type && \
-			ft_strcmp(file->redirect_to, p_file->redirect_to) == 0)
-			return (p_file);
-		parent_files = parent_files->next;
+		file = fds->content;
+		if (!open_file(minishell, file))
+		{
+			close_fds(head);
+			ft_lstclear(&head, del_fd);
+			free_token_array(token_array);
+			clear_shell(minishell);
+			exit(EXIT_FAILURE);
+		}
+		fds = fds->next;
 	}
-	return (p_file);
 }
 
-int	get_last_fd(int type, t_list *fds)
+int	get_last_fd(int type, t_list *fds, int default_fd)
 {
 	t_fd	*file;
 	int		last_fd;
 
-	last_fd = -2;
+	last_fd = default_fd;
 	while (fds != NULL)
 	{
 		file = fds->content;
 		if (type == STDIN_FILENO && file->type == REDIRECT_IN)
 			last_fd = file->fd;
-		if (type  == STDOUT_FILENO && \
-			(file->type == REDIRECT_OUT || file->type == HEREDOC_OUT))
+		if (type == STDOUT_FILENO && (file->type == REDIRECT_OUT
+				|| file->type == HEREDOC_OUT))
 			last_fd = file->fd;
 		fds = fds->next;
 	}

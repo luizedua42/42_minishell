@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:27:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 21:25:54 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:37:41 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	close_fds(t_list *fds)
-{
-	t_fd	*file;
-
-	while(fds != NULL)
-	{
-		file = fds->content;
-		if (file->fd == -1)
-			break;
-		close(file->fd);
-		fds = fds->next;
-	}
-}
-
-void	open_redirects(t_minishell *minishell, t_list *fds)
-{
-	t_fd	*file;
-
-	while (fds != NULL)
-	{
-		file = fds->content;
-		open_file(minishell, file);
-		fds = fds->next;
-	}
-}
 
 int	executor(t_minishell *minishell)
 {
@@ -44,7 +18,6 @@ int	executor(t_minishell *minishell)
 	t_list	**token_array;
 	size_t	lst_size;
 
-	open_redirects(minishell, minishell->fds);
 	expand_all(minishell, minishell->tokens);
 	token_array = split_pipes(minishell->tokens);
 	lst_size = lst_matrix_len(token_array);
@@ -59,6 +32,5 @@ int	executor(t_minishell *minishell)
 	while (token_array[++i] != NULL)
 		ft_lstclear(&token_array[i], del_token);
 	free(token_array);
-	close_fds(minishell->fds);
 	return (errno);
 }

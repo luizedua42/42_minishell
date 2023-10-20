@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:14:31 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 21:38:42 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:14:59 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_minishell	*create_sub_shells(t_list **tokens, t_list *envs)
 		else
 			copy_tokens(tokens, new_shell, token->value, token->type);
 	}
-	new_shell->fds = get_redirects(new_shell->tokens);
 	return (new_shell);
 }
 

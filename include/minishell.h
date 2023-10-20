@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 22:06:49 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:21:32 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_minishell
 {
 	t_list			*tokens;
 	t_list			*envs;
-	t_list			*fds;
 	t_list			*shells;
 	int				*pids;
 	unsigned char	exit_status;
@@ -108,6 +107,7 @@ size_t				count_args(char **args);
 void				del_fd(void *content);
 void				del_env(void *content);
 void				del_token(void *content);
+void				free_token_array(t_list **token_array);
 bool				is_redirect(t_token_type type);
 bool				is_token(char c);
 bool				is_exe(t_token_type type);
@@ -120,7 +120,7 @@ void				handle_signal(void);
 void				handle_signal_child(void);
 
 // Tokens
-void				sanitize_tokens(t_minishell *minishell);
+void				sanitize_tokens(t_list **original_tokens);
 t_list				*get_redirects(t_list *tokens);
 bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
@@ -163,11 +163,13 @@ int					exec(char **cmds, t_minishell *minishell);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
 void				close_fds(t_list *fds);
-bool				analyse_fds(t_list *child_files, t_list *parent_files);
-int					get_last_fd(int type, t_list *fds);
+void				open_redirects(t_minishell *minishell, t_list *fds,
+						t_list **token_array);
+int					get_last_fd(int type, t_list *fds, int default_fd);
 
 // Validation
-int					pipe_validation(bool is_last, int *pipedes);
+int					pipe_validation(bool is_last, int *pipedes,
+						int hostage_pipe);
 int					fork_validation(int pid);
 
 // Prints

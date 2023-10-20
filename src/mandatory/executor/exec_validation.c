@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:27:55 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/17 14:39:14 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:33:06 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_validation(bool is_last, int *pipedes)
+int	pipe_validation(bool is_last, int *pipedes, int hostage_pipe)
 {
+	pipedes[2] = hostage_pipe;
 	if (!is_last && pipe(pipedes) == -1)
 	{
 		perror(NULL);

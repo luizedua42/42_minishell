@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:25:57 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 19:56:57 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:00:26 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ void	del_token(void *content)
 	token = content;
 	free(token->value);
 	free(token);
+}
+
+void	free_token_array(t_list **token_array)
+{
+	size_t	i;
+
+	i = -1;
+	while (token_array[++i] != NULL)
+		ft_lstclear(&token_array[i], del_token);
+	free(token_array);
 }

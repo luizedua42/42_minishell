@@ -28,7 +28,7 @@ SRCS += delete.c count_args.c init_minishell.c is_redirect.c
 SRCS += is_exe.c is_token.c is_operator.c is_space.c is_builtin.c my_dup.c
 SRCS += executor.c get_path.c here_doc.c open_file.c selects.c split_pipes.c exec.c do_pipe.c
 SRCS += wild_file.c wild_match.c expantion.c join_words.c parse_env.c
-SRCS += parse_quote.c prompt.c
+SRCS += parse_quote.c prompt.c fd_utils.c
 SRCS += exec_validation.c signals.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
