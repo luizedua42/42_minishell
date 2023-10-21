@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 00:50:55 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 03:44:10 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 // Defines
 # define COMMAND_NOT_FOUND 127
+# define PATH_ERROR 126
 # define PATH_STR "PATH="
 
 typedef enum e_token_type
@@ -79,13 +80,22 @@ typedef struct s_minishell
 	unsigned char	exit_status;
 }					t_minishell;
 
+typedef struct s_bfd
+{
+	int				last_fdin;
+	int				last_fdout;
+	int				safe_in;
+	int				safe_out;
+}					t_bfd;
+
 // Parse
 bool				syntax_analysis(t_token_type *token_array);
 bool				token_analysis(t_token_type *token_array,
 						t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
 bool				check_parenthesis(t_token_type *token_array);
-t_minishell			*create_sub_shells(t_list **tokens, t_list *envs, int exit_status);
+t_minishell			*create_sub_shells(t_list **tokens, t_list *envs, \
+										int exit_status);
 void				clear_shell(void *minishell);
 void				clear_subshells(void *minishell);
 
@@ -100,6 +110,7 @@ int					minishell_export(t_minishell *minishell, char **args);
 int					builtin_selector(t_minishell *minishell, char **args,
 						bool has_pipe);
 int					echo(char **args);
+t_bfd				builtin_fds(t_list *child_files);
 
 // Utils
 size_t				count_args(char **args);
@@ -167,11 +178,13 @@ void				close_fds(t_list *fds);
 bool				open_redirects(t_minishell *minishell, t_list *fds,
 						t_list **token_array, bool has_pipe);
 int					get_last_fd(int type, t_list *fds, int default_fd);
+int					builtin_exit(char **cmds, t_list **token_array, int ret, \
+									t_minishell *minishell);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,
 						int hostage_pipe);
-int					fork_validation(int pid);
+int					fork_validation(int *pid);
 
 // Prints
 void				print_tokens(t_minishell *minishell, t_list *tokens);

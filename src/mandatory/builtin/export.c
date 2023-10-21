@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:41:08 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 01:43:13 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 02:02:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static bool	check_parameter(char *str)
 	is_valid = true;
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		if(!ft_isalnum(str[i]) && str[i] != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
 			is_valid = false;
 			break ;

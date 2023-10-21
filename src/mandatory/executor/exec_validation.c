@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:27:55 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/20 00:33:06 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/21 03:23:04 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int	pipe_validation(bool is_last, int *pipedes, int hostage_pipe)
 	return (0);
 }
 
-int	fork_validation(int pid)
+int	fork_validation(int *pid)
 {
-	if (pid == -1)
+	*pid = fork();
+	if (*pid == -1)
 	{
 		perror(NULL);
 		return (-1);

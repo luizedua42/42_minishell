@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:05:33 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/21 01:41:18 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 03:40:53 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 	static int	hostage_pipe;
 	bool		is_last;
 
-	pipedes[0] = -1;
-	pipedes[1] = -1;
-	pipedes[2] = -1;
+	memset(pipedes, -1, sizeof(int) * 3);
 	is_last = token_array[i + 1] == NULL;
 	sanitize_emptyvar(token_array);
 	if (token_array[i] == NULL)
@@ -43,8 +41,7 @@ int	do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 	if (pipe_validation(is_last, pipedes, hostage_pipe))
 		return (-1);
 	handle_signal_child();
-	pid = fork();
-	if (fork_validation(pid) == -1)
+	if (fork_validation(&pid) == -1)
 		return (-1);
 	if (!pid)
 		handle_child(pipedes, i, minishell, token_array);
@@ -113,57 +110,22 @@ static int	handle_builtin(t_minishell *minishell, t_list *tokens,
 {
 	char	**cmds;
 	int		ret;
-	size_t	i;
 	t_list	*child_files;
-	int		last_fdin;
-	int		last_fdout;
-	int		safe_in;
-	int		safe_out;
+	t_bfd	bfd;
 
 	child_files = get_redirects(tokens);
 	if (!open_redirects(minishell, child_files, token_array, false))
 		return (EXIT_FAILURE);
 	sanitize_tokens(&tokens);
 	cmds = ft_lst_to_array_choice(tokens, select_token_value);
-	last_fdin = get_last_fd(STDIN_FILENO, child_files, -1);
-	if (last_fdin != -1)
-	{
-		safe_in = dup(STDIN_FILENO);
-		my_dup(last_fdin, STDIN_FILENO);
-	}
-	last_fdout = get_last_fd(STDOUT_FILENO, child_files, -1);
-	if (last_fdout != -1)
-	{
-		safe_out = dup(STDOUT_FILENO);
-		my_dup(last_fdout, STDOUT_FILENO);
-	}
-	ft_lstclear(&child_files, del_fd);
+	bfd = builtin_fds(child_files);
 	ret = builtin_selector(minishell, cmds, false);
-	if (ft_strncmp(cmds[0], "exit", 5) == 0)
-	{
-		if (ret != -2)
-		{
-			free(cmds);
-			i = -1;
-			while (token_array[++i] != NULL)
-				ft_lstclear(&token_array[i], del_token);
-			free(token_array);
-			close(STDIN_FILENO);
-			close(STDOUT_FILENO);
-			close(STDERR_FILENO);
-			exit(ret);
-		}
-		else
-		{
-			free(cmds);
-			minishell->exit_status = EXIT_FAILURE;
-			return (EXIT_FAILURE);
-		}
-	}
-	if (last_fdin != -1)
-		my_dup(safe_in, STDIN_FILENO);
-	if (last_fdout != -1)
-		my_dup(safe_out, STDOUT_FILENO);
+	if (builtin_exit(cmds, token_array, ret, minishell) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (bfd.last_fdin != -1)
+		my_dup(bfd.safe_in, STDIN_FILENO);
+	if (bfd.last_fdout != -1)
+		my_dup(bfd.safe_out, STDOUT_FILENO);
 	free(cmds);
 	minishell->exit_status = ret;
 	return (ret);
