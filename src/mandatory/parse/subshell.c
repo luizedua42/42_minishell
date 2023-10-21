@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:14:31 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/20 01:14:59 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/20 20:04:15 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_minishell	*copy_minishell(t_list *envs);
+static t_minishell	*copy_minishell(t_list *envs, int exit_status);
 static t_list		*copy_envs(t_list *envs);
 static void			copy_tokens(t_list **tokens, t_minishell *new_shell,
 						char *value, t_token_type type);
 
-t_minishell	*create_sub_shells(t_list **tokens, t_list *envs)
+t_minishell	*create_sub_shells(t_list **tokens, t_list *envs, int exit_status)
 {
 	t_token		*token;
 	t_minishell	*new_shell;
 	t_minishell	*shell;
 
-	new_shell = copy_minishell(envs);
+	new_shell = copy_minishell(envs, exit_status);
 	while (*tokens != NULL)
 	{
 		token = (*tokens)->content;
 		if (token->type == OPEN_PARENTHESIS)
 		{
 			copy_tokens(tokens, new_shell, "subshell", SHELL);
-			shell = create_sub_shells(tokens, envs);
+			shell = create_sub_shells(tokens, envs, exit_status);
 			ft_lstadd_back(&new_shell->shells, ft_lstnew(shell));
 		}
 		else if (token->type == CLOSE_PARENTHESIS)
@@ -44,13 +44,13 @@ t_minishell	*create_sub_shells(t_list **tokens, t_list *envs)
 	return (new_shell);
 }
 
-static t_minishell	*copy_minishell(t_list *envs)
+static t_minishell	*copy_minishell(t_list *envs, int exit_status)
 {
 	t_minishell	*new_shell;
 
 	new_shell = ft_calloc(1, sizeof(t_minishell));
 	new_shell->envs = copy_envs(envs);
-	new_shell->exit_status = EXIT_SUCCESS;
+	new_shell->exit_status = exit_status;
 	return (new_shell);
 }
 

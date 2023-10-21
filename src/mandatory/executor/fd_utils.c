@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:40:56 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/20 01:22:28 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/20 23:26:12 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	close_fds(t_list *fds)
 	}
 }
 
-void	open_redirects(t_minishell *minishell, t_list *fds,
-		t_list **token_array)
+bool	open_redirects(t_minishell *minishell, t_list *fds,
+		t_list **token_array, bool has_pipe)
 {
 	t_fd	*file;
 	t_list	*head;
@@ -39,12 +39,18 @@ void	open_redirects(t_minishell *minishell, t_list *fds,
 		{
 			close_fds(head);
 			ft_lstclear(&head, del_fd);
+			if (!has_pipe)
+			{
+				minishell->exit_status = EXIT_FAILURE;
+				return (false);
+			}
 			free_token_array(token_array);
 			clear_shell(minishell);
 			exit(EXIT_FAILURE);
 		}
 		fds = fds->next;
 	}
+	return (true);
 }
 
 int	get_last_fd(int type, t_list *fds, int default_fd)

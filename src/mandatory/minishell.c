@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 20:55:14 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:29:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_minishell	*expand_shell(t_minishell *minishell)
 	t_minishell	*new_shell;
 
 	tokens = minishell->tokens;
-	new_shell = create_sub_shells(&tokens, minishell->envs);
+	new_shell = create_sub_shells(&tokens, \
+		minishell->envs, minishell->exit_status);
 	clear_shell(minishell);
 	return (new_shell);
 }
@@ -66,11 +67,14 @@ void	handle_command(t_minishell **minishell, char *command)
 	{
 		free(token_array);
 		if (!(success_create_tokens && valid_syntax))
+		{
 			ft_fprintf(2, "minishell: syntax error\n");
+			(*minishell)->exit_status = 2;
+		}
 		else
 		{
 			*minishell = expand_shell(*minishell);
-			executor(*minishell);
+			(*minishell)->exit_status = executor(*minishell);
 			clear_subshells(*minishell);
 		}
 	}
@@ -80,9 +84,15 @@ void	handle_command(t_minishell **minishell, char *command)
 
 static void	exit_main(t_minishell *minishell, char *command)
 {
+	int	ret;
+
 	free(command);
 	rl_clear_history();
+	ret = minishell->exit_status;
 	clear_shell(minishell);
 	ft_printf("exit\n");
-	exit (EXIT_SUCCESS);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit (ret);
 }

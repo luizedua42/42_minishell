@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/18 12:46:18 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/21 00:34:29 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ static void	create_pwd_env(t_minishell *minishell)
 	pwd_env = find_env(minishell->envs, "PWD");
 	if (pwd_env == NULL)
 		add_env(minishell->envs, "PWD", current_pwd);
-	else
-		update_env(minishell->envs, "PWD", current_pwd);
 	pwd_env = find_env(minishell->envs, "OLDPWD");
 	if (pwd_env == NULL)
 		add_env(minishell->envs, "OLDPWD", current_pwd);
-	else
-		update_env(minishell->envs, "OLDPWD", current_pwd);
 	free(current_pwd);
 }

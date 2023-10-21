@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 00:34:30 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/24 02:36:30 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:41:14 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env	*find_env(t_list *envs, char *key)
 	while (envs != NULL)
 	{
 		env = envs->content;
-		if (ft_strncmp(env->key, key, ft_strlen(env->key)) == 0)
+		if (ft_strncmp(env->key, key, ft_strlen(env->key) + 1) == 0)
 			return (env);
 		envs = envs->next;
 	}
@@ -43,7 +43,7 @@ t_list	*find_env_element(t_list *envs, char *key)
 	while (envs != NULL)
 	{
 		env = envs->content;
-		if (ft_strncmp(env->key, key, ft_strlen(env->key)) == 0)
+		if (ft_strncmp(env->key, key, ft_strlen(env->key) + 1) == 0)
 			return (envs);
 		envs = envs->next;
 	}

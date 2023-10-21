@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   verify_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 01:01:58 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/21 01:40:33 by luizedua         ###   ########.fr       */
+/*   Created: 2023/10/20 22:07:40 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/20 22:12:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo(char **args)
+bool	verify_token(t_list *tokens)
 {
-	size_t	i;
-	bool	n_is_set;
+	t_token *token;
 
-	i = 1;
-	n_is_set = false;
-	if (count_args(args) > 1)
+	while(tokens != NULL)
 	{
-		while (args[i] && ft_strncmp("-n", args[i], 3) == 0)
-		{
-			n_is_set = true;
-			i++;
-		}
-		while (args[i])
-		{
-			ft_printf("%s", args[i]);
-			if (args[i + 1] && args[i][0] != '\0')
-				ft_printf(" ");
-			i++;
-		}
+		
 	}
-	if (n_is_set == 0)
-		ft_printf("\n");
-	return (EXIT_SUCCESS);
 }

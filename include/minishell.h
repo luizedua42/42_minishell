@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/20 01:21:32 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/21 00:50:55 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 // Defines
 # define COMMAND_NOT_FOUND 127
@@ -78,15 +79,13 @@ typedef struct s_minishell
 	unsigned char	exit_status;
 }					t_minishell;
 
-t_minishell			*init_minishell(char **envp);
-
 // Parse
 bool				syntax_analysis(t_token_type *token_array);
 bool				token_analysis(t_token_type *token_array,
 						t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
 bool				check_parenthesis(t_token_type *token_array);
-t_minishell			*create_sub_shells(t_list **tokens, t_list *envs);
+t_minishell			*create_sub_shells(t_list **tokens, t_list *envs, int exit_status);
 void				clear_shell(void *minishell);
 void				clear_subshells(void *minishell);
 
@@ -118,6 +117,7 @@ bool				is_builtin(char *cmd);
 void				my_dup(int fd, int fd2);
 void				handle_signal(void);
 void				handle_signal_child(void);
+t_minishell			*init_minishell(char **envp);
 
 // Tokens
 void				sanitize_tokens(t_list **original_tokens);
@@ -125,6 +125,7 @@ t_list				*get_redirects(t_list *tokens);
 bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
 						size_t *index);
+void				sanitize_emptyvar(t_list **original_tokens);
 t_token_type		*create_token_array(t_list *tokens);
 
 // Enviroments
@@ -163,8 +164,8 @@ int					exec(char **cmds, t_minishell *minishell);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
 void				close_fds(t_list *fds);
-void				open_redirects(t_minishell *minishell, t_list *fds,
-						t_list **token_array);
+bool				open_redirects(t_minishell *minishell, t_list *fds,
+						t_list **token_array, bool has_pipe);
 int					get_last_fd(int type, t_list *fds, int default_fd);
 
 // Validation

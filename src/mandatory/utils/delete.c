@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:25:57 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/20 01:00:26 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:34:52 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	del_fd(void *content)
 	{
 		free(fd->redirect_to);
 		fd->redirect_to = NULL;
+		free(content);
 	}
 }
 

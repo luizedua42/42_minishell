@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 19:53:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/28 02:20:30 by cobli            ###   ########.fr       */
+/*   Updated: 2023/10/21 01:47:10 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static t_list	*wild_read(char *wildcard, DIR *dir)
 		dirret = readdir(dir);
 		if (dirret == NULL)
 			break ;
+		if (ft_strncmp(dirret->d_name, ".", 1) == 0)
+			continue ;
 		if (wild_match(wildcard, dirret->d_name))
 			ft_lstadd_back(&wild_list, ft_lstnew(ft_strdup(dirret->d_name)));
 	}

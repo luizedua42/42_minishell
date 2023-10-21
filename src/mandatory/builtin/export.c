@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:41:08 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/17 12:03:13 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/21 01:43:13 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	minishell_export(t_minishell *minishell, char **args)
 		print_sorted_envs(minishell);
 	else
 		valid_args = handle_envs(minishell, args + 1);
-	if (valid_args < argc)
+	if (valid_args < argc - 1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -105,7 +105,21 @@ static void	print_sorted_envs(t_minishell *minishell)
 
 static bool	check_parameter(char *str)
 {
-	if (ft_isdigit(str[0]) || str[0] == '=')
+	size_t	i;
+	bool	is_valid;
+
+	i = 0;
+	is_valid = true;
+	while (str[i] != '\0' && str[i] != '=')
+	{
+		if(!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			is_valid = false;
+			break ;
+		}
+		i++;
+	}
+	if (ft_isdigit(str[0]) || str[0] == '=' || !is_valid || str[0] == '\0')
 	{
 		ft_fprintf(STDERR_FILENO,
 			"minishell: export: `%s': not a valid identifier\n", str);
