@@ -8,6 +8,11 @@ vpath %.c src/bonus
 NAME := minishell
 CFLAGS := -Wextra -Wall -Werror
 CFLAGS += -g3
+JOBS := -j50
+MAKEFLAGS += --no-print-directory
+YELLOW := $(shell tput setaf 3)
+GREEN := $(shell tput setaf 2)
+RESET := $(shell tput sgr0)
 
 CC := cc
 RM := rm -rf
@@ -43,20 +48,26 @@ init_modules: $(LIBTF_DIR)
 update_modules: init_modules
 	git submodule foreach git pull origin master --rebase
 
+print_start:
+	@echo "$(YELLOW)Compiling minishell...$(RESET)"
+
 libft:
-	@$(MAKE) -j50 -C $(LIBTF_DIR)
+	@echo "$(YELLOW)Compiling libft...$(RESET)"
+	@$(MAKE) $(JOBS) -C $(LIBTF_DIR)
+	@echo "$(GREEN)libft compiled!$(RESET)"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(LIBTF_DIR):
-	mkdir -p $(LIBTF_DIR)
+	@mkdir -p $(LIBTF_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): print_start $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
+	@echo "$(GREEN)minishell compiled!$(RESET)"
 
 bonus: libft $(OBJS_BONUS)
 	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)

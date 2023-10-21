@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/21 01:33:13 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:15:07 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static char	*handle_wild(t_list *words)
 
 	i = 0;
 	expantion = join_words(words);
+	if (expantion == NULL)
+		return (NULL);
 	if (ft_strchr(expantion, '*') != NULL)
 	{
 		aux = wild_get(expantion);

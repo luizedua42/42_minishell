@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 21:14:47 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/16 15:35:20 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:16:30 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_list	**split_pipes(t_list *tokens)
 		{
 			tokendup = ft_calloc(1, sizeof(t_token));
 			tokendup->type = token->type;
-			tokendup->value = ft_strdup(token->value);
+			if (token-> value != NULL)
+				tokendup->value = ft_strdup(token->value);
 			ft_lstadd_back(token_array + i, ft_lstnew(tokendup));
 		}
 		tokens = tokens->next;

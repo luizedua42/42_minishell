@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:42:17 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 00:50:26 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:13:52 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	sanitize_emptyvar(t_list **original_tokens)
 	while (tokens != NULL)
 	{
 		token = tokens->content;
-		if (token->value[0] == '\0')
+		if (token->value == NULL)
 		{
 			*original_tokens = ft_lstrm(*original_tokens, tokens, del_token);
 			tokens = *original_tokens;
