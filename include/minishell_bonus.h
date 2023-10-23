@@ -16,7 +16,6 @@
 # include "libft.h"
 # include <dirent.h>
 # include <fcntl.h>
-# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -57,12 +56,6 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 }					t_env;
-
-typedef struct s_node
-{
-	t_token_type	type;
-	char			*value;
-}					t_node;
 
 typedef struct s_fd
 {

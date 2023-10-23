@@ -14,9 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <dirent.h>
 # include <fcntl.h>
-# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -53,12 +51,6 @@ typedef struct s_env
 	char			*value;
 }					t_env;
 
-typedef struct s_node
-{
-	t_token_type	type;
-	char			*value;
-}					t_node;
-
 typedef struct s_fd
 {
 	char			*redirect_to;
@@ -84,12 +76,7 @@ typedef struct s_bfd
 
 // Parse
 bool				syntax_analysis(t_token_type *token_array);
-bool				token_analysis(t_token_type *token_array,
-						t_token_type type);
 bool				redirection_analysis(t_token_type *token_array);
-bool				check_parenthesis(t_token_type *token_array);
-t_minishell			*create_sub_shells(t_list **tokens, t_list *envs, \
-										int exit_status);
 void				clear_shell(void *minishell);
 void				clear_shell_content(void *minishell);
 
@@ -115,7 +102,6 @@ void				free_token_array(t_list **token_array);
 bool				is_redirect(t_token_type type);
 bool				is_token(char c);
 bool				is_exe(t_token_type type);
-bool				is_operator(t_token_type type);
 bool				is_space(char c);
 char				*create_prompt(void);
 bool				is_builtin(char *cmd);
@@ -184,11 +170,6 @@ void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 int					pipe_validation(bool is_last, int *pipedes,
 						int hostage_pipe);
 int					fork_validation(int *pid);
-
-// Prints
-void				print_tokens(t_minishell *minishell, t_list *tokens);
-void				print_envs(t_list *envs);
-void				print_sub_shells(t_minishell *minishell, int level);
 
 // Getter
 t_minishell			*getset_mini(t_minishell *minishell);
