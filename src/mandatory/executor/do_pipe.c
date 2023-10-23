@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:05:33 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/22 00:23:45 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:17:49 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	handle_child(int *pipedes, int i, t_minishell *minishell,
 	t_list	*child_files;
 	int		last_fd;
 
+	cmds = NULL;
 	is_last = token_array[i + 1] == NULL;
 	if (!is_last)
 		close(pipedes[0]);
@@ -84,8 +85,8 @@ static void	handle_child(int *pipedes, int i, t_minishell *minishell,
 	last_fd = get_last_fd(STDOUT_FILENO, child_files, pipedes[1]);
 	if (!is_last || last_fd != pipedes[1])
 		my_dup(last_fd, STDOUT_FILENO);
-	sanitize_tokens(&token_array[i]);
-	cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
+	if (sanitize_tokens(&token_array[i]))
+		cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
 	ret = exec(cmds, minishell);
 	close_fds(child_files);
 	ft_lstclear(&child_files, del_fd);
