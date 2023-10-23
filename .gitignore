@@ -3,3 +3,4 @@ build
 minishell
 .vscode
 .cache
+minishell_tester

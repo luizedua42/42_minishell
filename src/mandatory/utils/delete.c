@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:25:57 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 12:43:03 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:34:52 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,16 @@ void	del_env(void *content)
 	free(env);
 }
 
-void	clear_fds(t_minishell *minishell)
+void	del_fd(void *content)
 {
-	minishell->fds.fd_in.type = END_ARRAY;
-	del_fd(&minishell->fds.fd_in);
-	minishell->fds.fd_out.type = END_ARRAY;
-	del_fd(&minishell->fds.fd_out);
-	minishell->fds.fd_error.type = END_ARRAY;
-	del_fd(&minishell->fds.fd_error);
-}
+	t_fd	*fd;
 
-void	del_fd(t_fd *fd)
-{
+	fd = content;
 	if (fd->redirect_to != NULL)
 	{
 		free(fd->redirect_to);
 		fd->redirect_to = NULL;
+		free(content);
 	}
 }
 
@@ -48,4 +42,14 @@ void	del_token(void *content)
 	token = content;
 	free(token->value);
 	free(token);
+}
+
+void	free_token_array(t_list **token_array)
+{
+	size_t	i;
+
+	i = -1;
+	while (token_array[++i] != NULL)
+		ft_lstclear(&token_array[i], del_token);
+	free(token_array);
 }

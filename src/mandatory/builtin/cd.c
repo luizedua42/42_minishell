@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:43:31 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/24 15:43:46 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/21 03:17:30 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	cd(t_minishell *minishell, char **args)
 		ft_fprintf(2, "minishell: cd: too many arguments\n");
 		return (EXIT_FAILURE);
 	}
-	else if (ft_strncmp(path, "-", 1) == 0)
+	else if (ft_strncmp(path, "-", 2) == 0)
 		exit_status = get_env_path(minishell->envs, "OLDPWD", &path);
-	if (chdir(path) < 0)
+	if (chdir(path) < 0 && exit_status != EXIT_FAILURE)
 	{
 		perror("minishell: cd");
 		exit_status = EXIT_FAILURE;
@@ -46,7 +46,7 @@ static int	get_env_path(t_list *envs, char *env_key, char **path)
 	*path = find_env_value(envs, env_key);
 	if (*path == NULL)
 	{
-		ft_fprintf(2, "minishell: cd: %s not defined\n", env_key);
+		ft_fprintf(2, "minishell: cd: %s not set\n", env_key);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

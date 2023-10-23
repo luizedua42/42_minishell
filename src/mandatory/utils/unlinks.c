@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wild_match.c                                       :+:      :+:    :+:   */
+/*   unlinks.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 19:25:23 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/27 21:53:48 by luizedua         ###   ########.fr       */
+/*   Created: 2023/10/22 19:23:52 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/22 19:51:24 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	wild_match(const char *pattern, const char *string)
+void	unlink_all(t_list *tokens)
 {
-	if (*pattern == '\0' && *string == '\0')
-		return (true);
-	if (*pattern == '*')
+	t_token	*token;
+
+	while (tokens != NULL)
 	{
-		while (*string != '\0')
+		token = tokens->content;
+		if (token->type == HEREDOC_IN)
 		{
-			if (wild_match(pattern + 1, string))
-				return (true);
-			string++;
+			tokens = tokens->next;
+			token = tokens->content;
+			unlink(token->value);
 		}
-		return (wild_match(pattern + 1, string));
+		tokens = tokens->next;
 	}
-	if (*pattern == *string)
-		return (wild_match(pattern + 1, string + 1));
-	return (false);
 }

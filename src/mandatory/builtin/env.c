@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:33:57 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/24 15:44:36 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:02:31 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	env(t_minishell *minishell)
 	while (envs != NULL)
 	{
 		env = envs->content;
-		ft_printf("%s=%s\n", env->key, env->value);
+		if (env->value != NULL)
+			ft_printf("%s=%s\n", env->key, env->value);
 		envs = envs->next;
 	}
 	return (EXIT_SUCCESS);

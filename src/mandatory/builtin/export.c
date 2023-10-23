@@ -3,26 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:41:08 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 16:37:35 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/21 02:02:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sort_envs(t_env **envs);
-static void	print_sorted_envs(t_minishell *minishell);
+static void		sort_envs(t_env **envs);
+static bool		check_parameter(char *str);
+static void		print_sorted_envs(t_minishell *minishell);
+static size_t	handle_envs(t_minishell *minishell, char **args);
 
 int	minishell_export(t_minishell *minishell, char **args)
 {
 	size_t	argc;
+	size_t	valid_args;
 
 	argc = count_args(args);
+	valid_args = 0;
 	if (argc == 1)
 		print_sorted_envs(minishell);
+	else
+		valid_args = handle_envs(minishell, args + 1);
+	if (valid_args < argc - 1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+static size_t	handle_envs(t_minishell *minishell, char **args)
+{
+	size_t	i;
+	char	*key;
+	char	*value;
+	size_t	valid_args;
+	bool	is_valid_args;
+
+	i = 0;
+	valid_args = 0;
+	while (args[i] != NULL)
+	{
+		key = args[i];
+		value = ft_strchr(args[i], '=');
+		if (value != NULL)
+		{
+			*value = '\0';
+			value++;
+		}
+		is_valid_args = check_parameter(args[i++]);
+		valid_args += is_valid_args;
+		if (!is_valid_args)
+			continue ;
+		export_env(minishell, key, value);
+	}
+	return (valid_args);
 }
 
 static void	sort_envs(t_env **envs)
@@ -59,10 +95,35 @@ static void	print_sorted_envs(t_minishell *minishell)
 	while (envs[i] != NULL)
 	{
 		if (envs[i]->value == NULL)
-			ft_printf("export -x %s\n", envs[i]->key);
+			ft_printf("declare -x %s\n", envs[i]->key);
 		else
-			ft_printf("export -x %s=\"%s\"\n", envs[i]->key, envs[i]->value);
+			ft_printf("declare -x %s=\"%s\"\n", envs[i]->key, envs[i]->value);
 		i++;
 	}
 	free(envs);
+}
+
+static bool	check_parameter(char *str)
+{
+	size_t	i;
+	bool	is_valid;
+
+	i = 0;
+	is_valid = true;
+	while (str[i] != '\0' && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			is_valid = false;
+			break ;
+		}
+		i++;
+	}
+	if (ft_isdigit(str[0]) || str[0] == '=' || !is_valid || str[0] == '\0')
+	{
+		ft_fprintf(STDERR_FILENO,
+			"minishell: export: `%s': not a valid identifier\n", str);
+		return (false);
+	}
+	return (true);
 }

@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:14:31 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/04 21:02:33 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
-static t_minishell	*copy_minishell(t_list *envs);
+static t_minishell	*copy_minishell(t_list *envs, int exit_status);
 static t_list		*copy_envs(t_list *envs);
 static void			copy_tokens(t_list **tokens, t_minishell *new_shell,
 						char *value, t_token_type type);
 
-t_minishell	*create_sub_shells(t_list **tokens, t_list *envs)
+t_minishell	*create_sub_shells(t_list **tokens, t_list *envs, int exit_status)
 {
 	t_token		*token;
 	t_minishell	*new_shell;
 	t_minishell	*shell;
 
-	new_shell = copy_minishell(envs);
+	new_shell = copy_minishell(envs, exit_status);
 	while (*tokens != NULL)
 	{
 		token = (*tokens)->content;
 		if (token->type == OPEN_PARENTHESIS)
 		{
 			copy_tokens(tokens, new_shell, "subshell", SHELL);
-			shell = create_sub_shells(tokens, envs);
+			shell = create_sub_shells(tokens, envs, exit_status);
 			ft_lstadd_back(&new_shell->shells, ft_lstnew(shell));
 		}
 		else if (token->type == CLOSE_PARENTHESIS)
@@ -41,26 +41,16 @@ t_minishell	*create_sub_shells(t_list **tokens, t_list *envs)
 		else
 			copy_tokens(tokens, new_shell, token->value, token->type);
 	}
-	get_redirects(new_shell);
-	sanitize_tokens(new_shell);
 	return (new_shell);
 }
 
-static t_minishell	*copy_minishell(t_list *envs)
+static t_minishell	*copy_minishell(t_list *envs, int exit_status)
 {
 	t_minishell	*new_shell;
 
 	new_shell = ft_calloc(1, sizeof(t_minishell));
 	new_shell->envs = copy_envs(envs);
-	new_shell->tokens = NULL;
-	new_shell->exit_status = EXIT_SUCCESS;
-	new_shell->fds.fd_in.redirect_to = NULL;
-	new_shell->fds.fd_in.type = END_ARRAY;
-	new_shell->fds.fd_out.redirect_to = NULL;
-	new_shell->fds.fd_out.type = END_ARRAY;
-	new_shell->fds.fd_error.redirect_to = NULL;
-	new_shell->fds.fd_error.type = END_ARRAY;
-	new_shell->shells = NULL;
+	new_shell->exit_status = exit_status;
 	return (new_shell);
 }
 
@@ -75,7 +65,8 @@ static t_list	*copy_envs(t_list *envs)
 	{
 		env = envs->content;
 		sub_env = ft_calloc(1, sizeof(t_env));
-		sub_env->value = ft_strdup(env->value);
+		if (env->value != NULL)
+			sub_env->value = ft_strdup(env->value);
 		sub_env->key = ft_strdup(env->key);
 		ft_lstadd_back(&new_envs, ft_lstnew(sub_env));
 		envs = envs->next;

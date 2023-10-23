@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_operator.c                                      :+:      :+:    :+:   */
+/*   my_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 20:44:42 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/04 21:10:42 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/10/17 00:34:11 by paulo             #+#    #+#             */
+/*   Updated: 2023/10/17 00:36:04 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_operator(t_token_type type)
+void	my_dup(int fd, int fd2)
 {
-	return (type == AND || type == OR || type == PIPE);
+	dup2(fd, fd2);
+	close(fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cobli <cobli@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 08:36:43 by cobli             #+#    #+#             */
-/*   Updated: 2023/09/28 08:54:06 by cobli            ###   ########.fr       */
+/*   Updated: 2023/10/22 22:29:47 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	parse_quote(t_minishell *minishell, t_list **words, char *str,
 
 	i = 1;
 	quote = str[0];
-	(void)minishell;
 	while (str[i] != quote)
 		i++;
 	if (i == 1)

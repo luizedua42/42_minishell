@@ -3,49 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   get_redirects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 12:17:38 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/09/24 12:33:49 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:09:38 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_redirect_value(t_fd *fd, t_list *last_redirect);
+static t_fd	*get_redirect_value(t_list **token_lst);
 
-void	get_redirects(t_minishell *minishell)
+t_list	*get_redirects(t_list *tokens)
 {
-	t_list	*tokens;
-	t_list	*last_redirect_in;
-	t_list	*last_redirect_out;
+	t_list	*fds;
 	t_token	*token;
 
-	tokens = minishell->tokens;
-	last_redirect_in = NULL;
-	last_redirect_out = NULL;
+	fds = NULL;
 	while (tokens != NULL)
 	{
 		token = tokens->content;
-		if (token->type == REDIRECT_IN || token->type == HEREDOC_IN)
-			last_redirect_in = tokens;
-		else if (token->type == REDIRECT_OUT || token->type == HEREDOC_OUT)
-			last_redirect_out = tokens;
+		if (is_redirect(token->type))
+			ft_lstadd_back(&fds, ft_lstnew(get_redirect_value(&tokens)));
 		tokens = tokens->next;
 	}
-	if (last_redirect_in != NULL)
-		get_redirect_value(&minishell->fds.fd_in, last_redirect_in);
-	if (last_redirect_out != NULL)
-		get_redirect_value(&minishell->fds.fd_out, last_redirect_out);
+	return (fds);
 }
 
-static void	get_redirect_value(t_fd *fd, t_list *last_redirect)
+static t_fd	*get_redirect_value(t_list **token_lst)
 {
 	t_token	*token;
+	t_fd	*fd;
 
-	token = last_redirect->content;
+	fd = ft_calloc(1, sizeof(t_fd));
+	token = (*token_lst)->content;
 	fd->type = token->type;
-	last_redirect = last_redirect->next;
-	token = last_redirect->content;
+	(*token_lst) = (*token_lst)->next;
+	token = (*token_lst)->content;
 	fd->redirect_to = ft_strdup(token->value);
+	fd->fd = -1;
+	return (fd);
 }

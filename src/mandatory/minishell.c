@@ -3,119 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/04 21:01:25 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/22 22:33:23 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens(t_minishell *minishell, t_list *tokens)
-{
-	t_token	*token;
-	char	*aux;
-
-	while (tokens != NULL)
-	{
-		token = tokens->content;
-		if (token->type == WORD)
-		{
-			aux = expand(minishell, token->value, false);
-			free(token->value);
-			token->value = aux;
-		}
-		ft_printf("value: %s	type: %i\n", token->value, token->type);
-		tokens = tokens->next;
-	}
-}
-
-void	print_envs(t_list *envs)
-{
-	t_env	*aux;
-
-	while (envs != NULL)
-	{
-		aux = envs->content;
-		ft_printf("key: %s		value: %s\n", aux->key, aux->value);
-		envs = envs->next;
-	}
-}
-
-void	print_redirects(t_minishell *minishell)
-{
-	ft_printf("INPUT = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_in.redirect_to,
-		minishell->fds.fd_in.type);
-	ft_printf("OUTPUT = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_out.redirect_to,
-		minishell->fds.fd_out.type);
-	ft_printf("ERROR = redirect_to: %s	redirect_type: %i\n", \
-		minishell->fds.fd_error.redirect_to,
-		minishell->fds.fd_error.type);
-}
-
-void	print_sub_shells(t_minishell *minishell, int level)
-{
-	t_list	*shell;
-
-	shell = minishell->shells;
-	while (shell != NULL)
-	{
-		print_sub_shells(shell->content, level + 1);
-		shell = shell->next;
-	}
-	ft_printf("level %d ------------------\n", level);
-	print_tokens(minishell, minishell->tokens);
-	print_redirects(minishell);
-}
-
-void	handle_command(t_minishell *minishell, char *command)
-{
-	bool			success_create_tokens;
-	t_token_type	*token_array;
-	t_minishell		*new_shell;
-	t_list			*tokens;
-
-	success_create_tokens = create_tokens(&minishell->tokens, command);
-	token_array = create_token_array(minishell->tokens);
-	if (!(success_create_tokens && syntax_analysis(token_array)))
-		ft_fprintf(2, "minishell: syntax error\n");
-	else
-	{
-		tokens = minishell->tokens;
-		new_shell = create_sub_shells(&tokens, minishell->envs);
-		print_sub_shells(new_shell, 0);
-		ft_lstclear(&(minishell)->tokens, del_token);
-		ft_lstclear(&(minishell)->envs, del_env);
-		ft_lstclear(&(minishell)->shells, clear_shells);
-		clear_fds((minishell));
-		clear_shells(new_shell);
-	}
-	free(token_array);
-	ft_lstclear(&minishell->tokens, del_token);
-	free(command);
-}
+static void	handle_command(t_minishell **minishell, char *command);
+static void	exit_main(t_minishell *minishell, char *command);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
 	char		*prompt;
-	t_minishell	minishell;
+	t_minishell	*minishell;
 
 	(void)argc;
 	(void)argv;
-	init_minishell(&minishell, envp);
+	minishell = init_minishell(envp);
 	while (1)
 	{
+		handle_signal();
 		prompt = create_prompt();
 		command = readline(prompt);
-		if (command == NULL || ft_strncmp("exit", command, 4) == 0)
-		{
-			free(command);
-			return (minishell_exit(&minishell));
-		}
+		if (command == NULL)
+			exit_main(minishell, command);
 		if (command[0] != '\0')
 		{
 			add_history(command);
@@ -124,4 +39,47 @@ int	main(int argc, char **argv, char **envp)
 		else if (command[0] == '\0')
 			free(command);
 	}
+}
+
+static void	handle_command(t_minishell **minishell, char *command)
+{
+	bool			valid_syntax;
+	t_token_type	*token_array;
+	bool			success_create_tokens;
+
+	success_create_tokens = create_tokens(&(*minishell)->tokens, command);
+	token_array = create_token_array((*minishell)->tokens);
+	valid_syntax = syntax_analysis(token_array);
+	if (token_array != NULL)
+	{
+		free(token_array);
+		if (!(success_create_tokens && valid_syntax))
+		{
+			ft_fprintf(2, "minishell: syntax error\n");
+			(*minishell)->exit_status = 2;
+		}
+		else
+		{
+			(*minishell)->exit_status = executor(*minishell);
+			unlink_all((*minishell)->tokens);
+			clear_shell_content(*minishell);
+		}
+	}
+	ft_lstclear(&(*minishell)->tokens, del_token);
+	free(command);
+}
+
+static void	exit_main(t_minishell *minishell, char *command)
+{
+	int	ret;
+
+	free(command);
+	rl_clear_history();
+	ret = minishell->exit_status;
+	clear_shell(minishell);
+	ft_printf("exit\n");
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit (ret);
 }

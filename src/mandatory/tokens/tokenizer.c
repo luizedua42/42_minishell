@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/09/28 19:15:50 by pdavi-al         ###   ########.fr       */
+/*   Updated: 2023/10/22 22:02:28 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,14 @@ bool	create_tokens(t_list **tokens, char *cmd)
 		else if (new_token(tokens, WORD, cmd + i, &i) == false)
 			return (false);
 	}
+	if (tokens == NULL)
+		return (false);
 	return (true);
 }
 
 static bool	is_double_token(t_list **tokens, char *command, size_t *i)
 {
-	if (ft_strncmp("||", command + *i, 2) == 0)
-		return (new_token(tokens, OR, "||", i));
-	else if (ft_strncmp("&&", command + *i, 2) == 0)
-		return (new_token(tokens, AND, "&&", i));
-	else if (ft_strncmp("<<", command + *i, 2) == 0)
+	if (ft_strncmp("<<", command + *i, 2) == 0)
 		return (new_token(tokens, HEREDOC_IN, "<<", i));
 	else if (ft_strncmp(">>", command + *i, 2) == 0)
 		return (new_token(tokens, HEREDOC_OUT, ">>", i));
@@ -56,9 +54,5 @@ static bool	is_single_token(t_list **tokens, char *command, size_t *i)
 		return (new_token(tokens, REDIRECT_IN, "<", i));
 	else if (command[*i] == '>')
 		return (new_token(tokens, REDIRECT_OUT, ">", i));
-	else if (command[*i] == '(')
-		return (new_token(tokens, OPEN_PARENTHESIS, "(", i));
-	else if (command[*i] == ')')
-		return (new_token(tokens, CLOSE_PARENTHESIS, ")", i));
 	return (false);
 }
