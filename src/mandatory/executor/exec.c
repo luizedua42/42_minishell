@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/21 03:18:21 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:51:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int	exec(char **cmds, t_minishell *minishell)
 	char		*path;
 	char		**env;
 
+	if (cmds == NULL)
+	{
+		clear_shell(minishell);
+		return (EXIT_SUCCESS);
+	}
 	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
 		return (ret);
@@ -40,7 +45,7 @@ int	exec(char **cmds, t_minishell *minishell)
 	free(path);
 	clear_all(minishell, cmds, env);
 	perror(NULL);
-	return (errno);
+	return (-1);
 }
 
 static void	clear_all(t_minishell *minishell, char **cmds, char **env)

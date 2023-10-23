@@ -6,13 +6,11 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 08:32:47 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/21 20:02:19 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:34:38 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	expand_env(size_t i, char *str, char **word, t_list *envs);
 
 void	parse_env(t_minishell *minishell, t_list **words, char *str,
 		size_t *index)
@@ -21,15 +19,17 @@ void	parse_env(t_minishell *minishell, t_list **words, char *str,
 	char	*word;
 
 	i = 1;
-	if (str[i] == '?')
+	if (str[i] == '?' || ft_isdigit(str[i]))
 	{
-		word = ft_itoa(minishell->exit_status);
-		ft_lstadd_back(words, ft_lstnew(word));
+		if (str[i] == '0')
+			ft_lstadd_back(words, ft_lstnew(ft_strdup("minishell")));
+		if (str[i] == '?')
+			ft_lstadd_back(words, ft_lstnew(ft_itoa(minishell->exit_status)));
 		*index += i + 1;
 		return ;
 	}
 	while (str[i] != '\0' && str[i] != '\'' && str[i] != '"' \
-			&& !is_space(str[i]))
+			&& (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	if (i == 1)
 		word = ft_strdup("$");
@@ -39,7 +39,7 @@ void	parse_env(t_minishell *minishell, t_list **words, char *str,
 	*index += i;
 }
 
-static void	expand_env(size_t i, char *str, char **word, t_list *envs)
+void	expand_env(size_t i, char *str, char **word, t_list *envs)
 {
 	char	*key;
 	char	*env_value;

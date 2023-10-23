@@ -6,11 +6,11 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 19:53:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 01:47:10 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static char		*wild_join(char **wild_list);
 static char		**wild_sort(t_list *wild_list);

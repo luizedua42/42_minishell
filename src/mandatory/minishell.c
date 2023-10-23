@@ -6,14 +6,13 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 00:29:54 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 22:33:23 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_minishell	*expand_shell(t_minishell *minishell);
-void		handle_command(t_minishell **minishell, char *command);
+static void	handle_command(t_minishell **minishell, char *command);
 static void	exit_main(t_minishell *minishell, char *command);
 
 int	main(int argc, char **argv, char **envp)
@@ -42,19 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 }
 
-t_minishell	*expand_shell(t_minishell *minishell)
-{
-	t_list		*tokens;
-	t_minishell	*new_shell;
-
-	tokens = minishell->tokens;
-	new_shell = create_sub_shells(&tokens, \
-		minishell->envs, minishell->exit_status);
-	clear_shell(minishell);
-	return (new_shell);
-}
-
-void	handle_command(t_minishell **minishell, char *command)
+static void	handle_command(t_minishell **minishell, char *command)
 {
 	bool			valid_syntax;
 	t_token_type	*token_array;
@@ -73,9 +60,9 @@ void	handle_command(t_minishell **minishell, char *command)
 		}
 		else
 		{
-			*minishell = expand_shell(*minishell);
 			(*minishell)->exit_status = executor(*minishell);
-			clear_subshells(*minishell);
+			unlink_all((*minishell)->tokens);
+			clear_shell_content(*minishell);
 		}
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/21 20:15:07 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 22:24:40 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	parse_word(t_list **words, char *str, size_t *index,
 				bool is_in_quotes);
-static char	*handle_wild(t_list *words);
 
 char	*expand(t_minishell *minishell, char *str, bool is_in_quotes)
 {
@@ -34,34 +33,7 @@ char	*expand(t_minishell *minishell, char *str, bool is_in_quotes)
 		else
 			parse_word(&words, str + i, &i, is_in_quotes);
 	}
-	return (handle_wild(words));
-}
-
-static char	*handle_wild(t_list *words)
-{
-	char	*aux;
-	char	*expantion;
-	size_t	i;
-
-	i = 0;
-	expantion = join_words(words);
-	if (expantion == NULL)
-		return (NULL);
-	if (ft_strchr(expantion, '*') != NULL)
-	{
-		aux = wild_get(expantion);
-		if (aux == NULL)
-			return (expantion);
-		free(expantion);
-		expantion = aux;
-	}
-	while (expantion[i] != '\0')
-	{
-		if (expantion[i] == -1)
-			expantion[i] = '*';
-		i++;
-	}
-	return (expantion);
+	return (join_words(words));
 }
 
 static void	parse_word(t_list **words, char *str, size_t *index,
@@ -80,11 +52,13 @@ static void	parse_word(t_list **words, char *str, size_t *index,
 	*index += i;
 }
 
-void	expand_all(t_minishell *minishell, t_list *tokens)
+bool	expand_all(t_minishell *minishell, t_list *tokens)
 {
 	t_token	*token;
 	char	*tokenex;
 
+	if (open_here_docs(minishell, minishell->tokens) == false)
+		return (false);
 	while (tokens != NULL)
 	{
 		token = tokens->content;
@@ -96,4 +70,5 @@ void	expand_all(t_minishell *minishell, t_list *tokens)
 		}
 		tokens = tokens->next;
 	}
+	return (true);
 }

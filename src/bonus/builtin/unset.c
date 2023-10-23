@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wild_match.c                                       :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 19:25:23 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 01:45:33 by luizedua         ###   ########.fr       */
+/*   Created: 2023/09/24 01:02:22 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
-bool	wild_match(const char *pattern, const char *string)
+int	unset(t_minishell *minishell, char **args)
 {
-	if (*pattern == '\0' && *string == '\0')
-		return (true);
-	if (*pattern == '*')
+	size_t	argc;
+
+	argc = count_args(args);
+	if (argc == 1)
+		return (EXIT_SUCCESS);
+	args++;
+	while (*args != NULL)
 	{
-		while (*string != '\0')
-		{
-			if (wild_match(pattern + 1, string))
-				return (true);
-			string++;
-		}
-		return (wild_match(pattern + 1, string));
+		if (delete_env(minishell, *args))
+			break ;
+		args++;
 	}
-	if (*pattern == *string)
-		return (wild_match(pattern + 1, string + 1));
-	return (false);
+	return (EXIT_SUCCESS);
 }

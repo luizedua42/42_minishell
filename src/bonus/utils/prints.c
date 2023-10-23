@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:33:15 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/18 12:54:30 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	print_tokens(t_minishell *minishell, t_list *tokens)
 {

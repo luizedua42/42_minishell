@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_operator.c                                      :+:      :+:    :+:   */
+/*   unlinks.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdavi-al <pdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 20:44:42 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/04 21:10:42 by pdavi-al         ###   ########.fr       */
+/*   Created: 2023/10/22 19:23:52 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/22 19:51:24 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_operator(t_token_type type)
+void	unlink_all(t_list *tokens)
 {
-	return (type == AND || type == OR || type == PIPE);
+	t_token	*token;
+
+	while (tokens != NULL)
+	{
+		token = tokens->content;
+		if (token->type == HEREDOC_IN)
+		{
+			tokens = tokens->next;
+			token = tokens->content;
+			unlink(token->value);
+		}
+		tokens = tokens->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 03:44:10 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 22:38:12 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <dirent.h>
-# include <errno.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include <readline/history.h>
@@ -27,23 +26,19 @@
 
 // Defines
 # define COMMAND_NOT_FOUND 127
+# define CTRLC_RETURN 130
 # define PATH_ERROR 126
 # define PATH_STR "PATH="
 
 typedef enum e_token_type
 {
-	OR = 0,
-	PIPE = 1,
-	AND = 2,
-	REDIRECT_IN = 3,
-	REDIRECT_OUT = 4,
-	HEREDOC_IN = 5,
-	HEREDOC_OUT = 6,
-	OPEN_PARENTHESIS = 7,
-	CLOSE_PARENTHESIS = 8,
-	WORD = 9,
-	SHELL = 10,
-	END_ARRAY = 11,
+	PIPE = 0,
+	REDIRECT_IN = 1,
+	REDIRECT_OUT = 2,
+	HEREDOC_IN = 3,
+	HEREDOC_OUT = 4,
+	WORD = 5,
+	END_ARRAY = 6,
 }					t_token_type;
 
 typedef struct s_token
@@ -75,7 +70,6 @@ typedef struct s_minishell
 {
 	t_list			*tokens;
 	t_list			*envs;
-	t_list			*shells;
 	int				*pids;
 	unsigned char	exit_status;
 }					t_minishell;
@@ -97,7 +91,7 @@ bool				check_parenthesis(t_token_type *token_array);
 t_minishell			*create_sub_shells(t_list **tokens, t_list *envs, \
 										int exit_status);
 void				clear_shell(void *minishell);
-void				clear_subshells(void *minishell);
+void				clear_shell_content(void *minishell);
 
 // Builtins
 int					pwd(void);
@@ -128,7 +122,9 @@ bool				is_builtin(char *cmd);
 void				my_dup(int fd, int fd2);
 void				handle_signal(void);
 void				handle_signal_child(void);
+void				signal_handler_child_heredoc(void);
 t_minishell			*init_minishell(char **envp);
+void				unlink_all(t_list *tokens);
 
 // Tokens
 void				sanitize_tokens(t_list **original_tokens);
@@ -149,6 +145,7 @@ t_env				*update_env(t_list *envs, char *key, char *value);
 t_env				*add_env(t_list *envs, char *key, char *value);
 bool				delete_env(t_minishell *minishell, char *key);
 t_env				*export_env(t_minishell *minishell, char *key, char *value);
+void				expand_env(size_t i, char *str, char **word, t_list *envs);
 
 // Wildcard
 char				*expand(t_minishell *minishell, char *str,
@@ -160,11 +157,11 @@ void				parse_env(t_minishell *minishell, t_list **words, char *str,
 char				*join_words(t_list *words);
 void				parse_quote(t_minishell *minishell, t_list **words,
 						char *str, size_t *index);
-void				expand_all(t_minishell *minishell, t_list *tokens);
+bool				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
 bool				open_file(t_minishell *minishell, t_fd *file);
-void				here_doc(t_minishell *minishell, t_fd *fd);
+void				here_doc(t_minishell *minishell, t_token *fds, char *index);
 char				*get_path(char *cmd, char **env);
 t_list				**split_pipes(t_list *tokens);
 void				*select_token_value(void *token);
@@ -180,6 +177,8 @@ bool				open_redirects(t_minishell *minishell, t_list *fds,
 int					get_last_fd(int type, t_list *fds, int default_fd);
 int					builtin_exit(char **cmds, t_list **token_array, int ret, \
 									t_minishell *minishell);
+bool				open_here_docs(t_minishell *minishell, t_list *tokens);
+void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,
@@ -190,5 +189,10 @@ int					fork_validation(int *pid);
 void				print_tokens(t_minishell *minishell, t_list *tokens);
 void				print_envs(t_list *envs);
 void				print_sub_shells(t_minishell *minishell, int level);
+
+// Getter
+t_minishell			*getset_mini(t_minishell *minishell);
+char				*getset_filename(char *file_name);
+int					getset_fd(int fd);
 
 #endif

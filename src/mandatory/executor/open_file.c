@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:26:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/20 00:25:09 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/21 21:50:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	open_file(t_minishell *minishell, t_fd *file)
 {
 	int	fd;
 
-	if (file->type == REDIRECT_IN)
+	if (file->type == REDIRECT_IN || file->type == HEREDOC_IN)
 	{
 		file->redirect_to = expand_redirect(minishell, file->redirect_to);
 		fd = open(file->redirect_to, O_RDONLY);

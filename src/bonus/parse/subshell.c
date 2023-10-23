@@ -6,11 +6,11 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:14:31 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/20 20:04:15 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static t_minishell	*copy_minishell(t_list *envs, int exit_status);
 static t_list		*copy_envs(t_list *envs);

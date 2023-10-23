@@ -6,11 +6,13 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 21:52:06 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 02:01:23 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:06:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	handle_sig_child(int sig);
 
 static void	handle_sigint(int sig)
 {

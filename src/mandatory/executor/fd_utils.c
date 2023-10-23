@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:40:56 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/20 23:26:12 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/21 21:53:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	get_last_fd(int type, t_list *fds, int default_fd)
 	while (fds != NULL)
 	{
 		file = fds->content;
-		if (type == STDIN_FILENO && file->type == REDIRECT_IN)
+		if (type == STDIN_FILENO && (file->type == REDIRECT_IN
+				|| file->type == HEREDOC_IN))
 			last_fd = file->fd;
 		if (type == STDOUT_FILENO && (file->type == REDIRECT_OUT
 				|| file->type == HEREDOC_OUT))

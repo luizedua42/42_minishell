@@ -1,8 +1,7 @@
 vpath %.c src/mandatory src/mandatory/environment src/mandatory/parse
 vpath %.c src/mandatory/tokens src/mandatory/utils src/mandatory/builtin
-vpath %.c src/mandatory/expantions src/mandatory/expantions/wildcards
+vpath %.c src/mandatory/expantions
 vpath %.c src/mandatory/executor
-
 vpath %.c src/bonus
 
 NAME := minishell
@@ -25,15 +24,17 @@ INCLUDE_DIR := include
 INCLUDES := -I$(INCLUDE_DIR) -I$(LIBTF_DIR)
 
 SRCS := minishell.c
-SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c delete_env.c
-SRCS += parser.c analysis.c subshell.c clear_shells.c
-SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c new_token.c prints.c
+SRCS += create_envs.c find_env.c update_env.c add_env.c uptade_pwd_env.c 
+SRCS += delete_env.c new_token.c
+SRCS += parser.c analysis.c clear_shells.c
+SRCS += tokenizer.c sanitize_tokens.c create_token_array.c get_redirects.c 
 SRCS += env.c pwd.c cd.c exit.c unset.c export.c echo.c builtin_selector.c
 SRCS += delete.c count_args.c init_minishell.c is_redirect.c
-SRCS += is_exe.c is_token.c is_operator.c is_space.c is_builtin.c my_dup.c
-SRCS += executor.c get_path.c here_doc.c open_file.c selects.c split_pipes.c exec.c do_pipe.c
-SRCS += wild_file.c wild_match.c expantion.c join_words.c parse_env.c
-SRCS += parse_quote.c prompt.c fd_utils.c
+SRCS += is_exe.c is_token.c is_space.c is_builtin.c my_dup.c
+SRCS += executor.c get_path.c here_doc.c open_file.c selects.c split_pipes.c 
+SRCS += exec.c do_pipe.c heredoc_sigs.c unlinks.c getters.c
+SRCS += expantion.c join_words.c parse_env.c
+SRCS += parse_quote.c prompt.c fd_utils.c open_heredoc.c
 SRCS += exec_validation.c signals.c builtin_exec.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
@@ -56,7 +57,7 @@ libft:
 	@$(MAKE) $(JOBS) -C $(LIBTF_DIR)
 	@echo "$(GREEN)libft compiled!$(RESET)"
 
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.c include/minishell.h | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
