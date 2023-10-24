@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:40:56 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 21:53:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 23:32:27 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,24 @@ bool	open_redirects(t_minishell *minishell, t_list *fds,
 		{
 			close_fds(head);
 			ft_lstclear(&head, del_fd);
+			minishell->exit_status = -EXIT_FAILURE;
 			if (!has_pipe)
-			{
-				minishell->exit_status = EXIT_FAILURE;
 				return (false);
-			}
 			free_token_array(token_array);
 			clear_shell(minishell);
-			exit(EXIT_FAILURE);
+			return (false);
 		}
 		fds = fds->next;
 	}
 	return (true);
+}
+
+int	close_pipedes(int *pipedes)
+{
+	close(pipedes[0]);
+	close(pipedes[1]);
+	close(pipedes[2]);
+	return (EXIT_FAILURE);
 }
 
 int	get_last_fd(int type, t_list *fds, int default_fd)

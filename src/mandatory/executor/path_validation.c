@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_token.c                                         :+:      :+:    :+:   */
+/*   path_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 21:55:28 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/23 11:08:53 by paulo            ###   ########.fr       */
+/*   Created: 2023/10/23 23:35:01 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/23 23:37:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_token(char c)
+bool	path_validation(char *cmd)
 {
-	return (c == '|' || c == '<' || c == '>');
+	return (ft_strchr(cmd, '/') == NULL && \
+		ft_strncmp(cmd, "..", 3) != 0 && ft_strncmp(cmd, ".", 2) != 0 \
+			&& cmd[0] != '\0');
 }

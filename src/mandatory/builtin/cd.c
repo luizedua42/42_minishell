@@ -6,13 +6,14 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:43:31 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 03:17:30 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 23:33:48 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	get_env_path(t_list *envs, char *env_key, char **path);
+static void	print_error(char *path);
 
 int	cd(t_minishell *minishell, char **args)
 {
@@ -34,7 +35,7 @@ int	cd(t_minishell *minishell, char **args)
 		exit_status = get_env_path(minishell->envs, "OLDPWD", &path);
 	if (chdir(path) < 0 && exit_status != EXIT_FAILURE)
 	{
-		perror("minishell: cd");
+		print_error(path);
 		exit_status = EXIT_FAILURE;
 	}
 	uptade_pwd_env(minishell->envs);
@@ -50,4 +51,13 @@ static int	get_env_path(t_list *envs, char *env_key, char **path)
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
+}
+
+static void	print_error(char *path)
+{
+	char	*error_message;
+
+	error_message = ft_strjoin("minishell: cd: ", path);
+	perror(error_message);
+	free(error_message);
 }

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 03:25:38 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/21 03:41:21 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:51:23 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_exit(char **cmds, t_list **token_array, int ret, \
 		else
 		{
 			free(cmds);
-			minishell->exit_status = EXIT_FAILURE;
+			minishell->exit_status = -EXIT_FAILURE;
 			return (EXIT_FAILURE);
 		}
 	}
