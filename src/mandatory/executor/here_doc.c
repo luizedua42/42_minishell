@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:01:13 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 22:37:44 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:02:21 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd);
 static char	*expand_line(char *line, t_minishell *minishell);
 static void	parse_line(t_list **words, char *str, size_t *index);
-static void	parse_here_env(t_minishell *minishell, t_list **words, char *str, \
-							size_t *index);
+static void	parse_here_env(t_minishell *minishell, t_list **words, char *str,
+				size_t *index);
 
 void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 {
 	int		fd;
 	char	*file_name;
-	char	*redirect_to;
 
 	file_name = ft_strjoin("/tmp/mini_doc_", index);
 	getset_filename(file_name);
@@ -31,9 +30,6 @@ void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 	if (fd == -1)
 		return ;
 	getset_fd(fd);
-	redirect_to = expand(minishell, fds->value, false);
-	free(fds->value);
-	fds->value = redirect_to;
 	here_doc_put_in(minishell, fds->value, fd);
 	free(file_name);
 	close(fd);
