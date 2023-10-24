@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:40:56 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/23 23:32:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:02:58 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	open_redirects(t_minishell *minishell, t_list *fds,
 	while (fds != NULL)
 	{
 		file = fds->content;
-		if (!open_file(minishell, file))
+		if (!open_file(file))
 		{
 			close_fds(head);
 			ft_lstclear(&head, del_fd);

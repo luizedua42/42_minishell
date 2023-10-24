@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 16:15:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:27:32 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void				parse_quote(t_minishell *minishell, t_list **words,
 bool				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
-bool				open_file(t_minishell *minishell, t_fd *file);
+bool				open_file(t_fd *file);
 void				here_doc(t_minishell *minishell, t_token *fds, char *index);
 char				*get_path(char *cmd, char **env);
 t_list				**split_pipes(t_list *tokens);

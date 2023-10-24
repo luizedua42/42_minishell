@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 21:43:31 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/23 23:33:48 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:39:10 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	cd(t_minishell *minishell, char **args)
 	}
 	else if (ft_strncmp(path, "-", 2) == 0)
 		exit_status = get_env_path(minishell->envs, "OLDPWD", &path);
-	if (chdir(path) < 0 && exit_status != EXIT_FAILURE)
+	if (exit_status != EXIT_FAILURE && chdir(path) < 0)
 	{
 		print_error(path);
 		exit_status = EXIT_FAILURE;
