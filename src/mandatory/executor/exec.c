@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/24 16:15:47 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:16:26 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 	else if (access(path, X_OK) != 0)
 		ret = print_err("minishell: %s: Permission denied\n", path, PATH_ERROR);
 	if (ret != EXIT_SUCCESS)
+	{
 		clear_all(minishell, cmds, env);
+		(void)close_sysfd(ret);
+	}
 	return (ret);
 }
 
