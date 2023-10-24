@@ -6,13 +6,13 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:27:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 20:04:02 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:48:12 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	mini_return(t_minishell *minishell, int status);
+static unsigned char	mini_return(t_minishell *minishell, int status);
 
 int	executor(t_minishell *minishell)
 {
@@ -40,10 +40,10 @@ int	executor(t_minishell *minishell)
 	return (mini_return(minishell, status));
 }
 
-static int	mini_return(t_minishell *minishell, int status)
+static unsigned char	mini_return(t_minishell *minishell, int status)
 {
-	if (minishell->exit_status != 0)
-		return (minishell->exit_status);
+	if (minishell->exit_status < 0)
+		return (-minishell->exit_status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

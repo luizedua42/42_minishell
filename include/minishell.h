@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/23 17:54:53 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/23 23:38:12 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_minishell
 	t_list			*tokens;
 	t_list			*envs;
 	int				*pids;
-	unsigned char	exit_status;
+	int				exit_status;
 }					t_minishell;
 
 typedef struct s_bfd
@@ -165,6 +165,8 @@ int					builtin_exit(char **cmds, t_list **token_array, int ret,
 						t_minishell *minishell);
 bool				open_here_docs(t_minishell *minishell, t_list *tokens);
 void				heredoc_err(char *line, char *limiter, size_t limiter_len);
+int					close_pipedes(int *pipedes);
+bool				path_validation(char *cmd);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,

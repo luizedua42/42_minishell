@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 22:02:28 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 21:28:49 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	create_tokens(t_list **tokens, char *cmd)
 		else if (new_token(tokens, WORD, cmd + i, &i) == false)
 			return (false);
 	}
-	if (tokens == NULL)
+	if (*tokens == NULL)
 		return (false);
 	return (true);
 }

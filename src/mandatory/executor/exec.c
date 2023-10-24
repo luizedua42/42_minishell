@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/22 17:51:54 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/23 23:39:01 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 						char **env);
-
 static int	handler_builtin(t_minishell *minishell, char **cmds);
 static void	clear_all(t_minishell *minishell, char **cmds, char **env);
 static int	print_err(char *format, char *path, int ret);
@@ -34,7 +33,7 @@ int	exec(char **cmds, t_minishell *minishell)
 	if (ret != -1)
 		return (ret);
 	env = ft_lst_to_array_choice(minishell->envs, select_env);
-	if (ft_strchr(cmds[0], '/') == NULL)
+	if (path_validation(cmds[0]))
 		path = get_path(cmds[0], env);
 	else
 		path = cmds[0];
@@ -75,7 +74,7 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 	int			ret;
 
 	ret = EXIT_SUCCESS;
-	if (path == NULL)
+	if (cmds[0][0] == '\0' || path == NULL)
 		ret = print_err("%s: command not found\n", cmds[0], COMMAND_NOT_FOUND);
 	else if (stat(path, &file_stat) != -1 && S_ISDIR(file_stat.st_mode))
 		ret = print_err("minishell: %s: Is a directory\n", path, PATH_ERROR);
