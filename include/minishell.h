@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 16:03:24 by paulo            ###   ########.fr       */
+/*   Updated: 2023/10/24 16:27:32 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ bool				open_here_docs(t_minishell *minishell, t_list *tokens);
 void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 int					close_pipedes(int *pipedes);
 bool				path_validation(char *cmd);
+int					close_sysfd(int ret);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,
