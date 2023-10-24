@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:06:27 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/21 01:41:31 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:10:05 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_path(char *cmd, char **env)
 
 	i = -1;
 	path_dir = find_path(env);
-	if (path_dir == NULL)
+	if (path_dir == NULL || path_dir[0] == '\0')
 		return (cmd);
 	path = ft_split(path_dir, ':');
 	while (path[++i])
