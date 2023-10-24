@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/23 23:38:12 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:15:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ bool				open_here_docs(t_minishell *minishell, t_list *tokens);
 void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 int					close_pipedes(int *pipedes);
 bool				path_validation(char *cmd);
+int					close_sysfd(int ret);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,

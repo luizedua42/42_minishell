@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/23 23:39:01 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:15:47 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec(char **cmds, t_minishell *minishell)
 	}
 	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
-		return (ret);
+		return (close_sysfd(ret));
 	env = ft_lst_to_array_choice(minishell->envs, select_env);
 	if (path_validation(cmds[0]))
 		path = get_path(cmds[0], env);
