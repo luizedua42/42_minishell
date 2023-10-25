@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 01:02:22 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 15:38:03 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:57:49 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ int	unset(t_minishell *minishell, char **args)
 	size_t	valid_args;
 	bool	is_valid_args;
 
-	i = 1;
+	i = 0;
 	argc = count_args(args);
 	valid_args = 0;
 	if (argc == 1)
 		return (EXIT_SUCCESS);
-	while (args[i] != NULL)
+	while (args[++i] != NULL)
 	{
 		is_valid_args = check_parameter(args[i]);
 		valid_args += is_valid_args;
-		if (delete_env(minishell, args[i]))
-			break ;
-		i++;
+		if (!is_valid_args)
+			continue ;
+		delete_env(minishell, args[i]);
 	}
 	if (valid_args < argc - 1)
 		return (EXIT_FAILURE);
