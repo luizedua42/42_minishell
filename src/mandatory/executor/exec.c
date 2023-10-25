@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/24 17:16:26 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:55:42 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	handler_builtin(t_minishell *minishell, char **cmds);
 static void	clear_all(t_minishell *minishell, char **cmds, char **env);
 static int	print_err(char *format, char *path, int ret);
 
-int	exec(char **cmds, t_minishell *minishell)
+int	exec(char **cmds, t_minishell *minishell, int *pipedes)
 {
 	int			ret;
 	char		*path;
@@ -27,6 +27,8 @@ int	exec(char **cmds, t_minishell *minishell)
 	if (cmds == NULL)
 	{
 		clear_shell(minishell);
+		close_sysfd(0);
+		close_pipedes(pipedes);
 		return (EXIT_SUCCESS);
 	}
 	ret = handler_builtin(minishell, cmds);
@@ -86,7 +88,7 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 	if (ret != EXIT_SUCCESS)
 	{
 		clear_all(minishell, cmds, env);
-		(void)close_sysfd(ret);
+		close_sysfd(ret);
 	}
 	return (ret);
 }

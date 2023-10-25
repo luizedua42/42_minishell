@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:05:33 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/23 23:47:14 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:56:32 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	handle_child(int *pipedes, int i, t_minishell *minishell,
 		my_dup(last_fd, STDOUT_FILENO);
 	if (sanitize_tokens(&token_array[i]))
 		cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
-	ret = exec(cmds, minishell);
+	ret = exec(cmds, minishell, pipedes);
 	exit_child(token_array, ((i != 0 || last_fd != pipedes[2]) << 1) & \
 		(!is_last || last_fd != pipedes[1]), child_files, ret);
 }

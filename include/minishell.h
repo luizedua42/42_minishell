@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 21:01:11 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:20:38 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void				*select_token_value(void *token);
 void				*select_env(void *content);
 size_t				lst_matrix_len(t_list **matrix);
 int					executor(t_minishell *minishell);
-int					exec(char **cmds, t_minishell *minishell);
+int					exec(char **cmds, t_minishell *minishell, int *pipedes);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
 void				close_fds(t_list *fds);
@@ -176,6 +176,7 @@ int					pipe_validation(bool is_last, int *pipedes,
 int					fork_validation(int *pid);
 
 // Getter
+t_minishell			*getset_mini_here(t_minishell *minishell);
 t_minishell			*getset_mini(t_minishell *minishell);
 char				*getset_filename(char *file_name);
 int					getset_fd(int fd);

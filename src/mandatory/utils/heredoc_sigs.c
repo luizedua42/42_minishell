@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 19:07:17 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 22:43:30 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:20:01 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sig_here(int sig)
 	(void)sig;
 	close(getset_fd(-1));
 	free(getset_filename(NULL));
-	clear_shell(getset_mini(NULL));
+	clear_shell(getset_mini_here(NULL));
 	exit(CTRLC_RETURN);
 }
 

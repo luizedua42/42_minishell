@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:02:07 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 22:48:24 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:20:13 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	here_child(t_minishell *minishell, t_list *tokens)
 	t_token	*token;
 
 	index = 0;
-	getset_mini(minishell);
+	getset_mini_here(minishell);
 	signal_handler_child_heredoc();
 	while (tokens != NULL)
 	{

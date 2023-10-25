@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 19:38:57 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 19:39:19 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:19:40 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ int	getset_fd(int fd)
 	if (fd != -1)
 		fd_static = fd;
 	return (fd_static);
+}
+
+t_minishell	*getset_mini_here(t_minishell *minishell)
+{
+	static t_minishell	*mini;
+
+	if (minishell != NULL)
+		mini = minishell;
+	return (mini);
 }
 
 t_minishell	*getset_mini(t_minishell *minishell)

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 20:20:50 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/24 20:09:16 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:24:24 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_env	*update_env(t_list *envs, char *key, char *value)
 {
 	t_env	*env;
 
-			
 	env = find_env(envs, key);
 	if (env == NULL)
 		return (NULL);

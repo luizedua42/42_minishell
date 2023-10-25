@@ -51,23 +51,23 @@ static int	free_all(t_minishell *minishell, int ret)
 
 static unsigned long long	ft_atoull(const char *nptr)
 {
-	int					flag;
-	unsigned long long	nb;
+	int					f;
+	unsigned long long	n;
 
-	flag = 0;
+	f = 0;
 	while (ft_isspace(*nptr))
 		nptr++;
 	if (*nptr == '+')
-		flag = 1;
+		f = 1;
 	else if (*nptr == '-')
-		flag = -1;
-	if (flag)
+		f = -1;
+	if (f)
 		nptr++;
-	nb = 0;
+	n = 0;
 	while (ft_isdigit(*nptr))
 	{
-		nb = nb * 10 + (*nptr - '0');
-		if ((flag != -1 && nb > LLONG_MAX) || nb > (unsigned long long)LLONG_MAX + 1)
+		n = n * 10 + (*nptr - '0');
+		if ((f != -1 && n > LLONG_MAX) || n > (unsigned long long)LLONG_MAX + 1)
 			return ((unsigned long long)LLONG_MAX + 2);
 		nptr++;
 	}
@@ -75,5 +75,5 @@ static unsigned long long	ft_atoull(const char *nptr)
 		nptr++;
 	if (*nptr != '\0')
 		return ((unsigned long long)LLONG_MAX + 2);
-	return (nb);
+	return (n);
 }
