@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/23 22:21:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:36:15 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,17 @@ static void	handle_command(t_minishell **minishell, char *command)
 	token_array = create_token_array((*minishell)->tokens);
 	valid_syntax = syntax_analysis(token_array);
 	if (token_array != NULL)
-	{
 		free(token_array);
-		if (!(success_create_tokens && valid_syntax))
-		{
-			ft_fprintf(2, "minishell: syntax error\n");
-			(*minishell)->exit_status = 2;
-		}
-		else
-		{
-			(*minishell)->exit_status = executor(*minishell);
-			unlink_all((*minishell)->tokens);
-			clear_shell_content(*minishell);
-		}
+	if (!(success_create_tokens && valid_syntax))
+	{
+		ft_fprintf(STDERR_FILENO, "minishell: syntax error\n");
+		(*minishell)->exit_status = 2;
+	}
+	else
+	{
+		(*minishell)->exit_status = executor(*minishell);
+		unlink_all((*minishell)->tokens);
+		clear_shell_content(*minishell);
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);
 	free(command);
@@ -81,5 +79,5 @@ static void	exit_main(t_minishell *minishell, char *command)
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
-	exit (ret);
+	exit(ret);
 }
