@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 21:52:06 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 19:06:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:17:28 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	handle_sigint(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	getset_mini(NULL)->exit_status = CTRLC_RETURN;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
