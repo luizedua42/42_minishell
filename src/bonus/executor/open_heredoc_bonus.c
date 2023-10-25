@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_heredoc.c                                     :+:      :+:    :+:   */
+/*   open_heredoc_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:02:07 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 22:51:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:35:02 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	open_here_docs(t_minishell *minishell, t_list *tokens)
 			here_child(minishell, tokens);
 		waitpid(pid, &status, 0);
 		get_here_docs_files(minishell->tokens);
-		if (WEXITSTATUS(status) == 130)
+		if (WEXITSTATUS(status) == CTRLC_RETURN)
 			return (false);
 	}
 	return (true);

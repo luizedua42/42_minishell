@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_quote.c                                      :+:      :+:    :+:   */
+/*   parse_quote_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 08:36:43 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:09:20 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	parse_quote(t_minishell *minishell, t_list **words, char *str,
 	i = 1;
 	quote = str[0];
 	wild_star(str, &i, quote);
+	while (str[i] != quote)
+		i++;
 	if (i == 1)
 		word = ft_strdup("");
 	else

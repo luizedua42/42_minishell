@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 22:49:43 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:40:41 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_minishell			*init_minishell(char **envp);
 void				unlink_all(t_list *tokens);
 
 // Tokens
-void				sanitize_tokens(t_list **original_tokens);
+bool				sanitize_tokens(t_list **original_tokens);
 t_list				*get_redirects(t_list *tokens);
 bool				create_tokens(t_list **tokens, char *cmd);
 bool				new_token(t_list **tokens, t_token_type type, char *value,
@@ -159,7 +159,7 @@ void				parse_quote(t_minishell *minishell, t_list **words,
 bool				expand_all(t_minishell *minishell, t_list *tokens);
 
 // Executor
-bool				open_file(t_minishell *minishell, t_fd *file);
+bool				open_file(t_fd *file);
 void				here_doc(t_minishell *minishell, t_token *fds, char *index);
 char				*get_path(char *cmd, char **env);
 t_list				**split_pipes(t_list *tokens);
@@ -167,7 +167,7 @@ void				*select_token_value(void *token);
 void				*select_env(void *content);
 size_t				lst_matrix_len(t_list **matrix);
 int					executor(t_minishell *minishell);
-int					exec(char **cmds, t_minishell *minishell);
+int					exec(char **cmds, t_minishell *minishell, int *pipedes);
 int					do_pipe(t_minishell *minishell, t_list *tokens, size_t i,
 						t_list **token_array);
 void				close_fds(t_list *fds);
@@ -178,6 +178,9 @@ int					builtin_exit(char **cmds, t_list **token_array, int ret, \
 									t_minishell *minishell);
 bool				open_here_docs(t_minishell *minishell, t_list *tokens);
 void				heredoc_err(char *line, char *limiter, size_t limiter_len);
+int					close_sysfd(int ret);
+int					close_pipedes(int *pipedes);
+bool				path_validation(char *cmd);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,
@@ -193,5 +196,6 @@ void				print_sub_shells(t_minishell *minishell, int level);
 t_minishell			*getset_mini(t_minishell *minishell);
 char				*getset_filename(char *file_name);
 int					getset_fd(int fd);
+t_minishell			*getset_mini_here(t_minishell *minishell);
 
 #endif

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:41:08 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:34:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
 static void		sort_envs(t_env **envs);
-static bool		check_parameter(char *str);
 static void		print_sorted_envs(t_minishell *minishell);
 static size_t	handle_envs(t_minishell *minishell, char **args);
+static bool		check_parameter(char *str);
 
 int	minishell_export(t_minishell *minishell, char **args)
 {

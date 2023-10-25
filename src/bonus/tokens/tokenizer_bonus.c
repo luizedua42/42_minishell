@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   tokenizer_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:15:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	create_tokens(t_list **tokens, char *cmd)
 		else if (new_token(tokens, WORD, cmd + i, &i) == false)
 			return (false);
 	}
-	if (tokens == NULL)
+	if (*tokens == NULL)
 		return (false);
 	return (true);
 }

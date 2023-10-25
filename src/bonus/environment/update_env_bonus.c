@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_env.c                                       :+:      :+:    :+:   */
+/*   update_env_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 20:20:50 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:05:45 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_env	*update_env(t_list *envs, char *key, char *value)
 	env = find_env(envs, key);
 	if (env == NULL)
 		return (NULL);
+	if (value == NULL)
+		return (env);
 	if (env->value != NULL)
 		free(env->value);
 	env->value = ft_strdup(value);

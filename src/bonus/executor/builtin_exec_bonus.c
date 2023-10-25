@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exec.c                                     :+:      :+:    :+:   */
+/*   builtin_exec_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 03:25:38 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:43:51 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_exit(char **cmds, t_list **token_array, int ret, \
 		else
 		{
 			free(cmds);
-			minishell->exit_status = EXIT_FAILURE;
+			minishell->exit_status = -EXIT_FAILURE;
 			return (EXIT_FAILURE);
 		}
 	}

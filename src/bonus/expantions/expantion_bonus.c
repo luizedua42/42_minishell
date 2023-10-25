@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expantion.c                                        :+:      :+:    :+:   */
+/*   expantion_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 00:41:27 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:09:59 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ bool	expand_all(t_minishell *minishell, t_list *tokens)
 	t_token	*token;
 	char	*tokenex;
 
-	if (open_here_docs(minishell, minishell->tokens) == false)
-		return (false);
 	while (tokens != NULL)
 	{
 		token = tokens->content;
@@ -98,5 +96,7 @@ bool	expand_all(t_minishell *minishell, t_list *tokens)
 		}
 		tokens = tokens->next;
 	}
+	if (open_here_docs(minishell, minishell->tokens) == false)
+		return (false);
 	return (true);
 }
