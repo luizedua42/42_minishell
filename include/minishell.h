@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 16:27:32 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:01:11 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <limits.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 
