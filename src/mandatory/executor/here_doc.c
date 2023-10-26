@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:01:13 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 22:15:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:14:43 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
-static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd, \
-							bool expand);
+static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd,
+				bool expand);
 static char	*expand_line(char *line, t_minishell *minishell);
 static void	parse_line(t_list **words, char *str, size_t *index);
 static void	parse_here_env(t_minishell *minishell, t_list **words, char *str,
@@ -23,8 +23,8 @@ void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 {
 	int		fd;
 	char	*file_name;
-	bool	expand;
 	char	*limiter;
+	bool	expand;
 
 	file_name = ft_strjoin("/tmp/mini_doc_", index);
 	getset_filename(file_name);
@@ -43,8 +43,8 @@ void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 	close(fd);
 }
 
-static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd, \
-							bool expand)
+static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd,
+		bool expand)
 {
 	char	*line;
 	size_t	limiter_len;

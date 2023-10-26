@@ -6,14 +6,13 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 21:51:05 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:35:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
 static void	handle_command(t_minishell **minishell, char *command);
-t_minishell	*expand_shell(t_minishell *minishell);
 static void	exit_main(t_minishell *minishell, char *command);
 
 int	main(int argc, char **argv, char **envp)
@@ -42,19 +41,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 }
 
-t_minishell	*expand_shell(t_minishell *minishell)
-{
-	t_list		*tokens;
-	t_minishell	*new_shell;
-
-	tokens = minishell->tokens;
-	new_shell = create_sub_shells(&tokens, \
-		minishell->envs, minishell->exit_status);
-	getset_mini(new_shell);
-	clear_shell(minishell);
-	return (new_shell);
-}
-
 static void	handle_command(t_minishell **minishell, char *command)
 {
 	bool			valid_syntax;
@@ -73,10 +59,9 @@ static void	handle_command(t_minishell **minishell, char *command)
 	}
 	else
 	{
-		*minishell = expand_shell(*minishell);
 		(*minishell)->exit_status = executor(*minishell);
 		unlink_all((*minishell)->tokens);
-		clear_subshells(*minishell);
+		clear_shell_content(*minishell);
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);
 	free(command);

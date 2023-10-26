@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:02:07 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/25 21:46:44 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:35:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ static void	here_child(t_minishell *minishell, t_list *tokens)
 		tokens = tokens->next;
 	}
 	clear_shell(minishell);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	exit(0);
 }
 

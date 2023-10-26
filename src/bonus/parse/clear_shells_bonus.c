@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_shells.c                                     :+:      :+:    :+:   */
+/*   clear_shells_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:06:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:35:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ void	clear_shell(void *minishell)
 		free(((t_minishell *)minishell)->pids);
 		((t_minishell *)minishell)->pids = NULL;
 	}
-	ft_lstclear(&((t_minishell *)minishell)->shells, clear_shell);
-	((t_minishell *)minishell)->shells = NULL;
 	free(minishell);
 }
 
-void	clear_subshells(void *minishell)
+void	clear_shell_content(void *minishell)
 {
 	ft_lstclear(&((t_minishell *)minishell)->tokens, del_token);
 	((t_minishell *)minishell)->tokens = NULL;
@@ -37,6 +35,4 @@ void	clear_subshells(void *minishell)
 		free(((t_minishell *)minishell)->pids);
 		((t_minishell *)minishell)->pids = NULL;
 	}
-	ft_lstclear(&((t_minishell *)minishell)->shells, clear_shell);
-	((t_minishell *)minishell)->shells = NULL;
 }

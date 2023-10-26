@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 22:57:57 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/26 00:17:46 by luizedua         ###   ########.fr       */
+/*   Created: 2023/10/25 15:35:18 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/26 01:35:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int					free_all(t_minishell *minishell, int ret);
 static unsigned long long	ft_atoull(const char *nptr, int *flag);
