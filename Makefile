@@ -79,7 +79,7 @@ libft:
 	@$(MAKE) $(JOBS) -C $(LIBTF_DIR)
 	@echo "$(GREEN)libft compiled!$(RESET)"
 
-$(OBJ_DIR)/%.o: %.c include/minishell.h | include/minishell_bonus.h | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.c include/minishell.h | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):

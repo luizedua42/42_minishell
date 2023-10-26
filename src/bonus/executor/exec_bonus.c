@@ -6,16 +6,15 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/25 22:08:39 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:12:48 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
-						char **env);
+static int	errcheck(char *path, char **cmds, char **env);
 static int	handler_builtin(t_minishell *minishell, char **cmds);
-static void	clear_all(t_minishell *minishell, char **cmds, char **env);
+static void	clear_all(char **cmds, char **env);
 static int	print_err(char *format, char *path, int ret);
 
 int	exec(char **cmds, t_minishell *minishell, int *pipedes)
@@ -25,7 +24,7 @@ int	exec(char **cmds, t_minishell *minishell, int *pipedes)
 	char		**env;
 
 	if (cmds == NULL)
-		return (exit_null_cmd(minishell, pipedes));
+		return (exit_null_cmd(pipedes));
 	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
 		return (close_sysfd(ret));
@@ -34,19 +33,19 @@ int	exec(char **cmds, t_minishell *minishell, int *pipedes)
 		path = get_path(cmds[0], env);
 	else
 		path = cmds[0];
-	ret = errcheck(minishell, path, cmds, env);
+	ret = errcheck(path, cmds, env);
 	if (ret != EXIT_SUCCESS)
 		return (ret);
 	execve(path, cmds, env);
 	free(path);
-	clear_all(minishell, cmds, env);
+	clear_all(cmds, env);
 	perror(NULL);
 	return (-1);
 }
 
-static void	clear_all(t_minishell *minishell, char **cmds, char **env)
+static void	clear_all(char **cmds, char **env)
 {
-	clear_shell(minishell);
+	clear_shell(getset_mini(NULL));
 	free(cmds);
 	ft_free_split(env);
 }
@@ -59,12 +58,12 @@ static int	handler_builtin(t_minishell *minishell, char **cmds)
 	if (ret != -1)
 	{
 		free(cmds);
-		clear_shell(minishell);
+		clear_shell(getset_mini(NULL));
 	}
 	return (ret);
 }
 
-static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
+static int	errcheck(char *path, char **cmds, \
 						char **env)
 {
 	struct stat	file_stat;
@@ -82,7 +81,7 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 		ret = print_err("minishell: %s: Permission denied\n", path, PATH_ERROR);
 	if (ret != EXIT_SUCCESS)
 	{
-		clear_all(minishell, cmds, env);
+		clear_all(cmds, env);
 		close_sysfd(ret);
 	}
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:05:33 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/25 16:45:37 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:19:16 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,17 @@ static void	handle_child(int *pipedes, int i, t_minishell *minishell,
 	last_fd = get_last_fd(STDOUT_FILENO, child_files, pipedes[1]);
 	if (!is_last || last_fd != pipedes[1])
 		my_dup(last_fd, STDOUT_FILENO);
-	if (sanitize_tokens(&token_array[i]))
-		cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
-	ret = exec(cmds, minishell, pipedes);
+	if (((t_token *)(token_array[i]->content))->type == SHELL)
+	{
+		ret = executor((t_minishell *)minishell->shells->content);
+		clear_shell(getset_mini(NULL));
+	}
+	else
+	{
+		if (sanitize_tokens(&token_array[i]))
+			cmds = ft_lst_to_array_choice(token_array[i], select_token_value);
+		ret = exec(cmds, minishell, pipedes);
+	}
 	exit_child(token_array, ((i != 0 || last_fd != pipedes[2]) << 1) & \
 		(!is_last || last_fd != pipedes[1]), child_files, ret);
 }
