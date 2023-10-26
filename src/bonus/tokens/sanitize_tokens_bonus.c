@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sanitize_tokens.c                                  :+:      :+:    :+:   */
+/*   sanitize_tokens_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:42:17 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:17:13 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	sanitize_tokens(t_list **original_tokens)
+static bool	just_has_redirects(t_list *tokens);
+
+bool	sanitize_tokens(t_list **original_tokens)
 {
 	t_list	*tokens;
 	t_token	*token;
 
+	if (just_has_redirects(*original_tokens))
+		return (false);
 	tokens = *original_tokens;
 	while (tokens != NULL)
 	{
@@ -30,6 +34,21 @@ void	sanitize_tokens(t_list **original_tokens)
 		*original_tokens = ft_lstrm(*original_tokens, tokens, del_token);
 		tokens = *original_tokens;
 	}
+	return (true);
+}
+
+static bool	just_has_redirects(t_list *tokens)
+{
+	t_token	*token;
+
+	while (tokens != NULL)
+	{
+		token = tokens->content;
+		if (!is_redirect(token->type))
+			return (false);
+		tokens = tokens->next->next;
+	}
+	return (true);
 }
 
 void	sanitize_emptyvar(t_list **original_tokens)

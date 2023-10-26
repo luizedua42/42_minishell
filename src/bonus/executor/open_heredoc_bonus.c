@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_heredoc.c                                     :+:      :+:    :+:   */
+/*   open_heredoc_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:02:07 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/22 22:51:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:46:44 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ bool	open_here_docs(t_minishell *minishell, t_list *tokens)
 
 	if (count_here_docs(tokens) > 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == 0)
 			here_child(minishell, tokens);
 		waitpid(pid, &status, 0);
+		handle_signal();
 		get_here_docs_files(minishell->tokens);
-		if (WEXITSTATUS(status) == 130)
+		if (WEXITSTATUS(status) == CTRLC_RETURN)
 			return (false);
 	}
 	return (true);
@@ -83,7 +85,7 @@ static void	here_child(t_minishell *minishell, t_list *tokens)
 	t_token	*token;
 
 	index = 0;
-	getset_mini(minishell);
+	getset_mini_here(minishell);
 	signal_handler_child_heredoc();
 	while (tokens != NULL)
 	{

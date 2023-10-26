@@ -36,9 +36,9 @@ SRCS += delete.c count_args.c init_minishell.c is_redirect.c
 SRCS += is_exe.c is_token.c is_space.c is_builtin.c my_dup.c
 SRCS += executor.c get_path.c here_doc.c open_file.c selects.c split_pipes.c 
 SRCS += exec.c do_pipe.c heredoc_sigs.c unlinks.c getters.c
-SRCS += expantion.c join_words.c parse_env.c
+SRCS += expantion.c join_words.c parse_env.c expand_here.c
 SRCS += parse_quote.c prompt.c fd_utils.c open_heredoc.c
-SRCS += exec_validation.c signals.c builtin_exec.c
+SRCS += exec_validation.c signals.c builtin_exec.c exit_null_cmd.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS_BONUS := subshell_bonus.c clear_shells_bonus.c analysis_bonus.c
@@ -59,7 +59,8 @@ SRCS_BONUS += split_pipes_bonus.c open_file_bonus.c builtin_exec_bonus.c
 SRCS_BONUS += exec_bonus.c open_heredoc_bonus.c get_path_bonus.c
 SRCS_BONUS += selects_bonus.c minishell_bonus.c tokenizer_bonus.c
 SRCS_BONUS += new_token_bonus.c get_redirects_bonus.c sanitize_tokens_bonus.c
-SRCS_BONUS += create_token_array_bonus.c
+SRCS_BONUS += create_token_array_bonus.c close_sysfd_bonus.c
+SRCS_BONUS += path_validation_bonus.c expand_here_bonus.c exit_null_cmd_bonus.c
 OBJS_BONUS := $(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:.c=.o))
 
 all: libft $(NAME)
@@ -78,7 +79,7 @@ libft:
 	@$(MAKE) $(JOBS) -C $(LIBTF_DIR)
 	@echo "$(GREEN)libft compiled!$(RESET)"
 
-$(OBJ_DIR)/%.o: %.c include/minishell.h | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.c include/minishell.h | include/minishell_bonus.h | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
@@ -91,11 +92,15 @@ $(NAME): print_start $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)
 	@echo "$(GREEN)minishell compiled!$(RESET)"
 
-bonus: libft $(OBJS_BONUS)
+bonus:  libft print_start $(OBJS_BONUS)
 	@$(CC) $(OBJS_BONUS) $(LIBS) $(INCLUDES) $(CFLAGS) -o $(NAME)_bonus
+	@echo "$(GREEN)minishell_bonus compiled!$(RESET)"
 
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --trace-children-skip='*/bin/*,*/sbin/*' --suppressions=./readline.supp -q ./$(NAME)
+
+bval: bonus
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --trace-children-skip='*/bin/*,*/sbin/*' --suppressions=./readline.supp -q ./$(NAME)_bonus
 
 clean: 
 	@$(MAKE) -C $(LIBTF_DIR) clean

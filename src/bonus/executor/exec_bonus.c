@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:08:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 
 static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 						char **env);
-
 static int	handler_builtin(t_minishell *minishell, char **cmds);
 static void	clear_all(t_minishell *minishell, char **cmds, char **env);
 static int	print_err(char *format, char *path, int ret);
 
-int	exec(char **cmds, t_minishell *minishell)
+int	exec(char **cmds, t_minishell *minishell, int *pipedes)
 {
 	int			ret;
 	char		*path;
 	char		**env;
 
 	if (cmds == NULL)
-	{
-		clear_shell(minishell);
-		return (EXIT_SUCCESS);
-	}
+		return (exit_null_cmd(minishell, pipedes));
 	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
-		return (ret);
+		return (close_sysfd(ret));
 	env = ft_lst_to_array_choice(minishell->envs, select_env);
-	if (ft_strchr(cmds[0], '/') == NULL)
+	if (path_validation(cmds[0]))
 		path = get_path(cmds[0], env);
 	else
 		path = cmds[0];
@@ -75,7 +71,7 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 	int			ret;
 
 	ret = EXIT_SUCCESS;
-	if (path == NULL)
+	if (cmds[0][0] == '\0' || path == NULL)
 		ret = print_err("%s: command not found\n", cmds[0], COMMAND_NOT_FOUND);
 	else if (stat(path, &file_stat) != -1 && S_ISDIR(file_stat.st_mode))
 		ret = print_err("minishell: %s: Is a directory\n", path, PATH_ERROR);
@@ -85,7 +81,10 @@ static int	errcheck(t_minishell *minishell, char *path, char **cmds, \
 	else if (access(path, X_OK) != 0)
 		ret = print_err("minishell: %s: Permission denied\n", path, PATH_ERROR);
 	if (ret != EXIT_SUCCESS)
+	{
 		clear_all(minishell, cmds, env);
+		close_sysfd(ret);
+	}
 	return (ret);
 }
 

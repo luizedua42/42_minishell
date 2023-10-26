@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   minishell_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:51:05 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
+static void	handle_command(t_minishell **minishell, char *command);
 t_minishell	*expand_shell(t_minishell *minishell);
-void		handle_command(t_minishell **minishell, char *command);
 static void	exit_main(t_minishell *minishell, char *command);
 
 int	main(int argc, char **argv, char **envp)
@@ -50,11 +50,12 @@ t_minishell	*expand_shell(t_minishell *minishell)
 	tokens = minishell->tokens;
 	new_shell = create_sub_shells(&tokens, \
 		minishell->envs, minishell->exit_status);
+	getset_mini(new_shell);
 	clear_shell(minishell);
 	return (new_shell);
 }
 
-void	handle_command(t_minishell **minishell, char *command)
+static void	handle_command(t_minishell **minishell, char *command)
 {
 	bool			valid_syntax;
 	t_token_type	*token_array;
@@ -64,20 +65,18 @@ void	handle_command(t_minishell **minishell, char *command)
 	token_array = create_token_array((*minishell)->tokens);
 	valid_syntax = syntax_analysis(token_array);
 	if (token_array != NULL)
-	{
 		free(token_array);
-		if (!(success_create_tokens && valid_syntax))
-		{
-			ft_fprintf(2, "minishell: syntax error\n");
-			(*minishell)->exit_status = 2;
-		}
-		else
-		{
-			*minishell = expand_shell(*minishell);
-			(*minishell)->exit_status = executor(*minishell);
-			unlink_all((*minishell)->tokens);
-			clear_subshells(*minishell);
-		}
+	if (!(success_create_tokens && valid_syntax))
+	{
+		ft_fprintf(STDERR_FILENO, "minishell: syntax error\n");
+		(*minishell)->exit_status = 2;
+	}
+	else
+	{
+		*minishell = expand_shell(*minishell);
+		(*minishell)->exit_status = executor(*minishell);
+		unlink_all((*minishell)->tokens);
+		clear_subshells(*minishell);
 	}
 	ft_lstclear(&(*minishell)->tokens, del_token);
 	free(command);
@@ -95,5 +94,5 @@ static void	exit_main(t_minishell *minishell, char *command)
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
-	exit (ret);
+	exit(ret);
 }

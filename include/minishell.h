@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/24 22:20:38 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:12:48 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ char				*join_words(t_list *words);
 void				parse_quote(t_minishell *minishell, t_list **words,
 						char *str, size_t *index);
 bool				expand_all(t_minishell *minishell, t_list *tokens);
+char				*expand_here(char *str, bool is_in_quotes);
 
 // Executor
 bool				open_file(t_fd *file);
@@ -169,6 +170,7 @@ void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 int					close_pipedes(int *pipedes);
 bool				path_validation(char *cmd);
 int					close_sysfd(int ret);
+int					exit_null_cmd(t_minishell *minishell, int *pipedes);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,

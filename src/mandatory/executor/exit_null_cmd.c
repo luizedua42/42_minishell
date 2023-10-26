@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_bonus.c                                     :+:      :+:    :+:   */
+/*   exit_null_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 14:44:28 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/25 20:38:15 by luizedua         ###   ########.fr       */
+/*   Created: 2023/10/25 22:04:34 by luizedua          #+#    #+#             */
+/*   Updated: 2023/10/25 22:07:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_bonus.h"
+#include "minishell.h"
 
-char	*create_prompt(void)
+int	exit_null_cmd(t_minishell *minishell, int *pipedes)
 {
-	char	*usr;
-
-	usr = "\001\x1b[32m\002cadet@minishell\001\x1b[m\002" \
-		"\001\x1b[38;2;252;127;0m\002 λ \001\x1b[25;0m\002";
-	return (usr);
+	clear_shell(minishell);
+	close_sysfd(0);
+	close_pipedes(pipedes);
+	return (EXIT_SUCCESS);
 }

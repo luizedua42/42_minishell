@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:01:13 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 22:50:16 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:14:43 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd);
+static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd,
+				bool expand);
 static char	*expand_line(char *line, t_minishell *minishell);
 static void	parse_line(t_list **words, char *str, size_t *index);
-static void	parse_here_env(t_minishell *minishell, t_list **words, char *str, \
-							size_t *index);
+static void	parse_here_env(t_minishell *minishell, t_list **words, char *str,
+				size_t *index);
 
 void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 {
 	int		fd;
 	char	*file_name;
-	char	*redirect_to;
+	char	*limiter;
+	bool	expand;
 
 	file_name = ft_strjoin("/tmp/mini_doc_", index);
 	getset_filename(file_name);
@@ -31,15 +33,18 @@ void	here_doc(t_minishell *minishell, t_token *fds, char *index)
 	if (fd == -1)
 		return ;
 	getset_fd(fd);
-	redirect_to = expand(minishell, fds->value, false);
+	expand = (ft_strchr(fds->value, '\'') == NULL && \
+					ft_strchr(fds->value, '"') == NULL);
+	limiter = expand_here(fds->value, false);
 	free(fds->value);
-	fds->value = redirect_to;
-	here_doc_put_in(minishell, fds->value, fd);
+	fds->value = limiter;
+	here_doc_put_in(minishell, fds->value, fd, expand);
 	free(file_name);
 	close(fd);
 }
 
-static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd)
+static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd,
+		bool expand)
 {
 	char	*line;
 	size_t	limiter_len;
@@ -50,7 +55,7 @@ static void	here_doc_put_in(t_minishell *minishell, char *limiter, int fd)
 		line = readline("> ");
 		if (line == NULL || ft_strncmp(line, limiter, limiter_len + 1) == 0)
 			return (heredoc_err(line, limiter, limiter_len));
-		if (line[0] != '\0')
+		if (line[0] != '\0' && expand)
 			line = expand_line(line, minishell);
 		if (line == NULL)
 		{

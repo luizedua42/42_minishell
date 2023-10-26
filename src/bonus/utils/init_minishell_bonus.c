@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_minishell.c                                   :+:      :+:    :+:   */
+/*   init_minishell_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 23:20:50 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:39:24 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_minishell	*init_minishell(char **envp)
 	t_minishell	*minishell;
 
 	minishell = ft_calloc(1, sizeof(t_minishell));
+	getset_mini(minishell);
 	minishell->envs = create_envs(envp);
 	create_pwd_env(minishell);
 	minishell->exit_status = EXIT_SUCCESS;

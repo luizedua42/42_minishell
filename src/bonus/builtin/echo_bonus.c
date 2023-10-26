@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   echo_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 01:01:58 by cobli             #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:08 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:36:54 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_bonus.h"
+#include "minishell.h"
+
+static bool	is_n(char *str);
 
 int	echo(char **args)
 {
@@ -21,20 +23,35 @@ int	echo(char **args)
 	n_is_set = false;
 	if (count_args(args) > 1)
 	{
-		while (args[i] && ft_strncmp("-n", args[i], 3) == 0)
+		while (args[i] && is_n(args[i]))
 		{
 			n_is_set = true;
 			i++;
 		}
 		while (args[i])
 		{
-			ft_printf("%s", args[i]);
+			write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 			if (args[i + 1] && args[i][0] != '\0')
-				ft_printf(" ");
+				write(STDOUT_FILENO, " ", 1);
 			i++;
 		}
 	}
-	if (n_is_set == 0)
-		ft_printf("\n");
+	if (n_is_set == false)
+		write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
+}
+
+static bool	is_n(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if (str[i] != '-')
+		return (false);
+	i++;
+	while (str[i] == 'n' && str[i] != '\0')
+		i++;
+	if (str[i] == '\0')
+		return (true);
+	return (false);
 }
