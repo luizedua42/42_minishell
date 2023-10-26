@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:48:19 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/25 16:15:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:35:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ bool	create_tokens(t_list **tokens, char *cmd)
 
 static bool	is_double_token(t_list **tokens, char *command, size_t *i)
 {
-	if (ft_strncmp("||", command + *i, 2) == 0)
-		return (new_token(tokens, OR, "||", i));
-	else if (ft_strncmp("&&", command + *i, 2) == 0)
-		return (new_token(tokens, AND, "&&", i));
-	else if (ft_strncmp("<<", command + *i, 2) == 0)
+	if (ft_strncmp("<<", command + *i, 2) == 0)
 		return (new_token(tokens, HEREDOC_IN, "<<", i));
 	else if (ft_strncmp(">>", command + *i, 2) == 0)
 		return (new_token(tokens, HEREDOC_OUT, ">>", i));
@@ -58,9 +54,5 @@ static bool	is_single_token(t_list **tokens, char *command, size_t *i)
 		return (new_token(tokens, REDIRECT_IN, "<", i));
 	else if (command[*i] == '>')
 		return (new_token(tokens, REDIRECT_OUT, ">", i));
-	else if (command[*i] == '(')
-		return (new_token(tokens, OPEN_PARENTHESIS, "(", i));
-	else if (command[*i] == ')')
-		return (new_token(tokens, CLOSE_PARENTHESIS, ")", i));
 	return (false);
 }

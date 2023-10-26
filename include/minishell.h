@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 22:12:48 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:39:23 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,6 @@ void				expand_env(size_t i, char *str, char **word, t_list *envs);
 // Wildcard
 char				*expand(t_minishell *minishell, char *str,
 						bool is_in_quotes);
-bool				wild_match(const char *pattern, const char *string);
-char				*wild_get(char *wildcard);
 void				parse_env(t_minishell *minishell, t_list **words, char *str,
 						size_t *index);
 char				*join_words(t_list *words);
