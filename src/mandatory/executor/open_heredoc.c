@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:02:07 by luizedua          #+#    #+#             */
-/*   Updated: 2023/10/25 16:35:02 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:55:26 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ bool	open_here_docs(t_minishell *minishell, t_list *tokens)
 
 	if (count_here_docs(tokens) > 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == 0)
 			here_child(minishell, tokens);
 		waitpid(pid, &status, 0);
+		handle_signal();
 		get_here_docs_files(minishell->tokens);
 		if (WEXITSTATUS(status) == CTRLC_RETURN)
 			return (false);

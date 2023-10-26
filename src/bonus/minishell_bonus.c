@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:07:51 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 16:30:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:51:05 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_minishell	*expand_shell(t_minishell *minishell)
 	tokens = minishell->tokens;
 	new_shell = create_sub_shells(&tokens, \
 		minishell->envs, minishell->exit_status);
+	getset_mini(new_shell);
 	clear_shell(minishell);
 	return (new_shell);
 }

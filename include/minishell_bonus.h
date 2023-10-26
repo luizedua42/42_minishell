@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 19:08:04 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 20:40:41 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 00:27:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <limits.h>
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -70,7 +71,7 @@ typedef struct s_minishell
 	t_list			*envs;
 	t_list			*shells;
 	int				*pids;
-	unsigned char	exit_status;
+	int				exit_status;
 }					t_minishell;
 
 typedef struct s_bfd
@@ -154,6 +155,8 @@ char				*wild_get(char *wildcard);
 void				parse_env(t_minishell *minishell, t_list **words, char *str,
 						size_t *index);
 char				*join_words(t_list *words);
+char				*expand_here(char *str, bool is_in_quotes);
+void				parse_quote_here(t_list **words, char *str, size_t *index);
 void				parse_quote(t_minishell *minishell, t_list **words,
 						char *str, size_t *index);
 bool				expand_all(t_minishell *minishell, t_list *tokens);
@@ -181,6 +184,7 @@ void				heredoc_err(char *line, char *limiter, size_t limiter_len);
 int					close_sysfd(int ret);
 int					close_pipedes(int *pipedes);
 bool				path_validation(char *cmd);
+int					exit_null_cmd(t_minishell *minishell, int *pipedes);
 
 // Validation
 int					pipe_validation(bool is_last, int *pipedes,

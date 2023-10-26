@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:27:00 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/10/25 16:39:24 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/26 00:03:09 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	executor(t_minishell *minishell)
 static unsigned char	mini_return(t_minishell *minishell, int status)
 {
 	if (minishell->exit_status < 0)
-		return (minishell->exit_status);
+		return (-minishell->exit_status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

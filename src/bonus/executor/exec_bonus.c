@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 23:57:41 by paulo             #+#    #+#             */
-/*   Updated: 2023/10/25 16:43:18 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:08:39 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ int	exec(char **cmds, t_minishell *minishell, int *pipedes)
 	char		**env;
 
 	if (cmds == NULL)
-	{
-		clear_shell(minishell);
-		close_sysfd(0);
-		close_pipedes(pipedes);
-		return (EXIT_SUCCESS);
-	}
+		return (exit_null_cmd(minishell, pipedes));
 	ret = handler_builtin(minishell, cmds);
 	if (ret != -1)
 		return (close_sysfd(ret));
